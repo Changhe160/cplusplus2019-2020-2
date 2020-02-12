@@ -1,0 +1,86 @@
+\chapter{基本数据类型和表达式}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 掌握基本数据类型的内存结构。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 掌握运算符的基本属性。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 掌握表达式求值的基本方法。}\\
+\end{tabular}}\color{black}
+
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}
+\section*{实验内容}
+%放到复合类型、string和vector
+%\section*{实验一\quad 十进制转成二进制}
+%\addcontentsline{toc}{section}{实验一\quad 十进制转成二进制}
+%编写程序输入一个十进制表示的正整数，将其转换成二进制并输出结果。\\
+%【分析】\\
+% 除二取余，然后倒序排列，高位补零。\\
+%【程序】\\
+% \begin{lstlisting}[caption=*, label=prog4-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+%#include<iostream>
+%using namespace std;
+%void main()
+%{
+%    int num, i, j = 0;
+%    int a[1000];//存储二进制编码
+%    cin >> num;
+%    i = n;
+%    while (i)//对2取余并除2，直到商为0时为止
+%    {
+%        a[j] = i % 2;
+%        i /= 2;
+%        ++j;
+%
+%    }
+%    for (i = j - 1; i >= 0; i--)//逆序输出
+%        cout << a[i];
+%    cout << endl;
+%}
+% \end{lstlisting}
+
+\section*{实验2.1\quad 基本数据类型}
+\addcontentsline{toc}{section}{实验2.1\quad 基本数据类型}
+编写程序，其中包括常量，类型推导，类型转换，常用运算符和转义字符的使用。\\
+【要求】
+\begin{enumerate}
+  \item 在调试过程中，通过监视窗口观察相关对象值的变化情况；
+  \item 观察sizeof的输出结果，说明其含义。  
+\end{enumerate}
+【程序】\\
+\begin{lstlisting}[caption=*, label=prog2-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include<iostream>
+using namespace std;
+int main() {
+    int r(0);
+    const double pi = 3.1415926;
+    auto area = 0., sum = 0.;
+    area = pi * r*r;
+    sum += area;
+    cout << "The area is" << area << "\n The sum area is \t "
+         << sum << endl;
+    ++r;
+    area = pi * static_cast<double>(r*r);
+    sum += area;
+    cout << "The area is" << area << "\n The sum area is \t "
+         << sum << endl;
+    cout << "The size of r " << sizeof(r) << " "
+         << "The size of int " << sizeof(int) << endl;
+    cout << "The size of area " << sizeof(area) << " "
+         << "The size of double " << sizeof(double) << endl;
+}
+\end{lstlisting}
+
+%放到循环并给出例子，输入abCdE.
+%\section*{实验二\quad 大小写字母转换}
+%\addcontentsline{toc}{section}{实验二\quad 大小写字母转换}
+%编写程序从键盘键入一字符串,要求将其中的大小写字母相互转换后并输出结果。\\
+

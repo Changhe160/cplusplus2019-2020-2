@@ -1,0 +1,105 @@
+\chapter{模板与泛型编程}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{所谓泛型编程，就是以独立于任何特定类型的方式编写代码。这使得程序员在编写充分可重用代码时有了趁手的工具。 泛型其实是一种形式的静态多态，实现方式是类型参数化。一旦类型本身被参数化，那么我们就可以跃过类型限制带来的鸿沟，用一个类或者函数操纵多种类型不同的对象，并且不需要知道实现的细节。这无疑为代码的编写和维护带来的巨大的好处。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 掌握泛型编程，并能基本运用模板的语法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 培养理论联系实际和自主学习的能力，提高程序设计水平。}\\
+\end{tabular}}\color{black}\\
+\\
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}
+\section*{实验内容}
+
+\section*{实验7.1\quad 用模板实现两个对象值的交换}
+\addcontentsline{toc}{section}{实验7.1\quad 用模板实现两个对象值的交换}
+设计一个函数模板，用来实现两个对象值的交换。并用string和double类型进行测试。
+\noindent 【程序】
+\begin{lstlisting}[caption=测试代码, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+template<typename T>
+T& Swap(T&a,T&b) {//`\color{green}系统也提供swap函数，所以自定义函数名首字母大写`
+	T c = a;
+	a = b;
+	b = c;
+	cout << a <<" "<< b << endl;
+	return a;
+}
+
+int main() {
+	double i, j;
+	string s1, s2;
+	cout << "Please input two values:" << endl;
+	cin >> i >> j;
+	Swap(i, j);
+	cout << "Please input two strings:" << endl;
+	cin>>s1 >> s2;
+	Swap(s1, s2);
+	return 0;
+}
+\end{lstlisting}
+
+\section*{实验7.2\quad 将集合类改造为集合类模板}
+\addcontentsline{toc}{section}{实验7.2\quad 将集合类改造为集合类模板}
+在实验6.4已经定义了一个集合类，在这里将其改造为集合类模板，并添加新的功能如下。\\
+\noindent 【要求】
+\begin{enumerate}
+  \item 增加查找功能：find()，返回所找元素在集合中的地址；
+  \item 清除所有成员clear()；
+  \item 返回集合中元素个数；
+  \item 与另一个集合类实现内容交换swap()；
+  \item 补充Set类模板成员函数的定义，并用string，int，complex类型测试
+\end{enumerate}
+%\noindent 【程序】
+%\begin{lstlisting}[caption=*, label=prog10-5,basicstyle=\ttfamily,escapechar=`,frame=lines]
+%#include<iostream>
+%#include<vector>
+%using namespace std;
+%template<typename T1>
+%class Less {
+%	bool operator()(const T1 &a, const T1 &b) {
+%		return a < b;
+%	}
+%};
+%template<typename T,size_t N>
+%class Set {
+%	vector<T,N> m_elems;//`\color{green}数据成员`
+%public:
+%	Set() {}
+%	Set(vector<T,N> &elem);//`\color{green}构造函数`
+%	~Set() {};             //`\color{green}析构函数`
+%	size_t size();         //`\color{green}返回集合中元素个数`
+%	template<typename F=less(T1)>
+%	auto sort(F f=less()); //`\color{green}给集合中元素排序`
+%	auto find(T c);        //`\color{green}查找某元素，返回其位置`
+%	bool clear();          //`\color{green}删除一个元素`
+%	void exchange(Set &s); //`\color{green}交换两集合的内容`
+%	auto operator=(const Set &s);//`\color{green}重载输出运算符`
+%private:
+%	void swap(const T &a, const T &b) {
+%		T t =a ;
+%		a = b;
+%		b = t;
+%	}
+%};
+%\end{lstlisting}
+
+\newpage
+\section*{实验7.3\quad 设计MyVector类模板}
+\addcontentsline{toc}{section}{实验7.3\quad 设计MyVector类模板}
+仿照标准模板库中vector模板，利用数组（长度1000）设计一个MyVector类模板，要求实现以下功能(注意const和\&的使用)。\\
+【要求】
+\begin{enumerate}
+\item 默认构造函数，带参数构造函数，拷贝构造函数，赋值运算符。
+\item size(), operator[](), at(), front(), back()。
+\item push\_back(), pop\_back(), insert(), erase(), clear()。
+\item sort():用冒泡排序法对集合元素进行从小到大排序；
+\item 实现二分查找算法binary\_search。
+\end{enumerate}

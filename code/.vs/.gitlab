@@ -1,0 +1,13 @@
+{
+  "User": {
+    "Id": 2489662,
+    "Username": "Changhe160",
+    "Name": "Changhe Li",
+    "Email": "changhe.lw@gmail.com",
+    "AvatarUrl": "https://secure.gravatar.com/avatar/fc880ca45b51c1476ac261eca2b8e558?s=80&d=identicon",
+    "PrivateToken": "857a2184036adc623b6686b5ecba4e270fb6792f86ab306b7d25f0cf3f637799",
+    "Host": "https://gitlab.com",
+    "TwoFactorEnabled": false,
+    "ApiVersion": 3
+  }
+}

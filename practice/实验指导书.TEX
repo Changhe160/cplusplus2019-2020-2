@@ -1,0 +1,33 @@
+\documentclass[12pt,a4paper,openany,twoside]{book}
+\input{setup/package.tex}   %引用宏包所在位置
+\begin{document}
+\begin{CJK*}{GBK}{song}
+\input{setup/format.tex}    %格式所在位置
+\pagenumbering{Roman}   %Roman字体书写页码
+%-----------------------------------------------------------------------------
+\input{preface/cover}                                           %封面
+
+%---------------------------------------目录部分---------------------------------
+\setcounter{page}{1}                                            %重新开始页码
+\tableofcontents
+
+\mainmatter    %前言和目录页码结束，正文重新开始设置页码
+%-----------------------------------------正文开始---------------------------------
+\include{experiment/chap1}        %第一章  初识C++程序
+\include{experiment/chap2}      %第二章 基本数据类型和表达式
+\include{experiment/chap3}        %第三章 语句控制结构
+\include{experiment/chap4}        %第四章  复合类型、string和vector
+\include{experiment/chap5}        %第五章  函数
+\include{experiment/chap6}        %第六章  类
+\include{experiment/design_1}           %上学期课程设计
+\include{experiment/chap7}        %第七章  模板与泛型编程
+\include{experiment/chap8}        %第八章  动态内存与数据结构
+\include{experiment/chap9}        %第九章  周 继承与多态
+\include{experiment/chap10}       %第十章  输入与输出
+\include{experiment/chap11}       %第十一章 标准模板库
+%-----------------------------------------正文结束--------------------------------
+\include{experiment/design_2}                                            %课程设计
+
+\include{experiment/templet}
+\end{CJK*}
+\end{document}

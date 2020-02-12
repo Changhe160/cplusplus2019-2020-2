@@ -1,0 +1,44 @@
+\markboth{课程设计上\quad 学生成绩管理系统}{课程设计上\quad 学生成绩管理系统}
+%\clearpage  %清楚前面的偶数空白页
+\phantomsection %加这个命令后，目录中的超链接才指向正确的页码
+\addcontentsline{toc}{chapter}{\protect\numberline{}{课程设计上\quad 学生成绩管理系统}}
+\thispagestyle{empty}
+\vspace*{2.2cm}
+\centerline{\erhao\hei{\color{darkblue}{课程设计上\quad 学生成绩管理系统}}}
+
+\subsection*{课程设计内容}
+    C++语言，面向对象的分析与设计。
+\subsection*{课程设计基本要求}
+学生成绩管理是高等学校教务管理的重要组成部分， 主要包括学生成绩的录入、 删除、查找及修改、 成绩的统计分析等等。 请设计一个系统实现对学生成绩的管理。\\
+系统要求实现以下功能：
+\begin{enumerate}
+\item 增加记录：要求可以连续增加多条记录。
+\item 删除一个学生的记录：要求可以先查找，再删除。删除前，要求用户确认。
+\item 成绩修改：若输入错误可进行修改；要求可以先查找，再修改。
+\item 查找：可以根据姓名（或学号）查找某个学生的课程成绩，查找某门课程成绩处于指定分数段内的学生名单等等。
+\item 统计分析：对某个班级学生的单科成绩进行统计， 求出平均成绩；求平均成绩要求实现函数的重载，既能求单科的平均成绩，又能求三科总分的平均成绩。求出一门课程标准差和合格率。
+\item 排序功能：要求按总分进行排序（从高到低），若总分相同，则按数学排序；若总分和数学相同，则按物理排序；若总分和各科成绩都相同，则按学号排序。
+\item 文件操作：可以打开文件，显示班级的所有学生信息；可以将增加或修改后的成绩重新写入文件；可以将排序好的信息写入新的文件。
+\item 所有操作都要通过控制台的菜单项界面来显示和选择。
+\end{enumerate}
+
+\subsection*{较高要求}
+查找可以实现模糊查询，即输入名字的一部分，可以列出满足条件的所有记录。再从这个记录中进行二次选择。
+\subsection*{测试数据}
+测试数据见目录data/课程设计上
+\subsection*{报告模板}
+见附录
+\subsection*{实现提示}
+设计一个学生的类和一个管理学生成绩的类。学生类的设计请参考测试数据的记录和将要实现的功能。学生一条记录包括：学号、姓名、数学成绩、物理成绩和英语成绩。学生成绩管理的类应能管理所有学生的成绩，包括上面要求的7种基本功能，可用 vector 来存储所有学生信息。主函数显示功能菜单，供用户选择操作。每步操作之前，都要显示菜单。在主函数中调用类的方法。\\
+学生类和成绩管理类的数据成员如下：
+\begin{lstlisting}[caption=*, basicstyle=\ttfamily,escapechar=`,frame=lines]
+class Student{
+private:
+   string m_id,m_name;
+   int m_math,m_eng,m_phy;
+};
+class Management{
+private:
+   vector<Student> stu; //`\color{green}存储所有学生的信息`
+};
+\end{lstlisting}

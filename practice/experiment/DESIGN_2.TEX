@@ -1,0 +1,50 @@
+\markboth{课程设计下\quad 学生选课和课程管理系统}{课程设计下\quad 学生选课和课程管理系统}
+%\clearpage  %清楚前面的偶数空白页
+\phantomsection %加这个命令后，目录中的超链接才指向正确的页码
+\addcontentsline{toc}{chapter}{\protect\numberline{}{课程设计下\quad 学生选课和课程管理系统}}
+\thispagestyle{empty}
+\vspace*{2.2cm}
+\centerline{\erhao\hei{\color{darkblue}{课程设计下\quad 学生选课和课程管理系统}}}
+
+\subsection*{课程设计内容}
+    C++语言，面向对象的分析与设计及可视化实现。
+\subsection*{课程设计基本要求}
+学生选课和成绩管理是高等学校教务管理的重要组成部分，主要包括教师管理学生成绩模块、学生选课模块和系统管理模块。每门课程包括学分、学时、课程名字以及课程性质（必修和选修）等信息。每位教师可以教授若干门课程，并负责学生成绩的录入、删除、查找及修改、成绩的统计分析等等。教师的信息还包括姓名和ID。学生根据自己的专业要求进行选课，比如需要完成的总学分(学校要求总学分为50)和必修课等情况。学生的信息还包括姓名、ID和班号等。请设计一个系统实现对学生的选课和成绩的管理。
+系统要求实现以下功能：
+\begin{enumerate}
+\item 教师模块：
+\begin{enumerate}
+\item 成绩的录入，要求从文件读取。
+\item 成绩修改：若输入错误可进行修改；要求可以先查找，再修改。
+\item 查找：可以根据姓名（或学号）查找某个学生的课程成绩，查找某门课程成绩处于指定分数段内的学生名单等等。
+\item 统计分析：对某个班级学生或所有选课的学生的单科成绩进行统计，求出平均成绩，标准差和及格率；
+\item 排序功能：对某个班级学生或所有选课的学生的单科成绩由高到低进行排序
+\end{enumerate}
+\item 学生模块：
+\begin{enumerate}
+\item 根据当前学分和课程性质选择相应课程
+\item 退选某些课程的学习
+\item 查看所选修课程的成绩和当前选修总学分
+\end{enumerate}
+\item 系统管理模块：
+\begin{enumerate}
+\item 学生入学或引进新教师时增加学生或老师的功能
+\item 学生毕业或老师离职时删除学生或老师功能
+\item 增加或删除某一门课程信息
+\item 学生、教师或课程信息发生变动后，将结果保存到相应的新建文本里面。
+\end{enumerate}
+\end{enumerate}
+\subsection*{附加功能}
+增加学生对教师的评价模块：学生对所选修课程进行评语并给出满意度成绩；教师模块可以查看学生评语和评分；系统管理模块根据学生的平均满意度对教师教学效果进行排序
+\subsection*{测试数据}
+测试数据见目录data/课程设计下：学生信息(student.txt)、学生成绩记录（score.txt）、教师信息(staff.txt)和课程信息(module.txt)，所有文件均以\#END为结束标识
+\subsection*{实现要求}
+\begin{enumerate}
+\item 在系统管理模块，不能用STL对教师和学生记录进行操作，其他地方可以使用STL。
+\item 所有操作都要通过可视化界面来操作和显示
+\end{enumerate}
+\subsection*{实现提示}
+\begin{enumerate}
+\item 可用自己实现的MyVector类模板来对教师和学生记录进行动态管理；
+\item 请考虑教师、学生和课程之间的关系，建立类结构关系；
+\end{enumerate}

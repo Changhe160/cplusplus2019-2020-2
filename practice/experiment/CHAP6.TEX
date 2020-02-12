@@ -1,0 +1,324 @@
+\chapter{类}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{类是C++ 扩展数据类型，可以封装不同类型的数据成员和函数成员。类是面向对象程序设计的基础。本章实验内容包括面向对象的基本概念、构造函数与析构函数，从实际问题抽象出类等，通过实验要求掌握以下内容：}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 掌握面向对象的基本概念和类的定义方法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 掌握类成员的访问权限以及访问类成员的方法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 掌握内联函数和默认函数。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{4. 掌握构造函数和析构函数的意义及使用方法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{5. 学会编写与应用复制构造函数。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{6. 掌握运算符重载成为友元函数的方法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{7. 掌握运算符重载成为成员函数的方法。}\\
+\end{tabular}}\color{black}\\
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}\\
+\section*{实验内容}
+
+\section*{实验6.1\quad 定义一个矩形类}
+\addcontentsline{toc}{section}{实验6.1\quad 定义一个矩形类}
+设计并测试一个矩形类（Rectangle）。属性为矩形的左上角与右下角的坐标，矩形水平放置。操作为计算矩形的周长和面积。\\
+\noindent 【提示】\\
+矩形所在坐标系参考屏幕：左上角为坐标原点，向右为x轴正向，向下为y轴正向。\\
+\noindent 【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+1. 头文件rect.h
+#ifndef RECT_H
+#define RECT_H
+#include<iostream>
+using namespace std;
+class Rectangle {
+    int m_left, m_top;
+    int m_right, m_bottom;
+public:
+    Rectangle(int left = 0, int top = 0, int right = 0,
+    int bottom = 0);
+    ~Rectangle(){} //`\color{green} 析构函数，在此函数体为空`
+    void show();//`\color{green}显示左上角与右下角坐标`
+    void assign(int left, int top, int right, int bottom);
+    int area();//`\color{green}计算矩形面积`
+    int perimeter();//`\color{green}计算矩形周长`
+};
+#endif
+
+2. 源文件rect.cpp
+#include "rect.h"
+Rectangle::Rectangle(int left, int top, int right, int bottom) :
+	m_left(left), m_right(right), m_top(top), m_bottom(bottom) {}
+	//`\color{green}构造函数，带缺省参数，缺省值全为0，在声明中指定`
+
+void Rectangle::show() {`\color{green}//显示左上点和右下点的坐标`
+	cout << "left-top point is (" << m_left
+		<< "," << m_top << ")" << '\n';
+	cout << "right-bottom point is (" << m_right
+		<< "," << m_bottom << ")" << '\n';
+}
+void Rectangle::assign(int left, int top, int right, int bottom) {
+	m_left = left;
+	m_right = right;
+	m_top = top;
+	m_bottom = bottom;
+}
+int Rectangle::area() {
+	return (m_right - m_left)*(m_bottom - m_top);
+}
+int Rectangle::perimeter() {
+	return 2*((m_right - m_left)+(m_bottom - m_top));
+}
+
+3. 源文件main.cpp
+#include "rect.h"
+int main() {
+	Rectangle rect;
+	rect.show();
+        rect.assign(100, 200, 300, 400);
+        rect.show();
+	Rectangle rect1(0, 0, 200, 200);
+	rect1.show();
+        rect1.assign(100, 200, 300, 400);
+	cout << "Area of rect:" << rect.area()
+		<< " Perimeter of rect:" << rect.perimeter() << endl;
+	system("pause");
+	return 0;
+}
+\end{lstlisting}
+【要求】
+\begin{enumerate}
+\item 将 Rectangle(double left=0, double top=0, double right=0, double bottom=0)改为Rectangle(double left, double top, double right, double bottom)，程序仍能正确运行吗？为什么？
+\item 注意成员函数show、area、perimeter的使用。因为在前面如果需编写类似功能的一般函数是需要带参数（形参）的，而在此处作为类的成员函数又不需要带参数。思考为什么？
+\item 理解void assign(double left,double top,double right,double bottom)函数的作用。\\
+将Rectangle(double left=0,double top=0,double right=0,double bottom=0) 改为Rectangle(double left,double top,double right,double bottom)，这时，有人认为Rectangle(double left,double top, double right,double bottom)和void assign(double left,double top,double right,double bottom) 的功能相同，那么assign 函数能否去掉呢？请试一试，结果会怎样？
+\item 为Rectangle类添加复制构造函数Rectangle\index{Rectangle}(const Rectangle\index{const Rectangle} \&\ rhs\index{rhs})。
+\end{enumerate}
+
+%\section{实验二}
+%定义一个圆类（Circle），要求用两种方法定义：\\
+%方法一： 要求属性为半径，操作为计算圆的周长和面积。\\
+%方法二： 要求属性为半径（radius）、圆周长和面积，操作为输入半径，并计算周长、面积，输出半径、周长和面积。要求定义构造函数（以半径为参数，缺省值为0，周长和面%积在构造函数中生成）和拷贝构造函数。\\
+
+%\section{实验三}
+%设计一个学校在册人员类（Person）。数据成员包括：身份证号（IdPerson），姓 名（Name），性别（Sex），生日（Birthday）和家庭住址（HomeAddress）。成员函数包 括人员信息的录入和显示等。使用多文件结构。\\
+
+%\section*{实验二\quad 定义一个分数类}
+%\addcontentsline{toc}{section}{实验二\quad 定义一个分数类}
+%编程建立一个分数类。分数类的数据成员包括分子和分母，操作包括约分、通分、加、减、乘、除、求倒数、比较、显示和输入。分数类的定义如下：
+%\begin{lstlisting}[caption=*, label=prog10-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+%#ifndef FRACTION_H
+%#define FRACTION_H
+%class Fraction {
+%    int m_numerator;                     //`\color{green}分子`
+%    int m_denominator;                   //`\color{green}分母`
+%public:
+%    void reduction();                    //`\color{green}约分`
+%    void makeCommonDen(Fraction&);       //`\color{green}通分`
+%    Fraction(int num = 0, int den = 1);  //`\color{green}默认的构造函数`
+%    Fraction(const Fraction&);           //`\color{green}拷贝构造函数`
+%    Fraction& operator=(const Fraction&);//`\color{green}重载= 运算符`
+%    Fraction add(const Fraction&);       //`\color{green}两分数相加`
+%    Fraction sub(const Fraction&);       //`\color{green}两分数相减`
+%    Fraction mul(const Fraction&);       //`\color{green}两分数相乘`
+%    Fraction div(const Fraction&);       //`\color{green}两分数相除`
+%    Fraction reciprocal();               //`\color{green}求倒数`
+%    bool equalTo(const Fraction&);       //`\color{green}两分数相等比较`
+%    bool lessThan(const Fraction&);      //`\color{green}两分数小于比较`
+%    bool greaterThan(const Fraction&);   //`\color{green}两分数大于比较`
+%    void display();                      //`\color{green}显示分数`
+%    void input();                        //`\color{green}从键盘输出`
+%};
+%#endif // !FRACTION_H
+%\end{lstlisting}
+%【要求】\\
+%完成上述所有成员函数并进行检验。请用多文件结构完成（包括后续章节的题目）。\\
+
+\section*{实验6.2\quad 定义复数类}
+\addcontentsline{toc}{section}{实验6.2\quad 定义一个复数类}
+复数形如z=a+bi，a为实部，b为虚部。支持一般的四则运算，但不支持大小比较。
+\noindent 【要求】
+\begin{enumerate}
+\item 定义复数类的默认构造函数，复制构造函数，析构函数；
+\item 重载输出运算符$``<<"$；
+\item 设置实部和虚部。
+\end{enumerate}
+【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include<iostream>
+using namespace std;
+class Complex {
+public:
+	Complex()=default;
+	Complex(double real,double imag);
+	double real() { return m_real; }
+	double imag() { return m_imag; }
+	void set(double, double);
+	friend ostream& operator<<(ostream &os,const Complex &rhs);
+private:
+	double m_real;
+	double m_imag;
+};
+\end{lstlisting}
+%2. 源文件Complex.cpp
+%include "Complex.h"
+%include<stdlib.h>
+%Complex::Complex(double real, double image) :m_real(real), m_imag(image) {}
+%ostream& operator<<(ostream &os, const Complex &rhs)
+%{
+%	os << "实部为：" << rhs.m_real <<endl<< "虚部为：" << rhs.m_imag ;
+%	return os;
+%}
+%istream& operator>>(istream &is, Complex &rhs)
+%{
+%	is>>rhs.m_real>>rhs.m_imag;
+%	return is;
+%}
+%int main() {
+%	double a, b;
+%	cout << "Please input 2 real values:";
+%	cin >> a >> b;
+%	Complex z(a,b);
+%	cout << z <<endl;
+%	system("pause");
+%	return 0;
+%}
+%
+\section*{实验6.3\quad 重载运算符}
+\addcontentsline{toc}{section}{实验6.3\quad 重载运算符}
+为上面实验6.2定义的Complex类重载运算符，并实现Complex类对象的计数功能int number()。\\
+\noindent 【要求】
+\begin{enumerate}
+  \item 重载+，-，*，/，=，==，!=运算符，请注意哪些运算符可以作为类的成员函数，哪些需要作为类的友元；
+  \item 定义具体的复数类对象，实现运算符的操作测试；
+  \item 计数器用于检测到目前为止Complex类对象的个数，如\\
+  \ttfamily
+Complex a;\\
+cout$<<$a.number()$<<$endl;  //输出1\\
+Complex b;\\
+cout$<<$Complex::number()$<<$endl; //输出2\\
+\end{enumerate}
+
+\section*{实验6.4\quad 定义一个集合类}
+\addcontentsline{toc}{section}{实验6.4\quad 定义一个集合类}
+集合是具有同一属性（共性）而又能互相区别（个性）的多个成员汇集起来的整体，构成集合的每个成员称为集合的元素，元素间没有顺序关系。例如，所有的小写英文字母是一个集合，它包括26个元素：a、b、…、z。不包含任何元素的集合称为空集合。自定义一个集合类Set，采用vector存放集合的元素。自定义集合类有以下功能。Set类头文件和主函数测试代码已给出，请自己完成Set头文件中函数的定义。\\
+【要求】
+\begin{enumerate}
+\item 判断元素elem是否为集合set的元素。
+\item 为集合添加一个元素elem。
+\item 从集合中删除一个元素elem。
+\item 赋值和复制构造函数。
+\item 显示集合中的所有元素。
+\item 求两个集合中相同的元素，即求两个集合的交集。
+\item 求两个集合中所有的元素，即求两个集合的并集。
+%\item 判断两集合包含的元素是否完全相同。
+%\item 判断一个集合是否被包含在另一个集合之中，即是否为另一个集合的子集。
+\end{enumerate}
+【程序】
+\begin{lstlisting}[caption=*, label=prog10-5,basicstyle=\ttfamily,escapechar=`,frame=lines]
+1. 头文件Set.h
+#include<iostream>
+#include<vector>
+using namespace std;
+class Set {
+	vector<char> m_elems;  //`\color{green}数据成员`
+public:
+    Set() =default;
+    Set(const vector<char> &elem);//`\color{green}构造函数`
+    bool is_elem(char);    //`\color{green}是否为集合元素`
+    void insert(char);  //`\color{green}插入一个元素`
+    void erase(char);      //`\color{green}删除一个元素`
+    Set common(const Set &s);   //`\color{green}两个集合的交集`
+    Set sum(const Set &s);      //`\color{green}两个集合的并集`
+    Set& operator =(const Set &s); //`\color{green}赋值运算符`
+    Set(const Set &s); //`\color{green}复制构造函数`
+    friend ostream& operator<<(ostream &os,const Set &s);
+};
+2. 源文件main.cpp
+#include "set.h"
+int main() {
+    vector<char> temp1 = {'a','s','d','f','g'};
+    vector<char> temp2 = { 'a','c','v','f','t','y','e','r' };
+    Set s1(temp1), s2(temp2),s3,s4;
+    s1.is_elem('a');
+    s1.insert('p');
+    cout << "s1={"<<s1<<"}"<<endl;
+    s2.erase('t');
+    cout << "s2={" << s2 <<"}" << endl;
+    cout<<s2<<endl;
+    s3=s1.common(s2);
+    s4=s1.sum(s2);	
+    cout << "s3={"<<s3 <<"}"<< endl;
+    cout << "s4={" << s4 << "}"<<endl;
+    Set s5(s1);
+    cout << "s5={" << s5 << "}"<<endl;
+    s5 = s4;
+    cout << "s5={" << s5 << "}"<<endl;
+    return 0;
+}
+\end{lstlisting}
+%\section*{实验四\quad 为矩形类定义复制构造函数}
+%\addcontentsline{toc}{section}{实验四\quad 为矩形类定义复制构造函数}
+%为矩形类定义复制构造函数。矩形类见本章实验一。
+%在rect.h 头文件中的类rect定义中加入以下代码：\\
+%Rectangle\index{Rectangle}(const Rectangle\index{const Rectangle} \&\ rhs\index{rhs});\\
+%在rect.cpp文件中添加以下代码：\\
+%Rectangle::Rectangle（const Rectangle \& rhs）:m\_left\index{left}(rhs.m\_left),m\_top\index{top}(rhs.m\_top),\\
+%m\_right\index{right}(rhs.m\_right),m\_bottom\index{bottom}(rhs.m\_bottom){
+%}//复制构造函数\\
+%在main\index{main}()函数中添加以下代码：\\
+%Rectangle rect2(rect1);\\
+%cout\index{cout} $<<$ "由复制构造函数生成的rect2:" $<<$ endl;\\
+%rect2.Show( );\\
+%这里的复制构造函数是默认的按成员语义定义的，可以不写，系统会自动提供。\\
+
+%\section*{实验四\quad 为矩形类定义友元函数和运算符重载函数}
+%\addcontentsline{toc}{section}{实验四\quad 为矩形类定义友元函数和运算符重载函数}
+%为本章实验一的Rectangle\index{的Rectangle}类增加加减复合赋值和加减运算符重载函数。加减复合赋值语义定义为固定长方形的左上角，对右下角的坐标进行加减运算，使新矩形的长宽为原两矩形长宽之和或差，对加和减复合赋值定义为成员函数。主程序如下：\\
+%【程序】
+%\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+%#include "rect.h"
+%int main(){
+%    Rectangle rect;
+%    cout<<"Initial rect:"<<endl;
+%    rect.show();
+%    rect.assign(100,200,300,400);
+%    cout<<"After assignment:"<<endl;
+%    rect.show();
+%    Rectangle rect1(0,0,200,200);
+%    cout<<"Initial rect1:"<<endl;
+%    rect1.show();
+%
+%    rect+=rect1;
+%    cout<<"After multiplication with rect1:"<<endl;
+%    rect.show();
+%
+%    rect-=rect1;
+%    cout<<"After substraction with rect1:"<<endl;
+%    rect.show();
+%
+%    Rectangle rect2;
+%    rect2=rect+rect1;
+%    cout<<"rect+rect1 is:"<<endl;
+%    rect2.show();
+%
+%    rect2=rect-rect1;
+%    cout<<"rect-rect1 is:"<<endl;
+%    rect2.show();
+%
+%    return 0;
+%}
+%\end{lstlisting}
+%【要求】\\
+%请完成类的定义及相关成员函数和友元函数的实现，并分别保存为rect.h文件和rect.cpp文件。
+%\begin{enumerate}
+%\item 将两个矩形加减运算定义为友元函数，并实现其功能。
+%\item 将两个矩形加减运算定义成运算符重载函数，并实现其功能。
+%\item 为矩形类在增加一个静态数据成员Counter\index{Counter},并统计共产生了多少个矩形对象，在main\index{main}() 函数中将其输出。
+%\end{enumerate}
+
+

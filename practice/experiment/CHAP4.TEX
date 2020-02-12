@@ -1,0 +1,155 @@
+\chapter{复合类型、string和vector}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 掌握引用和指针的概念及应用。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 熟练应用数组与多维数组。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 指针与数组的相互关系。}\\
+\end{tabular}}\color{black}\\
+\\
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}
+\section*{实验内容}
+
+\section*{实验4.1\quad 十进制转成二进制}
+\addcontentsline{toc}{section}{实验4.1\quad 十进制转成二进制}
+编写程序输入一个十进制表示的正整数，将其转换成二进制并输出结果。方法：除二取余，然后倒序排列，高位补零。\\
+【程序】\\
+ \begin{lstlisting}[caption=*, label=prog4-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include<iostream>
+void main()
+{
+    int num, i, j = 0;
+    int a[100];//`\color{green}存储二进制编码`
+    std::cin >> num;
+    i = num;
+    while (i)//`\color{green}对2取余并除2，直到商为0时为止`
+    {
+        a[j] = i % 2;
+        i /= 2;
+        ++j;
+    }
+    for (i = j - 1; i >= 0; i--)//`\color{green}逆序输出`
+        std::cout << a[i];
+}
+ \end{lstlisting}
+
+\section*{实验4.2\quad 指针访问数组}
+\addcontentsline{toc}{section}{实验4.2\quad 指针访问数组}
+从键盘输入十个整数存入一维数组中再按反序输出。\\
+【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include<iostream>
+using namespace std;
+int main() {
+    int value[10];
+    for (int i = 1; i <= 10; i++) {
+        cout << " 请输入第 " << i << " 个整数：" << endl;
+        cin >> value[i-1];
+    }
+    cout << " 反序输出：" << endl;
+    for (int i = 9; i >=0; i--) {
+        cout << value[i] <<' ';
+    }
+    return 0;
+}
+\end{lstlisting}
+【要求】
+\par 修改程序，用指针访问数组元素的方法反序输出。
+
+\section*{实验4.3\quad 用指针给二维向量赋值}
+\addcontentsline{toc}{section}{实验4.3\quad 用指针给二维向量赋值}
+定义一个 5×5 二维向量。\\
+【要求】
+\begin{enumerate}
+\item 用指针按照从左往右从上到下的次序依次给向量赋值，值从1开始递增。
+\item 用指针将向量的右上部分全部置0（对角线不变）。\\
+\end{enumerate}
+
+\section*{实验4.4\quad 判断字符串是否是“回文”}
+\addcontentsline{toc}{section}{实验4.4\quad 判断字符串是否是“回文”}
+判断用户输入的C字符串是否为"回文"，所谓"回文"是指顺读和反读都一样的串， 例如串 12321、madam。\\
+【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include <iostream>
+#include <cstring>
+using namespace std;
+const int SIZE = 100;
+int main(){
+    char carray[SIZE];
+    int i,len,is_palindrome = 1;
+    cout<<"Please input a string ..\n";
+    cin.get(carray,SIZE);
+    len = strlen(carray);
+    for(i=0;i<len/2;i++){
+        if(carray[i]!=carray[len-1-i]){
+            is_palindrome=0;
+            break;}
+    }
+    if(is_palindrome) cout<<"The string is a palindrome\n";
+    else cout<<"The string isn't a palindrome\n";
+    return 0;
+}
+\end{lstlisting}
+【要求】
+\begin{enumerate}
+\item 重新定义回文为：滤去所有非字母字符（包括空格）后，不考虑字母的大小写，从左向右和从右向左读都相同的词或短语。如,”Madam, I’m adam” 和 “Golf ,No Sir ,prefer prison flog!”
+\item 改写上面程序，用string来代替字符数组，并用指针来完成相同操作。\\
+\end{enumerate}
+
+\section*{实验4.5\quad 约瑟夫问题}
+\addcontentsline{toc}{section}{实验4.5\quad 约瑟夫问题}
+约瑟夫（Josephus）问题：n 个人围坐成一圈，从 1 开始顺序编号；游戏开始，从第一个人开始由 1 到 m 循环报数，
+报到 m 的人退出圈外，问最后留下的那个人原来的序号。\\
+【分析】
+\par 本题可定义一个容器(vector $<$bool$>$)，初始化大小（元素个数）为n。 容器里元素的值标识该人是否出局，1在圈内，0出局。值为0的元素不参加报数。可用一个整型数k做计数器，采用倒计数，记录留下的人数。\\
+【提示】
+\par 容器里的元素是线性排列的，而人是围成圈的，用容器表示要有一种从容器尾部跳到其头部的技巧，即下标加1除以n求余数。
+
+\section*{实验4.6\quad 猜字游戏}
+\addcontentsline{toc}{section}{实验4.6\quad 猜字游戏}
+猜字游戏，规则如下，程序初始化一个单词集合，每次游戏开始时，程序随机选择一个单词让玩家来猜，玩家每次只能猜一个字母，如果选择的单词里有玩家所猜的字母，则玩家猜测成功，程序将显示单词里所有猜中的字母，如果单词里没有所猜字母，则猜测失败，共有六次机会。 \\
+【提示】
+\par 假如系统选择了单词good， 玩家第一次猜测为a， 程序提醒玩家猜错，还有5次机会，并显示玩家已经猜过的字母和到当前为止所猜的单词中正确的猜测（没有猜中的字母用*代替，第一次没有猜中所以显示****）； 第二次如果玩家猜o， 猜测正确，显示玩家到当前为止所猜的单词中正确的猜测，其他未猜中的用*代替（*oo*）；第三次如果玩家猜a，提醒玩家此字母已经猜过，请重试，并显示玩家所有猜错的字母。依次进行，直到玩家猜中或者猜错的次数达到最大限制次数，此次猜单词游戏结束，询问玩家是否继续下一个单词的猜测。\\
+【程序】%？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？？
+ \begin{lstlisting}[caption=*, label=prog3-4,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include <iostream>
+#include<string>
+#include<cstdlib>  //for srand(),rand()
+#include<ctime>    //for time()
+using namespace std;
+int main() {
+    const int NUM = 26;
+	//`\color{green}初始化一个单词库`
+    const string wordlist[NUM] = {
+        "program","cat","cereal","danger","good","florid",
+        "garage","heal","insult","joke","keeper","loaner",
+        "nonce","onset","ok","quilt","remote","stolen","train",
+        "useful","valid","where","xenon","cool","result"
+	};
+    srand(time(0));
+    char play;
+    cout << "Will you play a word game?<y/n>";
+    cin >> play;
+    while (play == 'y' || play == 'Y') {
+        //`\color{green}从单词库随机选一个单词 rand() 产生一个随机正整数`
+        string target = wordlist[rand()%NUM];
+        //`\color{green}*****请在下面补充你的代码*****************`//
+
+        //`\color{green}*****代码填充截止*************************`//
+        cout << "Will you play another?<y/n>";
+        cin >> play;
+	}
+    cout << "Bye." << endl;
+    return 0;
+}
+\end{lstlisting}
+

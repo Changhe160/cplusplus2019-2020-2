@@ -1,0 +1,299 @@
+\chapter{初识C++程序}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 初步学会使用Microsoft Visual Studio集成开发环境（IDE）。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 独立上机编写、调试以及运行一个简单的C++程序。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 掌握C++程序的基本结构。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{4. 掌握C++基本数据类型和运算符。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{4. 熟悉输入、输出方法。}\\
+\end{tabular}}\color{black}
+
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}
+\section*{实验内容}
+
+%\begin{enumerate}
+%\subsection{VS2017 集成开发环境入门}
+%\begin{enumerate}
+
+\section*{实验1.1\quad Visual Studio(VS) 2017项目的设计步骤。}
+\addcontentsline{toc}{section}{实验1.1\quad Visual Studio(VS) 2017项目的设计步骤。}
+
+%\subsection{Visual Studio 2017控制台应用程序设计步骤。}
+作为学习面向对象的C++的第一步，学习的重点是算法和基本语法，可以建立简单的应用程序进行练习。
+下面是一个实例，该程序要求用户从键盘输入3个整数，然后按照从小到大的顺序在屏幕上输出。\\
+【步骤一】 Visual Studio Community 2017 的下载和安装步骤。
+\begin{enumerate}
+\item 在浏览器网址栏输入：https://visualstudio.microsoft.com或搜索“Visual Studio IDE”，在如图\ref{fig:VS1_1}所示选项中选择下载windows版本“Community 2017”，会下载一个小的安装器文件。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.5]{FIG/VS1_1.jpg}
+ \caption{Visual Studio Community 2017下载}
+ \label{fig:VS1_1}
+ %\end{minipage}%
+\end{figure}
+\item 双击此安装器文件，进入选择安装页面，在【工作负载】选项中勾选”使用C++的桌面开发“，并设置好安装路径，点击安装即可。如图\ref{fig:VS1_2}所示。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.5]{FIG/VS1_2.jpg}
+ \caption{VS2017 C++安装界面}
+ \label{fig:VS1_2}
+ %\end{minipage}%
+\end{figure}
+\end{enumerate}
+【步骤二】 启动VS2017集成开发环境。启动并进入VS2017集成开发环境至少有3种方法：
+\begin{enumerate}
+\item 选择开始菜单的“程序”，然后选择Microsoft Visual Studio 2017 级联菜单，再选择Visual Studio 2017菜单项，如图\ref{fig:VS1_3}所示。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=1]{FIG/VS1_3.jpg}
+ \caption{VS2017打开图标}
+ \label{fig:VS1_3}
+ %\end{minipage}%
+\end{figure}
+\item 在桌面上创建Microsoft Visual Studio 2017 的快捷方式，直接双击该图标。
+\item 如果已经创建了某个C++ 工程，双击该工程的扩展名为.sln的文件图标，也可进入集成开发环境，并打开该工程。
+选择 【文件|退出】菜单，可退出集成开发环境。
+\end{enumerate}
+【步骤三】创建一个空项目并添加源文件。
+\begin{enumerate}
+\item 进入VS 2017集成开发环境后，选择【文件|新建|项目】菜单项，如图\ref{fig:VS1_4}所示，单击【项目】标签，弹出新建对话框，或者选择快捷键Ctrl+Shift+N，进入创建项目页面。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.45]{FIG/VS1_4.jpg}
+ \caption{新建一个C++项目}
+ \label{fig:VS1_4}
+ %\end{minipage}%
+\end{figure}
+在其左边的列表框中点击【Visual C++】，然后在右边选项中选择【空项目】，
+在【名称】文本框中输入项目名exp1\_1,在【位置】文本框中输入项目保存的位置，单击【确定】按钮。如图\ref{fig:VS1_5}所示，即可创建一个空项目。
+%\item 在弹出的对话框（如图1.3所示），选择【空项目】，单击【完成】按钮
+%\begin{figure}[!htb]
+%%\begin{minipage}[t]{0.5\textwidth}
+% \centering
+% \includegraphics[width=5in]{FIG/VS1_3.jpg}
+% \caption{}
+% \label{fig:VS1_3}
+% %\end{minipage}%
+%\end{figure}
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.4]{FIG/VS1_5.jpg}
+ \caption{新建项目选项}
+ \label{fig:VS1_5}
+ %\end{minipage}%
+\end{figure}
+\item 接下来为空项目新建一个源文件（.cpp），鼠标右键在源文件处单击，选择【添加】|【新建项】，如图\ref{fig:VS1_6}所示，或者按快捷键Ctrl+Shift+A也可以。然后在左边的列表框中点击【Visual C++】，在右边选项中选择【C++ 文件(.cpp)】，在【名称】文本框中输入文件名exp1\_1，单击【确定】按钮即可。如图\ref{fig:VS1_7}所示。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.4]{FIG/VS1_6.jpg}
+ \caption{为项目添加文件}
+ \label{fig:VS1_6}
+ %\end{minipage}%
+\end{figure}
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.35]{FIG/VS1_7.jpg}
+ \caption{文件选择与命名}
+ \label{fig:VS1_7}
+ %\end{minipage}%
+\end{figure}
+\end{enumerate}
+【步骤四】程序的编辑、编译、生成和执行。
+\begin{enumerate}
+\item 在新建源文件中编辑源代码，如图\ref{fig:VS1_8}所示。也可以添加已经存在的源文件，右击【源文件文件| 添加| 现有项】菜单项或按组合键Alt+Shift+A，如图\ref{fig:VS1_9}所示。在随后打开的插入文件对话框中选择待添加文件，单击【添加】按钮即可将其添加到项目。
+ \begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.38]{FIG/VS1_8.jpg}
+ \caption{为项目添加已有文件}
+ \label{fig:VS1_8}
+ %\end{minipage}%
+\end{figure}
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.4]{FIG/VS1_9.png}
+ \caption{源代码编辑}
+ \label{fig:VS1_9}
+ %\end{minipage}%
+\end{figure}
+
+ \item 要求输入三个不等的整数后按Enter键，屏幕上由大到小输出这三个整数，如代码清单1.1\\
+\noindent 【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include <iostream>
+using namespace std;
+int main() {   //`\color{green}程序从main函数开始执行`
+    int num1, num2,num3;
+    int max, min;
+    cout << "Please enter 3 integers:\n";
+    cin >> num1 >> num2 >> num3;
+    if (num1>num2) {
+        max = num1;
+        min = num2;
+	}
+    else {
+        max = num2;
+        min = num1;
+	 }
+    if (num3>max){
+        cout << num3 << '\t' << max << '\t' << min << '\n';
+     }
+    else if (num3<min){
+        cout << max << '\t' << min << '\t' << num3 << '\n';
+     }
+    else{
+        cout << max << '\t' << num3 << '\t' << min << '\n';
+     }
+    return 0; //`\color{green}返回一个整数值`
+}
+\end{lstlisting}
+
+\item 源代码输入完后，点击菜单栏【生成】|【生成解决方案】或按F7快捷键，即可编译源文件exp1\_1.cpp。 系统会在输出窗口显示出错（error）信息以及警告（warning）信息，如图\ref{fig:VS1_10}所示。编译器在“输出”窗口给出语法错误和编译错误信息。语法错误处理： 鼠标双击错误信息可跳转到错误源代码位置处，然后进行修改，一个语法错误可能引发系统给出很多条error信息。因此，发现一个错误并修改后最好重新编译一次，以便提高工作效率。当错误为0时，可以得到目标文件（exp1\_1.obj）。
+{\color{red} 警告错误处理:} 一般是触发了C/C++的自动规则，如将一个单精度（浮点）型数据赋给整型变量，需要系统将单精度型数据自动转换为整型，此时小数部分会丢失，因而系统给出警告信息，警告信息不会影响程序执行，本例可以通过强制转换去掉警告信息。
+%\item 编译完成后选择【调试】|【开始执行】菜单项，执行工程文件，会出现一个类似DOS的窗口，按要求输入3个不等的整数后按Enter键，屏幕上由大到小输出这3 个整数，如图1.7 所示。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.5]{FIG/VS1_10.jpg}
+ \caption{代码调试错误窗口}
+ \label{fig:VS1_10}
+ %\end{minipage}%
+\end{figure}
+\end{enumerate}
+【步骤四】程序的调试。
+ \par 程序成功编译之后并不意味着程序能够成功运行，此时还需借助调试工具进行跟踪调试，解决程序潜在的逻辑错误。
+%例如，若在exp1\_1.cpp 的B行中else后面多加一个分号，即： ……..else ; {max=b; min=a; } 使用 88、 45、67 这组数据测试此程序，发现输出结果为67 45 88 ，显然结果不对。此时需要对源程序进行调试，
+下面介绍调试过程。
+\begin{enumerate}
+  \item 首先，在源程序中可能出现错误的行上设置断点，方法是将光标移至该行，然后按F9 键（再按一次F9键将取消断点），此时该行左侧出现一个红色圆点，断点设置成功。如图\ref{fig:VS1_11}就是在A行设置了断点。
+ \begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.5]{FIG/VS1_11.jpg}
+ \caption{设置断点}
+ \label{fig:VS1_11}
+ %\end{minipage}%
+\end{figure}
+ \item 然后选择【调试】|【开始调试】菜单命令（也可直接单击工具栏上的 图标）或按F5 快捷键，程序开始执行。但执行到断点处停止，桌面会跳出自动窗口，
+     %这时选择【调试】| 窗口| 自动窗口|，
+     自动窗口显示变量的值，若要观察某些变量的值分析并查找出错原因，可以将变量加入监视窗口。如在监视窗口加入max 和min 两个变量进行监视，方法是：在局部变量窗口选择变量max和min，右键单击，选择【添加监视】即可。监视窗口的每一行显示一个对象，其中左栏显示变量名，双击它可进行编辑；中间栏显示变量的值，右栏是变量类型。接下来可按F10 键（不跟踪进入函数内部）或F11 键（跟踪进入函数内部）从断点位置处单步执行。通过单步执行（一条一条语句执行）可以看出我们所观察的变量的变化以及程序执行流程是否正确，如果不正确是由那条语句引起的，因而有针对性的检查错误原因。例如在本例中，尽管num1 $>$ num2, 在执行了if后面的｛max=num1; min=num2; ｝后，通过单步执行发现仍然执行了else 后面的 ｛max=num2; min=num1; ｝所以当程序执行到箭头所指位置时，max=45, min=48, 如图\ref{fig:VS1_12}所示。
+ \begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.425]{FIG/VS1_12.png}
+ \caption{断点调试}
+ \label{fig:VS1_12}
+ %\end{minipage}%
+\end{figure}
+     与预期结果不相符，说明程序的流程有问题。此时再仔细分析源程序，发现问题在于else 后多余的分号。\\
+     调试过程中，Variables 窗口动态显示各变量值随程序执行而变化的结果。在面向对象程序设计中，若程序中有类的对象，Variables 窗口的this 页可显示当前this 指针所指向对象的各个值。经过反复的修改和调试，使程序中所有问题得到改正后，可得到正确的执行结果。如图\ref{fig:VS1_13}所示，输入三个整数，按从小到大的顺序输出了三个数。
+\begin{figure}[!htb]
+%\begin{minipage}[t]{0.5\textwidth}
+ \centering
+ \includegraphics[scale=0.5]{FIG/VS1_13.jpg}
+ \caption{命令窗口结果显示}
+ \label{fig:VS1_13}
+ %\end{minipage}%
+\end{figure}
+\end{enumerate}
+【练习】
+%\subsection{调试源程序}%\\%????? VC6 or vs2015 ?????????????
+%\section*{实验二\quad 调试源程序}
+%\addcontentsline{toc}{section}{实验二\quad 调试源程序}
+\par 建立简单控制台程序。使用VS2017开发环境来调试以下源程序。\\
+【程序】
+\begin{lstlisting}[caption=*, label=prog1-2,basicstyle=\ttfamily,escapechar=`,frame=lines]
+#include <iostream>
+#include <cmath>      //`\color{green}sqrt()的头文件`
+using namespace std;
+int main() {
+    double num1, num2, num3, s, area;
+    cout << "num1,num2,num3 = ";   //`\color{green}输入三角形的三条边`
+    cin >> num1 >> num2 >> num3;
+    s = (num1 + num2 + num3) / 2.0;
+    area = sqrt(s*(s - num1)*(s - num2)*(s - num3));//`\color{green} 求三角形面积`
+    cout << "area= " << area << endl;
+    return 0;
+}
+\end{lstlisting}
+【要求】
+\begin{enumerate}\vspace{-0.5em}
+\item 根据操作过程填写以下表格。
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+内容 & 操作 & 说明或结果分析 \\
+\hline
+进入VS2017 &  &   \\%？？？？？
+\hline
+建立工程为"exp2\_2" & & \\
+\hline
+添加源文件 & & \\
+\hline
+编辑代码 & & \\
+\hline
+编译程序 & & \\
+\hline
+运行程序 & & \\
+\hline
+\end{tabular}\\
+\end{center}
+
+\item 采用以下各组数据输入测试，记录输出结果。分析原因，思考如何解决？
+\begin{center}
+ \arrayrulecolor{white}
+\begin{tabular}{|c|c|c|}
+\hline
+3 & 4 & 5 \\
+\hline
+3 & 4 & 12  \\%？？？？？
+\hline
+0 & 6 & 2\\
+\hline
+-2 & 7 & 9\\
+\hline
+\end{tabular}\\
+\end{center}
+\item 修改程序。
+\begin{enumerate}\vspace{-0.5em}
+ \item 把double 改为 int，重新编译程序，会出现什么编译信息？什么原因？
+ \item 把s和area定义为double可以消除编译错误吗？为什么？
+ \item 采用以下数据输入测试，记录输出结果，分析原因。\\
+  3.45 \quad 5.618 \quad 4.012
+ \item 增加输出a、b、c对象值的语句，观察不同输入时，对象值的变化。
+ \end{enumerate}
+ \end{enumerate}
+
+%\subsection{一个简单的C++程序}
+\section*{实验1.2\quad 一个简单的C++程序}
+\addcontentsline{toc}{section}{实验1.2\quad 一个简单的C++程序}
+编写满足下列要求的程序：根据输入的球半径，分别计算球的表面积、体积。
+%【提示】\\
+球的表面积计算公式为  $ s=4\pi {r}^{2}$ ,球体积计算公式为 $ v=\frac{4}{3}\pi{r}^{3} $ 。\\
+【要求】
+\begin{enumerate}
+  \item 要求输入前应有提示性输出，如“Please input the radius of the ball ”；
+  \item 变量的命名，最好能见文知义，如radius, volume ,weight 等；
+  \item 在计算公式中使用正确的变量数据类型。
+\end{enumerate}
+
+
+

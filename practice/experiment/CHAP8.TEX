@@ -1,0 +1,227 @@
+\chapter{动态存储内存与数据结构}
+\thispagestyle{empty}
+\setlength{\fboxrule}{0pt}\setlength{\fboxsep}{0cm}
+\noindent\color{blueblack}\shadowbox{
+\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+\rowcolor{darkblue} \hei\textcolor{white}{实验目的}\\\hline
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. 理解运行时内存分配的概念，掌握自由存储区内存动态分配的方法。}\\
+\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. 理解内部包含为指针动态分配内存的类对象复制时的浅复制和深复制的概念，会编写深复制构造函数和赋值复制运算符。}\\\hline
+\end{tabular}}\color{black}\\
+\\
+%\noindent\color{blueblack}\shadowbox{
+%\begin{tabular}{|p{13.8cm}|}\arrayrulecolor{darkblue}\hline
+%\rowcolor{darkblue} \hei\textcolor{white}{实验环境}\\\hline
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{1. Windows XP 以上操作系统。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{2. Visual Studio 2015 语言环境。}\\
+%\rowcolor{lightblue}~~~~~~~~\kai\textcolor{darkblue}{3. 每人一台PC机。}\\
+%\end{tabular}}\color{black}
+\setlength{\fboxrule}{1pt}\setlength{\fboxsep}{4pt}
+\section*{实验内容}
+
+\section*{实验8.1\quad 再设计MyVector类模板}
+\addcontentsline{toc}{section}{实验8.1\quad 再设计MyVector类模板}
+实验7.3通过定长数组设计了一个MyVector类，但是其不具有vector类的可变容量属性。在这里，利用动态数组重新设计一个MyVector类，考察动态内存的使用。\\
+\noindent 【要求】
+\begin{enumerate}
+\item 默认构造函数，带参数构造函数，拷贝构造函数，赋值运算符，移动构造函数，移动赋值运算符；
+\item 完成size(), operator[](), at(), front(), back(),push\_back(), pop\_back(), insert(), erase(), clear()等成员函数的重新定义；
+\item 注意动态内存的使用与分配。
+\end{enumerate}
+\noindent 【提示】
+\par 利用动态数组设计的vector类模板如下：
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+template<typename T>
+class MyVector{
+    T* m_arr;
+public:
+    MyVector(){};
+    MyVector(const T *arr=nullptr);//`\color{green}默认构造函数`
+    MyVector(const MyVector &rhs);   //`\color{green}复制构造函数`
+    MyVector(MyVector &&rhs);        //`\color{green}移动构造函数`
+    ~MyVector(){delete [] m_arr;};   //`\color{green}析构函数`
+    T & operator[](int i);         //`\color{green}重载取下标运算符`
+    int size()                     //`\color{green}输出元素个数`
+    MyVector & operator=(const MyVector &rhs);//`\color{green}赋值运算符`
+    MyVector & operator=(MyVector &&rhs);//`\color{green}移动赋值运算符`
+    friend ostream& operator<<(ostream &os,const MyVector &rhs);
+    ...
+};
+\end{lstlisting}
+请读者完成各函数的定义，并测试。\\
+
+
+\section*{实验8.2\quad 基于链栈实现简单计算器}
+\addcontentsline{toc}{section}{实验8.2\quad 基于链栈实现简单计算器}
+链栈是一种采用链式结点（node）结构实现栈（stack）后进先出（LIFO），只能在顶部结点进行操作的数据结构。基于链栈结构实现一个简单计算器的功能。\\
+\noindent 【要求】
+\begin{enumerate}
+  \item 支持加、减、乘、除、求余、括号等基本操作；
+  \item （选做）：扩展计算器功能，使其支持sin、cos、tan、sqrt、pow等功能。
+  \item 基于设计的计算器，计算以下表达式：\\3-2*4+(6-1)/2+5，sin(30)，cos(45)，tan(60)，sqrt(9)，pow(2,3) 用于测试。
+\end{enumerate}
+\noindent 【提示】
+\begin{enumerate}
+  \item 可根据教材8.4节介绍的方法求解；
+  \item 函数功能的实现可以考虑将运算符设为string类型压入运算符栈；
+  \item 函数实现关键是如何准确读取string类型的函数名，如“sin”，而不是“si”或“s”，这样才能确保得到所要的函数。
+\end{enumerate}
+\noindent 【程序】
+\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+...
+if (m_opr.top() == "sin")
+    m_num.push(sin(c));
+else if(m_opr.top() == "cos")
+    m_num.push(cos(c));
+else if(m_opr.top() == "tan")
+    m_num.push(tan(c));
+else if(m_opr.top() == "sqrt")
+    m_num.push(sqrt(c));
+else if(m_opr.top() == "pow")
+    m_num.push(pow(c,d));
+    ...
+\end{lstlisting}
+%1、栈的实现
+%template<typename T>
+%class Stack{
+%   Node<T> *m_top=nullptr;
+%public:
+%   Stack()=default;
+%   Stack(const Stack &)=delete;          //`\color{green}禁止复制`
+%   ~Stack(){clear()};
+%   void push(const T &val);              //`\color{green}进栈`
+%   void pop();                           //`\color{green}出栈`
+%   void clear();                         //`\color{green}清空栈内元素`
+%   Stack& operator=(const Stack &)=delete;//`\color{green}禁止赋值`
+%   const T& top(){return m_top->m_data;} //`\color{green}取栈顶元素`
+%};
+%\\
+
+%\noindent 【思考】\\
+%\par 能否用函数指针实现计算器的函数计算功能？
+%#include<cmath>
+%    using pf1=double (*)(double);//`\color{green}单参数函数`
+%    using pf2=double (*)(double,double);//`\color{green}双参数函数`
+%    pf1 s1 =&sin;//`\color{green}s1指向sin函数`
+%    pf1 s2 =&cos;//`\color{green}s2指向sin函数`
+%    pf1 s3 =&tan;//`\color{green}s3指向sin函数`
+%    pf1 s4 =&sqrt;//`\color{green}s4指向sin函数`
+%    pf2 s5 =&pow;//`\color{green}s5指向sin函数`
+
+%template<typename T>
+%void Stack<T>::push(const T &val){
+%     Node(T) *node=new Node<T>(val);//`\color{green}创建一个新结点`
+%     node->next=m_top;//`\color{green}将结点压入栈`
+%     m_top=node;//`\color{green}修改栈顶指针`
+%}
+%
+%template<typename T>
+%void Stack<T>::pop(){
+%     Node(T) *p=m_top;//`\color{green}栈顶元素地址存放在p指针中`
+%     m_top=m_top->next;//`\color{green}改变栈顶指针指向`
+%     delete p;//`\color{green}释放指针P指向的内存`
+%}
+
+%class Calculator{
+%private:
+%   Stack<double> m_num;//`\color{green}操作数栈`
+%   Stack<char> m_opr;//`\color{green}运算符栈`
+%   int precedence(const char &s) const;//`\color{green}获取运算符优先级`
+%   double readNum(string::const_iterator &it);//`\color{green}读操作数`
+%   void calculate();//`\color{green}取运算符和操作数计算`
+%   bool isNum(string::const_iterator &c) const{
+%        return *c >= ’0’&&*c <= ’9’ || *c == ’.’;
+%        }//`\color{green}判断是否为数字`
+%public:
+%   Calculator(){ m_opr.push(’#’);}//`\color{green}运算符栈初始化`
+%   double doIt(const string &exp);//`\color{green}表达式求值`
+%};
+
+%\section*{实验二\quad 认识浅拷贝和深拷贝}
+%\addcontentsline{toc}{section}{实验二\quad 认识浅拷贝和深拷贝}
+%为使用本章实验一所定义字的符串类mystring的学生类和使用动态C风格字符串的学生类编写复制构造函数。对比两者的差别，主要是复制构造函数student(student \& std) 和复制构造函数dstudent(dstudent \& std)的实现。请按提示要求完成两复制构造函数，其余代码已给出。\\
+%【程序】
+%\begin{lstlisting}[caption=*, label=prog1-1,basicstyle=\ttfamily,escapechar=`,frame=lines]
+%class student{
+%    int m_id;  //`\color{green}学号`
+%    mystring m_name;  //`\color{green}姓名`
+%    char m_sex;  //`\color{green}性别`
+%    int m_age;  //`\color{green}年龄`
+%    mystring m_address;  //`\color{green} 地址`
+%    float m_eng,m_phy,m_math,m_electron;//`\color{green}英语、物理、数学和电子成绩`
+%public:
+%    student(int id,mystring name,char sex,int age,mystring address,
+%    float eng,float phy,float math,float electron){
+%        m_id=id;
+%        m_name=name;
+%        m_sex=sex;
+%        m_age=age;
+%        m_address=address;
+%        m_eng=eng;
+%        m_phy=phy;
+%        m_math=math;
+%        m_electron=electron;
+%    }
+%    student(student & std){  //`\color{green}浅拷贝`
+%        ...............
+%    }
+%    void show(){
+%        cout<<m_id<<'\t';
+%        m_name.show();
+%        cout<<m_sex<<'\t'<<m_age<<'\t';
+%        m_address.show();
+%
+%        cout<<m_eng<<'\t'<<m_phy<<'\t'<<m_math<<'\t'
+%        <<m_electron<<endl;
+%    }
+%}
+%
+%class dstudent{
+%    int m_id;  //`\color{green}学号`
+%    char *m_name;  //`\color{green}姓名`
+%    char m_sex;  //`\color{green}性别`
+%    int m_age;  //`\color{green}年龄`
+%    char *m_address;  //`\color{green} 地址`
+%    float m_eng,m_phy,m_math,m_electron;//`\color{green}英语、物理、数学和电子成绩`
+%public:
+%    dstudent(int id,char* name,char sex,int age,char* address,
+%    float eng,float phy,float math,float electron){
+%        m_id=id;
+%        if(name){
+%            m_name=new char[strlen(name)+1];
+%            strcpy(m_name,name);
+%        }
+%        else m_name=NULL;
+%        m_sex=sex;
+%        m_age=age;
+%
+%        if(address){
+%            m_address=new char[strlen(address)+1];
+%            strcpy(m_address,address);
+%        }
+%        else m_address=NULL;
+%        m_eng=eng;
+%        m_phy=phy;
+%        m_math=math;
+%        m_electron=electron;
+%    }
+%    dstudent(dstudent & std){  //`\color{green}深拷贝`
+%        ...............
+%    }
+%    void show(){
+%        cout<<m_id<<'\t'<<m_name<<'\t'<<m_sex<<'\t'<<m_age<<
+%        '\t'<<m_address<<'\t'<<m_eng<<'\t'<<m_phy<<'\t'<<
+%        m_math<<'\t'<<m_electron<<endl;
+%    }
+%}
+%int main(){
+%    student s1(6004327,"张菲",'m',19," 北京路 58号",80,
+%    85,90,78), s2(s1);
+%    dstudent ds1(6004121,"关雨",'w',19," 天津路 64号",88,75,
+%    91,68), ds2(ds1);
+%    s1.show();
+%    s2.show();
+%    ds1.show();
+%    ds2.show();
+%    return 0;
+%}
+%\end{lstlisting}
