@@ -134,11 +134,11 @@
 \begin{frame}[fragile]{2.1~C++语句基本元素}
 \begin{columns}[t]
 \column{0.8\textwidth}
-\begin{yellowblock}{标识符命名小建议}
+\begin{yellowblock}{标识符命名建议}
 		\begin{itemize}
 			\item 对象名一般小写，如name,而不是NAME；
             \item 应使用能帮助记忆的名字，如salary，而不是s；
-            \item 有多个单词组成时，单词之间可用下划线或是内嵌单词的第一个字母大写；\\如student\_name或studentName。
+            \item 有多个单词组成时，单词之间可用\alert{下划线}或是\alert{内嵌单词的第一个字母大写}；\\如student\_name或studentName
 		\end{itemize}
 	\end{yellowblock}
 \end{columns}
@@ -351,7 +351,7 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 %---------------------------------------------------------------------------------------------
 \begin{frame}[fragile]{2.2 基本数据类型\normalsize{~---~常量（字面值常量）}}
 \begin{columns}[t]
-\column{0.9\textwidth}
+\column{\textwidth}
 \begin{block}{整型常量的表示方法}	
 		\begin{itemize}
 			\item 十进制整数：如~58
@@ -376,7 +376,12 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 \begin{yellowblock}{说明}
 指数形式由\alert{尾数}、\alert{阶数}和\alert{ E或 e}组成，其中在E或e前面的尾数部分必须有数字，后面的阶数必须为整数
 \end{yellowblock}
+\pause
+\begin{block}{判断下列表示是否合法}
+1.43E3.5 ~~~~~~~~ E4 ~~~~~~~~ -.34e-2 ~~~~~~~~ 123E12
+\end{block}
 \end{columns}
+
 \end{frame}
 
 %---------------------------------------------------------------------------------------------
@@ -624,7 +629,17 @@ const int ci = i;
     \end{lstlisting}
 \end{blueblock}
 
+\column{0.4\textwidth}
+\begin{yellowblock}<2->{说明}
+\begin{itemize}
+    \item const修饰的对象不能改变其内容，即不能对其进行写操作
+    \item const对象创建时必须初始化
+\end{itemize}
+\end{yellowblock}
+\end{columns}
 
+\begin{columns}
+\column{0.55\textwidth}
 \begin{greenblock}<3->{问题}
 判断如下代码是否正确？
     \begin{lstlisting}
@@ -633,22 +648,13 @@ numStudent = 50;
 const double pi;
     \end{lstlisting}
 \end{greenblock}
-
 \column{0.4\textwidth}
-\begin{yellowblock}<2->{说明}
-\begin{itemize}
-    \item const修饰的对象不能改变其内容，即不能对其进行写操作
-    \item const对象创建时必须初始化
-\end{itemize}
-\end{yellowblock}
-~\\
 \begin{greenblock}<4->{答案}
 \begin{itemize}
   \item 第二行代码错误：不能对 numStudent 进行写值操作
   \item 第三行代码错误：const 对象必须初始化
 \end{itemize}
 \end{greenblock}
-
 \end{columns}
 \end{frame}
 
