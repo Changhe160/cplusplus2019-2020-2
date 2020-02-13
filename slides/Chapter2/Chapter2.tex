@@ -759,13 +759,15 @@ int i = 0;
     \begin{lstlisting}
 auto pi=3.14159, rad=1.0;   // pi 和 rad 都为 double 类型
 auto area=pi*rad*rad;       // area 为 double 类型
-auto i=0, pi=3.14159;       // 错误：i 和 pi 的类型不一致
     \end{lstlisting}
     \end{greenblock}
 \pause
     \begin{redblock}{注意}
 \begin{itemize}
     \item 当用\texttt{auto}定义多个对象时，其显示类型必须一致，否则会报错
+    \begin{lstlisting}
+auto i=0, pi=3.14159;       // 错误：i 和 pi 的类型不一致
+    \end{lstlisting}
     \item \texttt{auto}不能肆意使用，否则会造成代码的可读性和可维护性下降，使用时需要权衡利弊
 \end{itemize}
     \end{redblock}
