@@ -323,14 +323,15 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 原码， 3：0000 0011， -3：1000 0011\\
 反码， 3：0000 0011， -3：1111 1100\\
 补码， 3：0000 0011， -3：1111 1101
+\item \onslide<2->{整数在计算机中以补码形式存储}
 	\end{itemize}
 \end{block}
 
-\begin{greenblock}<2->{思考：一个\texttt{char}类型表示范围？}	
-\onslide<3->{一个 \texttt{ char}类型表示范围为[1000 0000, 0111 1111]即-128至127。}
+\begin{greenblock}<3->{思考：一个\texttt{char}类型表示范围？}	
+\onslide<4->{一个 \texttt{ char}类型表示范围为[1000 0000, 0111 1111]即-128至127。}
 \end{greenblock}
 
-\begin{block}<4->{浮点型}	
+\begin{block}<5->{浮点型}	
     \begin{itemize}
 		\item 可表示单精度\texttt{（float，4B）}、双精度\texttt{（double，8B）}和扩展精度\texttt{（long double，8B、12B或16B）}，用来保存实数，如3.1415926。
 	\end{itemize}
@@ -368,9 +369,10 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 \column{0.45\textwidth}
 \begin{block}{实型常量的表示方法}
 		\begin{itemize}
-			\item 小数形式：如~3.14159~~~~~4.235
-            \item 指数形式：如~3.14159E0~~~~4e6 \\~~
+			\item 小数形式：如~3.14159~~~~~423.5~~~~~0.
+            \item 指数形式：如~3.14159E0~~~~4.235e2
 		\end{itemize}
+注意：实型常量默认类型为double类型
 \end{block}
 \column{0.45\textwidth}
 \begin{yellowblock}{说明}
@@ -384,6 +386,7 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 
 \end{frame}
 
+
 %---------------------------------------------------------------------------------------------
 \begin{frame}[fragile]{2.2 基本数据类型\normalsize{~---~常量（字面值常量）}}
 \vspace{-3mm}
@@ -391,9 +394,9 @@ long double&扩展的精度浮点数&精度不低于~double~类型&8\\\hline
 \column{1.0\textwidth}
 \begin{block}{字符和字符串常量}		
 		\begin{itemize}
-			\item 字符常量：由单引号括起来单个字符，如：~~\texttt{\alert{'a'}}~~~~\texttt{'1'}~~
-            \item 字符串常量：由双引号括起来的字符，如：~~\texttt{\alert{"a"}}~~~~\texttt{"Mandy"}。自动在末尾添加空字符（\texttt{'\textbackslash 0'}）
-            \item 特殊字符：用\alert{转义序列}表示方法，如：\textbackslash n~换行符、\textbackslash r~回车符，\textbackslash\textbackslash~反斜线等\\
+			\item \underline{字符常量}：由单引号括起来单个字符，如：~~\texttt{\alert{'a'}}~~~~\texttt{'1'}~~
+            \item \underline{字符串常量}：由双引号括起来的字符，如：~~\texttt{\alert{"a"}}~~~~\texttt{"Mandy"}。自动在末尾添加空字符（\texttt{'\textbackslash 0'}）
+            \item \underline{特殊字符}：用\alert{转义序列}表示方法，如：\textbackslash n~换行符、\textbackslash r~回车符，\textbackslash\textbackslash~反斜线等\\
             \textbackslash nnn 八进制数，\textbackslash xnn 十六进制数，如 \texttt{'\textbackslash 141'} 和\texttt{ '\textbackslash x61'} 都表示字符\texttt{'a'}
             \begin{lstlisting}[basicstyle=\small\ttfamily]
 cout << "Hi \"\103++\"\n"; // 输出Hi "C++"，转到新一行
@@ -864,7 +867,7 @@ decltype (pi) rad=1.0;
 \column{0.8\textwidth}
 \begin{block}{左值和右值}
 	\begin{itemize}
-        \item 左值所在的内存空间的地址是可以获取的（使用取址符 \texttt{\&}），但右值的地址是无法得到的
+        \item 左值所在的内存空间的地址是可以获取的（使用\underline{取址符 \texttt{\&}}），但右值的地址是无法得到的
         \item 左值对象由程序员创建并命名，具有持久性。右值对象中除了字面值常量以外，都是\alert{临时对象}
         \item 一般来说，右值只能在 = 符号右边，左值没有限制
 	\end{itemize}
@@ -888,15 +891,16 @@ N = 40;               //错误：不能改变右值对象 N 的值
 \column{0.9\textwidth}
 \begin{block}{优先级和结合性}
 	\begin{itemize}
-        \item \alert{优先级}和\alert{结合性}共同决定了运算中的优先关系
         \item \alert{优先级}：指不同运算符在运算中的优先关系。例如乘(\texttt{*})和除(\texttt{/})的优先级比加(\texttt{+})和减(\texttt{-})的高
         \item \alert{结合性}：决定优先级相等的运算符结合在一起时的运算次序，同一优先级的运算符有相等的结合性（\alert{左/右结合}）。例如~+~和~-~的结合性是从左到右（左结合）
+         \item<2-> \alert{优先级}和\alert{结合性}共同决定了运算中的优先关系
 	\end{itemize}
+
 \end{block}
 \end{columns}
 \begin{columns}[t]
 \column{0.5\textwidth}
-\begin{greenblock}<2->{例子}
+\begin{greenblock}<3->{例子}
 \pause
 (1)~~\texttt{2*3+6/2}\\
 \pause
@@ -948,12 +952,12 @@ N = 40;               //错误：不能改变右值对象 N 的值
 \column{0.5\textwidth}
 \begin{block}<2->{}
 \begin{spacing}{1}
-优先级：\alert{加、减}~<~\alert{乘、除、求余}~<~\alert{单目}\\
-结果：\alert{右值}
+优先级：\alert<3->{加、减}~<~\alert<4->{乘、除、求余}~<~\alert<5->{单目}\\
+结果：\alert<6->{右值}
 \end{spacing}
 \end{block}
 
-\begin{yellowblock}<3->{说明}
+\begin{yellowblock}<7->{说明}
 \begin{itemize}
     \item 整型数的算术运算的结果还是整数，例如：\texttt{21/6}的结果是\texttt{3}，余数被舍弃
     \item 求余运算中的两个运算数必须是整型类型，如：\texttt{5\%3}
@@ -1264,16 +1268,14 @@ bool b = !i && ++j;
 
 已知\texttt{int a=10, b=20, c=30; float x=1.8, y=2.4;}\\求解\texttt{a<b\texttt{\&\&}x>y\texttt{||}a<b-!c}
 \pause
-~\\
-~\\
-\textcolor{blue}{答案：}
+%\textcolor{blue}{答案：}
 \end{columns}
 \begin{columns}[t]
 \column{0.55\textwidth}
 \begin{yellowblock}{}
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{luoji.png}
+\includegraphics[width=0.9\textwidth]{luoji.png}
 \end{figure}
 \end{yellowblock}
 \end{columns}
@@ -1286,11 +1288,10 @@ bool b = !i && ++j;
 \end{center}
 \begin{spacing}{1.5}
 1.已知\texttt{int a=1,b=5,c=2,d=6;}求解下列表达式及相应对象的的值\\
-\begin{tabular}{ll}
+\begin{tabular}{lll}
   % after \\: \hline or \cline{col1-col2} \cline{col3-col4} ...
-  (1)\texttt{a+b>c+d} & (2)\texttt{a=(b=4)+(c=6)} \\
-  (3)\texttt{a+=c=b*a} & (4)\texttt{d=(a++)-(++b)+c--} \\
-  (5)\texttt{--a||b<d\&\&c--} & ~ \\
+  (1)\texttt{a+b>c+d} & (2)\texttt{a=(b=4)+(c=6)} &(3)\texttt{a+=c=b*a} \\
+   (4)\texttt{d=(a++)-(++b)+c--} &  (5)\texttt{--a||b<d\&\&c--} & ~ \\
 \end{tabular}
 
 2.逻辑表达式的构造：\texttt{a}和\texttt{b}之一为\texttt{0}，但不同时为\texttt{0}\\
@@ -1343,9 +1344,6 @@ i = (j=3, j+=6, 5+6);
 
 %---------------------------------------------------------------------------------------------
 \begin{frame}[fragile]{2.5 表达式\normalsize{~---~条件运算符}}
-\begin{center}
-  \alert{条件运算符(?:)}~唯一的三目运算符
-\end{center}
 \begin{columns}[t]
 \column{0.4\textwidth}
 \begin{blueblock}{格式如下}
@@ -1357,7 +1355,7 @@ cond ? expr1 : expr2
 \begin{yellowblock}{ }
 \begin{figure}[!h]
 \centering
-\includegraphics[width=\textwidth]{tiaojian.png}
+\includegraphics[width=0.8\textwidth]{tiaojian.png}
 \end{figure}
 \end{yellowblock}
 \pause
@@ -1372,6 +1370,12 @@ max=a>b?(a>c?a:c):(b>c?b:c);
 \begin{yellowblock}{建议}
 由于会降低程序的可读性，条件运算符不宜嵌套使用
 \end{yellowblock}
+
+\pause
+\begin{yellowblock}{说明}
+条件运算符是唯一的三目运算符
+\end{yellowblock}
+
 \end{columns}
 \end{frame}
 
@@ -1483,18 +1487,13 @@ j = i * 2 + i++;
 
 %---------------------------------------------------------------------------------------------
 \begin{frame}[fragile]{2.6 类型转换\normalsize{~---~隐式转换}}
-\begin{columns}[t]
-\column{0.4\textwidth}
+
 \begin{center}
-  \textcolor{blue}{混合运算的类型转换规则}
+\textcolor{blue}{混合运算的类型转换规则}\\~\\
+\includegraphics[width=0.3\textwidth]{leixingzhuanhuan.png}
 \end{center}
-\begin{yellowblock}{}
-\begin{figure}[!h]
-\centering
-\includegraphics[width=\textwidth]{leixingzhuanhuan.png}
-\end{figure}
-\end{yellowblock}
-\end{columns}
+
+
 \end{frame}
 
 %---------------------------------------------------------------------------------------------
