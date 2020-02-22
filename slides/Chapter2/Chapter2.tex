@@ -1189,7 +1189,7 @@ j = ++i;
 \begin{block}{ }
 \begin{spacing}{1.}
 优先级：\\
-赋值运算符~\texttt{<}~~\textcolor{blue}{逻辑与\texttt{\&\&}~、逻辑或\texttt{||}}~\texttt{<}~\textcolor{red}{关系运算符}~\texttt{<}~算术运算符~\texttt{<}~\textcolor{blue}{逻辑非\texttt{!}}
+赋值运算符~\texttt{<}~~\textcolor{blue}{逻辑或\texttt{||}~<~ 逻辑与\texttt{\&\&}~}~\texttt{<}~\textcolor{red}{关系运算符}~\texttt{<}~算术运算符~\texttt{<}~\textcolor{blue}{逻辑非\texttt{!}}
 \end{spacing}
 \end{block}
 \pause
@@ -1476,10 +1476,10 @@ j = i * 2 + i++;
 \column{0.85\textwidth}
 \begin{block}{隐式转换}
 	\begin{itemize}
-		\item 比int类型小的整型类型提升为较大的整型类型
-		\item 将表达式的值转换为布尔值
-        \item 初始化过程中，初始值转换成定义对象的类型
-        \item 算术表达式中，运算结果转换为运算对象中最宽（大）的数据类型
+		\item 比int类型小的整型类型提升为较大的整型类型： 'a'+125
+		\item 将表达式的值转换为布尔值：  $1+3>4*7$
+        \item 初始化过程中，初始值转换成定义对象的类型： double i = 3;
+        \item 算术表达式中，运算结果转换为运算对象中最宽（大）的数据类型 ： 3.14+2+'a'
 	\end{itemize}
 \end{block}
 \end{columns}
