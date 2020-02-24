@@ -1406,13 +1406,13 @@ cout << sizeof (++i);//输出4，i 的值为0
 %---------------------------------------------------------------------------------------------
 \begin{frame}[fragile]{2.5 表达式\normalsize{~---~位运算符}}
 \begin{itemize}
-  \item 位运算符：~\verb;~;~、\verb;<<;~、\verb;>>;~、\texttt{\&}~、\texttt{|} ~、~\verb;^;（优先级由高到低）
-  \item 运算的对象是\alert{整型对象}，处理二进制数
+  \item<1-> 位运算符：按位反~\verb;~;、{\color<2->{blue}左移~\verb;<<;、右移~\verb;>>;}~、按位与~\texttt{\&}、按位异或~\verb;^;、按位或~\texttt{|} （优先级由高到低）
+  \item<3-> 运算的对象是\alert{整型对象}，处理二进制数
 \end{itemize}
-\pause
+
 \begin{columns}[t]
 \column{0.95\textwidth}
-\begin{blueblock}{~~\texttt{short a = 3, b = 5;}}
+\begin{blueblock}<4->{~~\texttt{short a = 3, b = 5;}}
 \begin{center}
 \begin{tabular}{cr@{~}r@{}cr@{~}r@{~}cr@{~}r@{~}}
 b&\verb;~;&00000000~00000101&&\verb;<<;1&00000000~00000101&&\verb;>>;1&00000000~00000101\\\cline{3-3}\cline{6-6}\cline{9-9}
