@@ -523,7 +523,7 @@ int main() {
       break;
   ...
   default;
-  cout << "F" << endl;
+      cout << "F" << endl;
   }
   /*...*/
         \end{lstlisting}
@@ -540,11 +540,11 @@ int main() {
 
 	\begin{block}{\texttt{switch}语句语法规则：}
 		\begin{itemize}
-			\item 每个开关入口可以\alert{对应多个标签值}，执行相同的操作\\
+			\item 每个开关入口可以\alert{对应多个标签值}，执行相同的操作，\alert{标签值后紧接冒号}\\
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
         /*...*/
         switch(score/10){
-        case 9:case 10:
+        case 9: case 10:
             cout << "A" << endl;
             break;
         /*...*/
@@ -554,7 +554,7 @@ int main() {
         case 9.0:case 10: //报错：表达式必须为整型常量表达式
             cout << "A" << endl;
             break;
-        case 10:   //报错：标签值已经出现在次开关
+        case 10:   //报错：标签值已经出现
             cout << "B" << endl;
             break;
             \end{lstlisting}
@@ -591,17 +591,17 @@ int main() {
 
 	\begin{block}{\texttt{switch}语句语法规则：}
 		\begin{itemize}
-			\item 开关语句里面定义对象时需要使用花括号。
+			\item 开关语句里面\alert{初始化}对象时需要使用花括号，否则出现语法错误。
 			      例如：\\
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
         case 8:
-            char c = 'B';
+            char c = 'B';       //初始化
             break;
         case 7:
             c = 'C';  //修改在前面标签处定义的对象
             break;
             \end{lstlisting}
-            编译正确，但当进入开关case 7时，由于对象c未定义，出现错误
+            进入开关case 7时，前面开关case 8 被跳过，造成对象c未定义，出现错误
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -730,7 +730,7 @@ while (expr) { //条件表达式
 	\end{exampleblock}
 \end{frame}
 \begin{frame}[fragile]
-	\frametitle{3.2 循环结构\small{—\texttt{while}语句}}
+	\frametitle{3.3 循环结构\small{—\texttt{while}语句}}
 	% \framesubtitle{——\texttt{while}语句}
 	\begin{exampleblock}{例3.4：}
 		\ttfamily
@@ -761,8 +761,8 @@ int main() {
         ++i;          //在当前项基础上计算下一项
         x *= (i - 1.) / (2 * i - 1);//注意1后面的小数点
     }  //fixed和setprecision用于控制输出精度
-    cout<<"pi="<<fixed<<setprecision(10)<<2*sum<<endl;
-                        //输出结果pi=3.1415926533
+    cout<<"pi="<<fixed<<setprecision(10)<<2*sum<<endl;  //输出结果pi=3.1415926533
+                        
     return 0;
 }
 \end{lstlisting}\ttfamily
@@ -796,7 +796,7 @@ do{
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{3.2 循环结构\small{—\texttt{do while}语句}}
+	\frametitle{3.3 循环结构\small{—\texttt{do while}语句}}
 	% \framesubtitle{——\texttt{do while}语句}
 	\begin{columns}
 		\begin{column}{0.5\textwidth}
@@ -847,7 +847,7 @@ int main() {
 
 
 \begin{frame}[fragile]
-	\frametitle{3.2 循环结构\small{—\texttt{do while}语句}}
+	\frametitle{3.3 循环结构\small{—\texttt{do while}语句}}
 	% \framesubtitle{——\texttt{do while}语句}
 	\begin{exampleblock}{练习：}
 \begin{columns}
