@@ -635,6 +635,7 @@ int main() {
 		\begin{columns}[t]
 			\begin{column}{0.04\linewidth}
 			\end{column}
+            \pause
 			\begin{column}{0.4\textwidth}
 				\begin{lstlisting}[numbers=left,numberstyle=\small,basicstyle=\small\ttfamily]
 #include<iostream>
@@ -762,7 +763,7 @@ int main() {
         x *= (i - 1.) / (2 * i - 1);//注意1后面的小数点
     }  //fixed和setprecision用于控制输出精度
     cout<<"pi="<<fixed<<setprecision(10)<<2*sum<<endl;  //输出结果pi=3.1415926533
-                        
+
     return 0;
 }
 \end{lstlisting}\ttfamily
@@ -834,7 +835,7 @@ int main() {
     do {
         x = cin.get();  //获取终端输入的任意一个字符
         if (x >= '0'&&x <= '9') ++cnt;
-    } while (x != EOF); //EOF为输入流结束标志，组合键Ctrl+z
+    } while (x != EOF); //EOF为输入流结束标志，组合键Ctrl+Z
     cout << "数字字符个数为： " << cnt << endl;
     return 0;
 }
@@ -1107,15 +1108,16 @@ int main(){
 	% \framesubtitle{——if 语句}
 	\begin{abstractblock}{跳转语句用于中断当前的执行顺序，包括：}
 		\begin{itemize}
-			\item \textcolor[rgb]{0,0,1}{\texttt{break}}语句
-			\item \textcolor[rgb]{0,0,1}{\texttt{return}}语句：
+			\item \textcolor[rgb]{1,0,0}{\texttt{break}}语句
+			
+			\item<2-> \textcolor[rgb]{1,0,0}{\texttt{continue}}语句
+\item<3-> \textcolor[rgb]{0,0,0}{\texttt{return}}语句：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
     int main(){
         return 0; /*返回一个整型值*/
     }
 \end{lstlisting}\ttfamily
-			\item \textcolor[rgb]{0,0,1}{\texttt{continue}}语句
-			\item \texttt{goto}语句（不作介绍）
+			\item<4-> \texttt{goto}语句（不作介绍）
 		\end{itemize}
 	\end{abstractblock}
 \end{frame}
@@ -1133,7 +1135,8 @@ int main(){
 				\begin{lstlisting}[basicstyle=\small\ttfamily]
     int a = 10, y = 0;
     do {
-        a += 2; y += a;
+        a += 2; 
+        y += a;
         cout<<"a="<<a<<","<<"y="<<y<< endl;
         if (y > 50) break;
     } while (a = 14);
@@ -1236,7 +1239,7 @@ int main(){
         cout << "#";
     }
 \end{lstlisting}\ttfamily
-		\ttfamily 输出结果：*\#*\#
+		\pause 输出结果：*\#*\#
 	\end{exampleblock}
 \end{frame}
 
