@@ -7,6 +7,10 @@ using namespace std;
 
 int main() {
 
+	short i(32767);
+	i++;
+	cout << i;
+
 	{//3.3.3½Ú
 		int sum = 0;
 		for (int i = 1; i <= 100; ++i) {
