@@ -1259,7 +1259,7 @@ int main(){
             }
             x++;
         }
-        cout<<x<<endl;
+        cout<<"x="<<x<<endl;
         return 0;
     }
     \end{lstlisting}\ttfamily
@@ -1286,7 +1286,7 @@ int main(){
         }
         k++;
     } while(c<'G');
-    cout<<k<<endl;
+    cout<<"k="<<k<<endl;
         \end{lstlisting}\ttfamily
 		A.k = 3~~B.k = 4~~C.k = 2~~D.k = 0\\
 		\onslide<2->{答案：B}
@@ -1350,7 +1350,7 @@ int main() {
     double x = 0;          //x从0开始
     while (x < 6.28) {     //画一个周期的曲线
         int val = 30*(sin(x)+1);//计算sin(x)左侧的空格数
-        for (int i = 0; i < val; ++i) //画出所有空格
+        for (int i = 0; i < val; ++i){ //画出所有空格
             cout << " ";
         }
         cout << "*" << endl;//在相应的位置打印*
@@ -1477,8 +1477,9 @@ int main() {
 		\begin{columns}
 			\begin{column}{0.06\linewidth}
 			\end{column}
-			\begin{column}{0.94\textwidth}
+			\begin{column}{0.94\textwidth}\vspace{-3mm}
 				\begin{lstlisting}[numbers=left,numberstyle=\small,basicstyle=\small\ttfamily]
+#include <iostream>
 using namespace std;
 int main() {
     //公鸡、母鸡最大数目
@@ -1486,8 +1487,7 @@ int main() {
     for (int i = 0; i < max_rst; ++i) {
         for (int j = 0; j < max_hen; ++j) {
             int k = 100 - i - j;    //小鸡数目
-            //跳过不能被3整除的数，执行流程跳转到++j
-            if (k % 3) continue;
+            if (k % 3) continue;    //跳过不能被3整除的数，执行流程跳转到++j
             if (5 * i + 3 * j + k / 3 == 100) {
                 cout<<"公鸡："<<i<<" 母鸡："<<j<<" 小鸡："<<k<<endl;
             }

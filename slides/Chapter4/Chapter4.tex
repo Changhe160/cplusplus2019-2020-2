@@ -124,18 +124,25 @@
 
 \begin{frame}[fragile]
 	{4.1 引用}
-	\begin{block}{引用语法格式：}
+	\begin{block}{引用语法格式：}\vspace{-3mm}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int counter = 0;
-int &refCnt = counter;  //refCnt引用counter对象的内容
-int &refCnt2;             //错误：定义引用时必须和一个对象绑定
-        \end{lstlisting}
+int &refCnt = counter;      //refCnt引用counter对象的内容
+int &refCnt2;               //错误：定义引用时必须和一个对象绑定
+        \end{lstlisting}\vspace{-3mm}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-refCnt = 2;       //修改了counter所在的内存空间的内容
-int i = refCnt;//通过引用读取counter对象的内容，并初始化对象i
-        \end{lstlisting}
+refCnt = 2;             //修改了counter所在的内存空间的内容
+int i = refCnt;         //通过引用读取counter对象的内容，并初始化对象i
+        \end{lstlisting}\vspace{-3mm}
 	\end{block}
-	\begin{alertblock}<2->{建议：}
+
+\begin{block}<2->{定义引用时必须要初始化}\vspace{-3mm}
+		\begin{lstlisting}[basicstyle=\small\ttfamily]
+int &refCnt2;             //错误：定义引用时必须和一个对象绑定
+        \end{lstlisting}\vspace{-3mm}
+	\end{block}
+
+	\begin{alertblock}<3->{建议：}
 		书写上，把\textcolor[rgb]{1,0,0}{引用符号与对象名放在一起}，而不是把类型名和引用符号放在一起，这样有助于\textcolor[rgb]{1,0,0}{提高程序的可读性}。如：\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int counter = 0;
@@ -200,10 +207,10 @@ r1 = 1;                //错误：相当于修改const 对象ci 的值
 			\item 可用任何类型兼容的对象来初始化\texttt{const}引用，例如：\\
 			      \ttfamily
 			      int i = 0;\\
-			      const int \&r1 = i;~~~~~~//正确：使用左值对象初始化\\
-			      const int \&r2 = 1;~~~~~~//正确：使用字面值常量初始化\\
-			      const int \&r3 = i+1;~~~~//正确：使用表达式~i+1~的结果初始化\label{chap4-1-1-const-reference}\\
-			      const int \&r4 = 3.14;~~~//正确：使用~double~类型数据初始化
+			      \onslide<3->{const int \&r1 = i;~~~~~~//正确：使用左值对象初始化}\\
+			      \onslide<4->{const int \&r2 = 1;~~~~~~//正确：使用字面值常量初始化}\\
+			      \onslide<5->{const int \&r3 = i+1;~~~~//正确：使用表达式~i+1~的结果初始化\label{chap4-1-1-const-reference}}\\
+			      \onslide<6->{const int \&r4 = 3.14;~~~//正确：使用~double~类型数据初始化}
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -218,7 +225,7 @@ r1 = 1;                //错误：相当于修改const 对象ci 的值
 int i = 0, &ri = i;
 auto r = ri; //r 是 int 类型而不是 int 类型引用，auto 被推导为 int
             \end{lstlisting}
-			\item<2-> 定义一个整型引用，需要显式指出引用类型
+			\item<2-> 定义一个整型引用，需要显式标明引用类型
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int i = 0;
 auto &r = i; //r是int类型引用
@@ -276,17 +283,19 @@ cout << "a= " << a << endl;
 	% \framesubtitle{——\texttt{decltype}和引用}
 	\begin{block}{\texttt{decltype}和引用}
 		\begin{itemize}
-			\item \texttt{decltype}能够根据表达式的类型来定义对象
-			\item 如果表达式是一个对象，\texttt{decltype}会\alert{推导出对象的类型}
-			\item 如果表达式是一个引用，\texttt{decltype}也会\alert{推导出引用类型}：
-			      \begin{lstlisting}[basicstyle=\small\ttfamily]
+			\item<2-> 如果表达式是一个对象，\texttt{decltype}会\alert{推导出对象的类型}
+\begin{lstlisting}[basicstyle=\small\ttfamily]
 int i = 0, &r1 = i;
 decltype (r1) r2 = i; //r2 为int 引用
+            \end{lstlisting}
+			\item<3-> 如果表达式是一个引用，\texttt{decltype}也会\alert{推导出引用类型}：
+			      \begin{lstlisting}[basicstyle=\small\ttfamily]
+int i = 0, &r1 = i;
 decltype (r1 + 0) r3; //r3 为int 类型
             \end{lstlisting}
 		\end{itemize}
 	\end{block}
-	\begin{alertblock}<2->{注意：对象名加上圆括号推导出引用}
+	\begin{alertblock}<4->{注意：对象名加上圆括号推导出引用}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
      int i = 0;
      decltype ((i)) r2; //错误：r2 为int 引用，必须初始化
@@ -358,7 +367,7 @@ auto &&rr2 = i;    //rr2 为左值引用
 			      \begin{itemize}
 				      \item \alert{对象名}：本质上是数据所在的内存空间的地址映射
 			      \end{itemize}
-			\item 间接访问：\\
+			\item<2-> 间接访问：\\
 			      \begin{itemize}
 				      \item \alert{引用}：通过引用访问已经存在的对象的内容，效果上与使用原对象名对数据的读写相同
 				      \item \alert{指针}：把数据的内存地址存放到专门存放地址的对象中，通过地址对象对数据进行访问
@@ -426,11 +435,11 @@ int &ref = *ptr;//& 紧随int，故ref 为引用；* 在表达式中，故为解
 int i = 10;
 double *ptr = &i;        //错误：ptr 和i 的类型不匹配
             \end{lstlisting}
-			\item 定义多个相同类型的指针对象，每个对象名前面都要加\alert{*}
+			\item<2-> 定义多个相同类型的指针对象，每个对象名前面都要加\alert{*}
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int i, *ptr1, *ptr2; //i 为int 类型，ptr1 和ptr2 为指针对象
             \end{lstlisting}
-			\item 无具体的指向对象时，需用\alert{\texttt{nullptr}}来初始化
+			\item<3-> 无具体的指向对象时，需用\alert{\texttt{nullptr}}来初始化
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 {
     int *ptr1 = nullptr; //ptr1 为空指针，没有指向任何对象
@@ -468,7 +477,7 @@ const int *ptrc = &ci; //ptrc 指向常量ci
         \end{lstlisting}
 		\end{itemize}
 	\end{block}
-	\begin{exampleblock}{练习：}
+	\begin{exampleblock}<2->{练习：}
 		\ttfamily 下面语句有错误吗？若有，则错在哪里？
 		\begin{columns}
 			\begin{column}{0.4\linewidth}
@@ -481,7 +490,7 @@ const int *ptrc = &ci; //ptrc 指向常量ci
 			\end{column}
 			\hfill
 			\begin{column}{0.55\linewidth}
-				\onslide<2->{答案：语句\texttt{*c = 100;}错误， 不能修改所指向对象的值}
+				\onslide<3->{答案：语句\texttt{*c = 100;}错误， 不能修改所指向对象的值}
 			\end{column}
 		\end{columns}
 	\end{exampleblock}
@@ -644,7 +653,7 @@ p = &i;         //正确：也可以存放int 类型对象的地址
 \end{lstlisting}
 		\end{itemize}
 	\end{block}
-	\begin{alertblock}{提示：}
+	\begin{alertblock}<2->{提示：}
 		将\texttt{void}指针赋值给普通指针，必须确保它们指向的对象类型相同，需要进行类型转换\\
 		\ttfamily
 		例如：\\
@@ -671,7 +680,7 @@ int **pptr = &ptr; //用指针对象ptr 的地址初始化pptr
 cout << i << '\t' << *ptr << '\t' << **pptr << endl;
         \end{lstlisting}
 	\end{block}
-	\begin{block}{三级指针}
+	\begin{block}<2->{三级指针}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int ***ppptr = &pptr;
 cout << ***ppptr << endl; //输出1
@@ -690,8 +699,8 @@ int i = 0, j = 1;
 int &r;//错误：引用在定义时需要给定初始值
 int *p;//正确
             \end{lstlisting}
-			\item \alert{不存在空引用}。引用必须与有效的内存单元关联，指针可以为\texttt{nullptr}；
-			\item \alert{赋值行为不同}。对引用赋值修改与其相绑定的对象的值，对指针赋值改变其指向的对象，例如：\\
+			\item<2-> \alert{不存在空引用}。引用必须与有效的内存单元关联，指针可以为\texttt{nullptr}；
+			\item<3-> \alert{赋值行为不同}。对引用赋值修改与其相绑定的对象的值，对指针赋值改变其指向的对象，例如：\\
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int i = 0, j = 1, &r = i, *p = &i;
 r = 4;   //修改与r 相绑定的对象i 的值
@@ -712,7 +721,7 @@ int *const p = &i; //不允许指针p指向其他对象
 int &ri = i;          //引用 ri 只能与 i 绑定
     \end{lstlisting}
 	\end{block}
-	\begin{alertblock}{建议：}
+	\begin{alertblock}<2->{建议：}
 		能用引用的地方，不要用指针。
 	\end{alertblock}
 \end{frame}
