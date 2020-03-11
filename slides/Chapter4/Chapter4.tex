@@ -60,7 +60,7 @@
     breaklines,                                                           % 控制是否折行
     postbreak=\space,                                                     % 控制折行后显示的标识字符
     breakindent=5pt,                                                      % 控制折行后缩进数量
-    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream}, % 非内置类型
+    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream,constexpr}, % 非内置类型
     emphstyle={\color{teal}},
     escapeinside={(*@}{@*)},
 }
@@ -732,16 +732,36 @@ int &ri = i;          //引用 ri 只能与 i 绑定
 	\frametitle{4.3 数组\small{—数组的定义和初始化}}
 	% \framesubtitle{——数组的定义和初始化}
 	% \ttfamily
+	\begin{block}{\color{yellow}{处理批量数据}}
+		已知一个班级30名学生的英语成绩，求平均分和标准差。
+\pause
+\begin{lstlisting}[basicstyle=\small\ttfamily]
+int s1,s2,s3,...,s30;
+int sum=0;
+cin>>s1>>s2>>...s30;
+sum=s1+s2+...+s30;
+...
+        \end{lstlisting}
+	\end{block}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{4.3 数组\small{—数组的定义和初始化}}
+	% \framesubtitle{——数组的定义和初始化}
+	% \ttfamily
 	\begin{block}{数组---\color{yellow}{处理批量数据}}
 		\alert{数组}是由有限个\alert{同类型}元素组成的\alert{有序集合}，所有元素顺序存放在一段连续的内存空间中。\\如下定义一个存储5个整型元素的数组：\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int arr[5];
         \end{lstlisting}
 	\end{block}
+\pause
 	\begin{minipage}[m]{0.3\linewidth}
 		\includegraphics[scale=0.4]{array.png}
 	\end{minipage}
 	\hfill
+\pause
 	\begin{minipage}[m]{0.48\linewidth}
 		\includegraphics[scale=0.6]{Fig4-2.jpg}
 	\end{minipage}
@@ -774,11 +794,11 @@ float arrf[10.];          //错误：数组长度必须是整型
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int arr[5] = {1, 2, 3, 4, 5};
             \end{lstlisting}
-			\item 显式初始化部分数组元素：
+			\item<2-> 显式初始化部分数组元素：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int arr[5] = {1, 2, 3}; //等价于arr[5] = {1, 2, 3, 0, 0}
             \end{lstlisting}
-			\item 编译器可以根据列表中提供的元素的个数，推断数组的长度：
+			\item<3-> 编译器可以根据列表中提供的元素的个数，推断数组的长度：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int arr[] = {1, 2, 3, 4, 5}; //数组arr 的长度为5
             \end{lstlisting}
@@ -796,17 +816,14 @@ int arr[] = {1, 2, 3, 4, 5}; //数组arr 的长度为5
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 char name[] = "Lisha"; //自动添加字符串结束符'\0'
             \end{lstlisting}
-			\item 这种方式等价于：
+			\item<2-> 这种方式等价于：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 char name[] = {'L', 'i', 's', 'h', 'a', '\0'};
             \end{lstlisting}
 		\end{itemize}
 	\end{block}
-	\begin{alertblock}{提示：}
-		上面的语句是\alert{初始化操作}，\alert{不是赋值操作}。不能将字符串常量赋值给一个数组,如：
-		\begin{lstlisting}[basicstyle=\small\ttfamily]
-name = "Lisha"; //错误：数组不允许赋值操作
-        \end{lstlisting}
+	\begin{alertblock}<3->{提示：}
+		上面的语句是\alert{初始化操作}，\alert{不是赋值操作}。
 	\end{alertblock}
 \end{frame}
 
@@ -817,10 +834,16 @@ name = "Lisha"; //错误：数组不允许赋值操作
 		不能用一个数组初始化另外一个数组，也不能用一个数组赋值给另外一个数组\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 char n1[] = "Lisha";
-char n2[] = n1; //错误：不能用数组初始化数组
-n2 = n1; //错误：数组不能执行赋值操作
+char n2[] = n1;     //错误：不能用数组初始化数组
+n2 = n1;            //错误：数组不能执行赋值操作
         \end{lstlisting}
 	\end{alertblock}
+\begin{thinkblock}<2->{为什么数组不能执行赋值操作}
+例如，不能将字符串常量赋值给一个数组
+\begin{lstlisting}[basicstyle=\small\ttfamily]
+name = "Lisha"; //错误：数组不允许赋值操作
+        \end{lstlisting}
+\end{thinkblock}
 \end{frame}
 
 
@@ -835,11 +858,11 @@ n2 = n1; //错误：数组不能执行赋值操作
 int arr[5];     //定义一个含有5 个int 类型元素的数组
 int *arrp[5]; //含有5 个int* 类型元素的数组，每个元素都是指针
         \end{lstlisting}
-			\item 数组指向其他数组,即数组指针：
+			\item<2-> 数组指向其他数组,即数组指针：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int (*parr)[5] = &arr; //指向含有5 个int 类型元素的数组的指针
         \end{lstlisting}
-			\item 数组引用其他数组,即数组的引用：
+			\item<3-> 数组引用其他数组,即数组的引用：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int (&rarr)[5] = arr; //定义arr 的一个引用定义
         \end{lstlisting}
@@ -906,6 +929,7 @@ for(auto i: arr){           //i 为arr 中当前元素的副本
 }
         \end{lstlisting}
 	\end{exampleblock}
+\pause
 	\begin{columns}
 		\begin{column}{0.25\linewidth}
 			\includegraphics[scale=0.3]{quetion_icon1.png}
@@ -941,13 +965,18 @@ for(auto &i: arr){ //i为arr中当前元素的引用
 	\frametitle{4.3 数组\small{—访问数组元素}}
 	% \framesubtitle{——访问数组元素}
 	% \ttfamily
-	\begin{exampleblock}{例4.1：}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{exampleblock}{例4.1：}
 		\ttfamily
 		计算一个班级30名学生的数学科目的平均成绩和标准差。学生成绩随机生成。\\
 		\alert{提示}：标准差公式：$\sigma=\sqrt{\frac{\sum\limits_{i=1}^{N}(X_{i}-\mu)^{2}}{N}}$
 	\end{exampleblock}
-	\centering
-	\includegraphics[scale=0.28]{example4_1.png}
+\pause
+\column{0.5\textwidth}
+\centering
+	\includegraphics[scale=0.4]{example4_1.png}
+\end{columns}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -961,6 +990,7 @@ for(auto &i: arr){ //i为arr中当前元素的引用
 			\begin{column}{0.94\textwidth}
 				\begin{lstlisting}[numbers=left,numberstyle=\small,basicstyle=\small\ttfamily]
 #include <cstdlib>
+#include <cmath>
 #include <iostream>
 using namespace std;
 int main() {
@@ -1010,12 +1040,12 @@ int main() {
 	\begin{exampleblock}{例4.2：}
 		\ttfamily
 		在8$\times$8的国际象棋棋盘上摆放八个皇后，使其不能相互攻击，即任意两个皇后不得处在同一行、同一列或者同一对角斜线上。下图所示是一种符合条件的摆放方案。本题计算出一种方案即可。\\
-		\alert{提示}：用回溯法求解。回溯法基本思想:当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，即走不通就退回重新走。
+		\alert<2->{提示}：用回溯法求解。回溯法基本思想:当探索到某一步时，发现原先选择并不优或达不到目标，就退回一步重新选择，即走不通就退回重新走。
 	\end{exampleblock}
 	% \includegraphics[scale=0.35]{Fig4-3.png}
 	\begin{figure}
 		\centering
-		\animategraphics[scale=1.3,autoplay]{2}{example4_2/example4_2_}{001}{114}
+		\animategraphics[scale=1.5,autoplay]{1}{example4_2/example4_2_}{001}{114}
 	\end{figure}
 \end{frame}
 
@@ -1029,19 +1059,20 @@ int main() {
         ~~~~que[8] = \{3, 6, 2, 7, 1, 4, 0, 5\};\\
         ~~~~\\
        \onslide<2->{
-        冲突情况：\\
-        1）第~i~行和第~j~行的皇后在同一列：\\
-        ~~~~ que[i] == que[j]\\
-        2）第~i~行和第~j~行的皇后在同一对角线上：\\
-        ~~~~ {|que[i] - que[j]| == |i - j|}\\
-        比如~que[0]=1，que[1]=2~表明第0行和第1行的两个皇后在同一个对角线上。
-        }
+        冲突情况：}
+        \begin{enumerate}
+          \item <3->第~i~行和第~j~行的皇后在同一列：\\
+           que[i] == que[j]
+          \item <4->第~i~行和第~j~行的皇后在同一对角线上：\\
+         {|que[i] - que[j]| == |i - j|}\\
+         比如~que[0]=1，que[1]=2~表明第0行和第1行的两个皇后在同一个对角线上。
+        \end{enumerate}
         \end{exampleblock}
     \end{column}
 	\begin{column}{0.4\textwidth}
         \begin{figure}
         \centering
-        	\includegraphics[scale=0.4]{Fig4-3.png}
+        	\includegraphics[scale=0.5]{Fig4-3.png}
         \end{figure}
     \end{column}
 \end{columns}
@@ -1083,7 +1114,6 @@ int main() {
             break; //结束运行
         }
     }
-    return 0;
 }
         \end{lstlisting}\ttfamily
 	\end{exampleblock}
@@ -1100,7 +1130,7 @@ int main() {
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5];
             \end{lstlisting}
-			\item 三维数组
+			\item<2-> 三维数组
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a3d[2][3][5];
             \end{lstlisting}
@@ -1123,7 +1153,7 @@ int a2d[3][5] = {
     {7, 5, 4, 5, 7},
     {0, 8, 5, 2, 9}};
                       \end{lstlisting}
-				\item 内嵌的花括号可以省略：
+				\item<2-> 内嵌的花括号可以省略：
 				      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5] = {0, 1, 2, 1, 4, 7, 5, 4, 5, 7, 0, 8, 5, 2, 9};
                 \end{lstlisting}
@@ -1141,11 +1171,11 @@ int a2d[3][5] = {0, 1, 2, 1, 4, 7, 5, 4, 5, 7, 0, 8, 5, 2, 9};
 				      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5] = {0, 1, 2};
                 \end{lstlisting}
-				\item 显式初始化每个一维数组中的第一个元素：
+				\item<2-> 显式初始化每个一维数组中的第一个元素：
 				      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5] = {{0}, {1}, {2}};
                 \end{lstlisting}
-				\item 通过列表元素让编译器自动推断第一维长度：
+				\item<3-> 通过列表元素让编译器自动推断第一维长度：
 				      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[][5] = {0, 1, 2, 1, 4, 7, 5, 4, 5, 7, 0, 8};
                 \end{lstlisting}
@@ -1174,38 +1204,31 @@ B. int a[][3] = \{ \{ 1,2 \},\{ 0 \} \};\\
 \begin{frame}[fragile]
 	\frametitle{4.3 数组\small{—多维数组}}
 	% \framesubtitle{——多维数组}
-	\begin{block}{访问多维数组元素}
-		\begin{itemize}
+	\begin{block}{访问多维数组元素}\centering
+\begin{lstlisting}[basicstyle=\small\ttfamily]
+int a2d[2][2] = { {1,2}, {3,4}};
+            \end{lstlisting}
+\begin{columns}
+\column{0.5\textwidth}
+\begin{itemize}
 			\item 利用下标运算符访问：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
-int a2d[2][2] = {
-    {1,2},
-    {3,4}};
 int val = a2d[1][1];
 cout << "val=" << val << endl;//输出val= 4
             \end{lstlisting}
-			\item 用嵌套的\texttt{for}语句访问：
+			\item<2-> 用嵌套的\texttt{for}语句访问：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
-int a2d[2][2] = {{1,2},{3,4}};
 for (int i = 0; i < 2; i++) {
     for (int j = 0; j < 2; j++) {
-        cout << "a2d[" << i << "][" << j << "]: ";
-        cout << a2d[i][j] << endl;
+        cout << "a2d[" << i << "][" << j << "]: "<< a2d[i][j] << endl;
     }
 }
             \end{lstlisting}
 		\end{itemize}
-	\end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-	\frametitle{4.3 数组\small{—多维数组}}
-	% \framesubtitle{——多维数组}
-	\begin{block}{访问多维数组元素}
-		\begin{itemize}
-			\item 用范围\texttt{~for~}语句访问：
+\column{0.5\textwidth}
+\begin{itemize}
+			\item<3-> 用范围\texttt{~for~}语句访问：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
-int a2d[2][2] = { { 1,2 },{ 3,4 } };
 for (auto &row : a2d) {
     for (auto &col : row)
         cout << col << " ";
@@ -1213,7 +1236,9 @@ for (auto &row : a2d) {
 }
             \end{lstlisting}
 		\end{itemize}
-	\end{block}
+	
+\end{columns}
+\end{block}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -1248,7 +1273,7 @@ for (auto &row : a2d) {//row被推导为int(&)[5] 类型
     cout << endl;
 }
         \end{lstlisting}
-			\item 省去\texttt{row}前面的\texttt{\&}，无法通过编译：
+			\item<2-> 省去\texttt{row}前面的\texttt{\&}，无法通过编译：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[2][2] = { { 1,2 },{ 3,4 } };
 for (auto row : a2d) { //row 被推导为int *类型
@@ -1264,9 +1289,9 @@ for (auto row : a2d) { //row 被推导为int *类型
 \begin{frame}[fragile]
 	\frametitle{4.3 数组\small{—多维数组}}
 	% \framesubtitle{——多维数组}
-	\begin{exampleblock}{例4.3：}
+	\begin{exampleblock}{例4.3：打印扫雷游戏的地图}
 		\ttfamily
-		打印扫雷游戏的地图。在一个~$n\times n$~网格化的地图上，随机分布一些地雷，要求在每个没有设置地雷的网格内标记出其相邻区域内地雷的数目，每个网格相邻区域只包括同一行和同一列紧邻的4个网格。\\
+		在一个~$n\times n$~网格化的地图上，随机分布一些地雷，要求在每个没有设置地雷的网格内标记出其相邻区域内地雷的数目，每个网格相邻区域只包括同一行和同一列紧邻的4个网格。\\
 	\end{exampleblock}
 	\begin{center}
 		\includegraphics[width=0.4\textwidth]{Fig4-4.png}
@@ -1307,23 +1332,23 @@ int main() {
 			\end{column}
 			\begin{column}{0.96\textwidth}
 				\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,firstnumber=15,basicstyle=\small\ttfamily]
-for (int i = 0; i < sz; ++i) {
-    for (int j = 0; j < sz; ++j) {
-        if (map[i][j] != '*')
-            continue;          //跳过地雷的方格
-        if (i + 1 < sz && map[i + 1][j] != '*') map[i + 1][j] += 1;
-        if (i - 1 >= 0 && map[i - 1][j] != '*') map[i - 1][j] += 1;
-        if (j + 1 < sz && map[i][j + 1] != '*') map[i][j + 1] += 1;
-        if (j - 1 >= 0 && map[i][j - 1] != '*') map[i][j - 1] += 1;
+    for (int i = 0; i < sz; ++i) {
+        for (int j = 0; j < sz; ++j) {
+            if (map[i][j] != '*')
+                continue;          //跳过地雷的方格
+            if (i + 1 < sz && map[i + 1][j] != '*') map[i + 1][j] += 1;
+            if (i - 1 >= 0 && map[i - 1][j] != '*') map[i - 1][j] += 1;
+            if (j + 1 < sz && map[i][j + 1] != '*') map[i][j + 1] += 1;
+            if (j - 1 >= 0 && map[i][j - 1] != '*') map[i][j - 1] += 1;
+        }
+    }
+    for (int i = 0; i < sz; ++i) {
+        for (int j = 0; j < sz; ++j) {
+            cout << map[i][j]<<" ";
+        }
+        cout << endl;
     }
 }
-for (int i = 0; i < sz; ++i) {
-    for (int j = 0; j < sz; ++j) {
-        cout << map[i][j]<<" ";
-    }
-    cout << endl;
-}
-return 0;}
         \end{lstlisting}\ttfamily
 			\end{column}
 		\end{columns}
@@ -1336,6 +1361,7 @@ return 0;}
 	\frametitle{4.4 指针和数组\small{—指针指向数组}}
 	% \framesubtitle{——指针指向数组}
 	\begin{block}{指针和数组的关系}
+\vspace{-3mm}
 \begin{columns}
 \begin{column}{0.5\textwidth}
 		\begin{itemize}
@@ -1358,6 +1384,7 @@ int *p = &arr[0];
 \end{columns}
 	\end{block}
 	\begin{exampleblock}{对于以下程序段：}
+\vspace{-3mm}
 		\ttfamily
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int a[3] = { 5,7,3 }, *p = a;
@@ -1493,26 +1520,26 @@ int val2 = p[2];            //等价于 int val2 = arr[2];
 	\frametitle{4.4 指针和数组\small{—利用指针访问数组}}
 	% \framesubtitle{——利用指针访问数组}
 	\begin{block}{利用指针访问二维数组}
-		\begin{lstlisting}[basicstyle=\scriptsize\ttfamily]
+\vspace{-3mm}
+		\begin{lstlisting}[basicstyle=\ttfamily]
 int a2d[3][5] = { { 0 },{ 1 },{ 2 } };
 int(*p2d)[5] = a2d;
 cout << p2d[1][1] << endl;//输出为0
 
-cout << "a2d: " << a2d << "\t\t &a2d[0]: " << &a2d[0] << "\t p2d: " << p2d << endl;
-cout << "a2d[0]: " << a2d[0] << "\t &a2d[0][0]: " << &a2d[0][0] <<"\t *p2d: "<<*p2d<<endl;
-cout << "a2d[0][0]: " << a2d[0][0] << "\t\t **p2d: " << **p2d << endl;
+cout <<"a2d: "<<a2d<<"&a2d[0]: "<<&a2d[0]<<"\t p2d: "<<p2d<< endl;
+cout <<"a2d[0]: "<<a2d[0]<<"\t &a2d[0][0]: "<<&a2d[0][0]<<"\t *p2d: "<<*p2d<<endl;
+cout <<"a2d[0][0]: "<<a2d[0][0]<<"\t\t **p2d: "<<**p2d<<endl;
 //输出:
 a2d: 008FFD98            &a2d[0]: 008FFD98       p2d: 008FFD98
 a2d[0]: 008FFD98         &a2d[0][0]: 008FFD98    *p2d: 008FFD98
 a2d[0][0]: 0             **p2d: 0
         \end{lstlisting}
-a2d $\Leftrightarrow$ \&a2d[0] $\Leftrightarrow$ p2d\\
-a2d[0] $\Leftrightarrow$ \&a2d[0][0] $\Leftrightarrow$ *p2d\\
-a2d[0][0] $\Leftrightarrow$ **p2d\\
-~~~\\
-		\texttt{p2d[1][1] = 1;}与下面代码等价：\\
+\onslide<2->{a2d $\Leftrightarrow$ \&a2d[0] $\Leftrightarrow$ p2d;}~~~~~~\onslide<3->{a2d[0] $\Leftrightarrow$ \&a2d[0][0] $\Leftrightarrow$ *p2d;}~~~~~~\onslide<4->{a2d[0][0] $\Leftrightarrow$ **p2d}\\
+\smallskip
+		\onslide<5->{\texttt{p2d[1][1] = 1;}与下面代码等价：\\
 		\texttt{*(*(p2d + 1) + 1) = 1;~~~~~~*(*(a2d + 1) + 1) = 1;\\
 			*(p2d[1] + 1) = 1; ~~~~~~~~~*(a2d[1] + 1) = 1;}
+}
 	\end{block}
 \end{frame}
 
