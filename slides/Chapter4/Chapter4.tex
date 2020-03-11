@@ -1536,7 +1536,7 @@ a2d[0][0]: 0             **p2d: 0
         \end{lstlisting}
 \onslide<2->{a2d $\Leftrightarrow$ \&a2d[0] $\Leftrightarrow$ p2d;}~~~~~~\onslide<3->{a2d[0] $\Leftrightarrow$ \&a2d[0][0] $\Leftrightarrow$ *p2d;}~~~~~~\onslide<4->{a2d[0][0] $\Leftrightarrow$ **p2d}\\
 \smallskip
-		\onslide<5->{\texttt{p2d[1][1] = 1;}与下面代码等价：\\
+		\onslide<5->{\texttt{p2d[1][1] = 1}与下面代码等价：\\
 		\texttt{*(*(p2d + 1) + 1) = 1;~~~~~~*(*(a2d + 1) + 1) = 1;\\
 			*(p2d[1] + 1) = 1; ~~~~~~~~~*(a2d[1] + 1) = 1;}
 }
