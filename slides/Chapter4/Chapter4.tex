@@ -1090,28 +1090,28 @@ int main() {
 		\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,xleftmargin=2em,framexleftmargin=2em,basicstyle=\footnotesize\ttfamily]
 int main() {
     constexpr int sz = 8;
-    int que[sz] = { 0 };//每一行皇后都从第0列开始摆放
-    int i = 0;//从第0行开始摆放
+    int que[sz] = { 0 };            //每一行皇后都从第0列开始摆放
+    int i = 0;                      //从第0行开始摆放
     while (i >= 0){
         int k = 0;
-        while (k<i){ //检查前面所有皇后是否和第i行皇后冲突
+        while (k<i){                //检查前面所有皇后是否和第i行皇后冲突
             if(que[k]!=que[i]&&(abs(que[i]-que[k])!=abs(i-k))) ++k;
-            else   break;//第k行和第i行皇后产生冲突，退出，转到第11行
+            else   break;           //第k行和第i行皇后产生冲突，退出，转到第11行
         }
-        if (k < i) {//检测到冲突
-            ++que[i];//处理冲突：移动第i行皇后到当前位置的下一列
-            while (que[i] == sz){ //当前行所有尝试都失败，需要回溯
-                que[i] = 0; //重置当前行皇后位置
-                --i;//回溯到上一行
-                if (i < 0) break; //如果回溯到第0行之前，结束运行，转到第19行
-                ++que[i];//前一行皇后后移一列
+        if (k < i) {                //检测到冲突
+            ++que[i];               //处理冲突：移动第i行皇后到当前位置的下一列
+            while (que[i] == sz){   //当前行所有尝试都失败，需要回溯
+                que[i] = 0;         //重置当前行皇后位置
+                --i;                //回溯到上一行
+                if (i < 0) break;   //如果回溯到第0行之前，结束运行，转到第19行
+                ++que[i];           //前一行皇后后移一列
             }
-            continue; //重新检测是否与前面已安排皇后冲突，转到第5行
-        }else { //没有检测到冲突，安排下一行皇后
-            ++i;//移动到下一行
-            if (i < sz)  continue; //安排下一行皇后，已安排在第0列，转到第5行
+            continue;               //重新检测是否与前面已安排皇后冲突，转到第5行
+        }else {                     //没有检测到冲突，安排下一行皇后
+            ++i;                    //移动到下一行
+            if (i < sz)  continue;  //安排下一行皇后，已安排在第0列，转到第5行
             for (k = 0; k<sz; ++k)   cout << que[k]; //找到一个方案并输出
-            break; //结束运行
+            break;                  //结束运行
         }
     }
 }
@@ -1130,7 +1130,7 @@ int main() {
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5];
             \end{lstlisting}
-			\item<2-> 三维数组
+			\item 三维数组
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a3d[2][3][5];
             \end{lstlisting}
@@ -1334,8 +1334,7 @@ int main() {
 				\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,firstnumber=15,basicstyle=\small\ttfamily]
     for (int i = 0; i < sz; ++i) {
         for (int j = 0; j < sz; ++j) {
-            if (map[i][j] != '*')
-                continue;          //跳过地雷的方格
+            if (map[i][j] != '*')    continue;          //跳过地雷的方格
             if (i + 1 < sz && map[i + 1][j] != '*') map[i + 1][j] += 1;
             if (i - 1 >= 0 && map[i - 1][j] != '*') map[i - 1][j] += 1;
             if (j + 1 < sz && map[i][j + 1] != '*') map[i][j + 1] += 1;
@@ -1383,7 +1382,7 @@ int *p = &arr[0];
 \end{column}
 \end{columns}
 	\end{block}
-	\begin{exampleblock}{对于以下程序段：}
+	\begin{exampleblock}<2->{对于以下程序段：}
 \vspace{-3mm}
 		\ttfamily
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
@@ -1392,7 +1391,7 @@ cout << a << " " << &a[0] <<" "<< p << endl;
 cout << a[0] <<" "<< *p << endl;
         \end{lstlisting}
 		若数组a的第二个元素的地址为004FFB74,则该程序的输出为？\\
-		\onslide<2->{004FFB70 004FFB70 004FFB70 \\ 5 5}
+		\onslide<3->{004FFB70 004FFB70 004FFB70 \\ 5 5}
 	\end{exampleblock}
 \end{frame}
 
@@ -1404,12 +1403,12 @@ cout << a[0] <<" "<< *p << endl;
 			\item 利用\textcolor[rgb]{0,0,1}{\texttt{auto}}进行类型推导，得到的是一个指针
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int arr[] = {1, 2, 3, 4, 5};
-auto pa = arr; //pa 为int * 类型，显然是一个指针
-cout << *pa;     //输出arr[0] 的值1
+auto pa = arr;          //pa 为int * 类型，显然是一个指针
+cout << *pa;            //输出arr[0] 的值1
                 \end{lstlisting}
-			\item 利用\textcolor[rgb]{0,0,1}{\texttt{decltype}}定义新数组时，数组名\texttt{arr}不会转换为指针
+			\item<2-> 利用\textcolor[rgb]{0,0,1}{\texttt{decltype}}定义新数组时，数组名\texttt{arr}不会转换为指针
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
-decltype (arr) ar2; //ar2 为存放5 个整型数的一维数组
+decltype (arr) ar2;     //ar2 为存放5 个整型数的一维数组
             \end{lstlisting}
 		\end{itemize}
 	\end{block}
@@ -1441,10 +1440,11 @@ int *p2d[5];//p2d是一个含有5个指向整型对象的指针数组
 		一个数组名可理解为一个\texttt{const}指针，但两者并不完全等价\\
 		\texttt{如：}\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
+int arr[] = { 1, 2, 3, 4, 5 };
 int * const p = &arr[0]; //arr 可以理解为const 指针p
 cout << sizeof(arr) << " " << sizeof(p);
         \end{lstlisting}
-		使用运算符\texttt{~sizeof}测试的输出结果为：20 4，分别为一个含有5个整型元素的数组和一个指向整型类型的指针对象的大小
+		使用运算符\texttt{~sizeof}测试的输出结果为：20 8，分别为一个含有5个整型元素的数组和一个指向整型类型的指针对象的大小
 	\end{block}
 \end{frame}
 
@@ -1479,9 +1479,9 @@ int *p2 = p + 3; //返回p后面第3 个元素的地址，即&arr[3]
 int *p3 = p++;      //p后移一个位置，p3指向p原来的位置&arr[0]
 int *p4 = ++p;      //p继续后移一个位置，p4和p指向同一个位置&arr[2]
             \end{lstlisting}
-			\item 关系运算\\
+			\item<2-> 关系运算\\
 			      \texttt{p == p4, p4 > p3, p3 <= p2}等都为真。
-			\item 指针相减\\
+			\item<3-> 指针相减\\
 			      两个指针相减的结果为所指向数组元素的位置距离，比如表达式\alert{\texttt{p4-p3}}的结果为2。
 		\end{itemize}
 	\end{block}
@@ -1498,7 +1498,7 @@ p2 = &arr[0]; //正确：指向第一个元素，等价于p2 = arr;
 p2 = &arr[5]; //正确：指向尾元素后面的一个位置，等价于p2=arr + 5;
             \end{lstlisting}
 			      虽然不存在元素\texttt{arr[5]}，但可以计算该位置的地址。
-			\item 仅当两个指针指向同一个数组时，它们之间的运算才有意义。
+			\item<2-> 仅当两个指针指向同一个数组时，它们之间的运算才有意义。
 		\end{itemize}
 	\end{block}
 \end{frame}
@@ -1549,13 +1549,14 @@ a2d[0][0]: 0             **p2d: 0
 	\begin{block}{利用\texttt{auto}简化代码}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5] = { { 1 },{ 1 },{ 1 } };
-for (auto p = a2d; p < a2d + 3; ++p) {//p的类型为int (*)[5]
-    for (auto q = *p; q < *p + 5; ++q) {//q的类型为int *
+for (auto p = a2d; p < a2d + 3; ++p) {          //p的类型为int (*)[5]
+    for (auto q = *p; q < *p + 5; ++q) {        //q的类型为int *
         cout << *q << " ";
     }
     cout << endl;
 }
         \end{lstlisting}
+        \pause
 		\ttfamily 输出为：\\
 		1~0~0~0~0\\
 		1~0~0~0~0\\
@@ -1571,11 +1572,11 @@ for (auto p = a2d; p < a2d + 3; ++p) {//p的类型为int (*)[5]
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[3][5] = { { 1 },{ 1 },{ 1 } };
 for (auto p = &a2d[0][0]; p < a2d[0] + 15; ++p) {
-    if ((p - a2d[0]) % 5 == 0) //a2d[0] 等价于 &a2d[0][0]
-        cout << endl; //每打印5个元素后换行
+    if ((p - a2d[0]) % 5 == 0)      //a2d[0] 等价于 &a2d[0][0]
+        cout << endl;               //每打印5个元素后换行
     cout << *p << " ";
 }
-        \end{lstlisting}
+        \end{lstlisting}\pause
 		\ttfamily 输出为：\\
 		1~0~0~0~0\\
 		1~0~0~0~0\\
@@ -1611,9 +1612,9 @@ using namespace::std;
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 string str1;                //默认初始化，定义一个空字符串
 string str2(str1);          //等价于string str2 = str1; str2是str1的一个拷贝
-string str3 = "Rosita"; //复制初始化
+string str3 = "Rosita";     //复制初始化
 string str4("Rosita");      //直接初始化
-string str5(5, 'R');      //直接初始化，str5 的内容为 RRRRR
+string str5(5, 'R');        //直接初始化，str5 的内容为 RRRRR
         \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -1642,14 +1643,14 @@ getline(cin, s);
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 string s;
 cin >> s;
-cout << s.size() << endl;//输出 s 里面字符的个数，与 s.length() 等价
-if(!s.empty())               //如果 s 非空，则输出其内容
+cout << s.size() << endl;       //输出 s 里面字符的个数，与 s.length() 等价
+if(!s.empty())                  //如果 s 非空，则输出其内容
     cout << s;
                 \end{lstlisting}
 		调用类的成员函数需在对象名后加\alert{\texttt{.}}操作符。指针对象需用\alert{\texttt{->}}操作符:
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-string *ps = &s;                 //定义一个指针对象指向 string 对象 s
-cout << ps->size() << endl; //通过指针调用 size 成员函数
+string *ps = &s;                //定义一个指针对象指向 string 对象 s
+cout << ps->size() << endl;     //通过指针调用 size 成员函数
                 \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -1685,7 +1686,7 @@ string s4 = "Hello " + s2;//string对象可与字面值常量相加
 			\item 利用下标运算和\alert{\texttt{at}函数}访问单个字符
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 string s = "hello";
-s[1] = 'H'; //对第二个元素进行写操作
+s[1] = 'H';         //对第二个元素进行写操作
 cout << s.at(1) << endl;
         \end{lstlisting}
 			      下标运算和 \texttt{at} 函数都要求一个有效的位置值，最小值为0，最大值为对象的长度-1。利用\alert{\texttt{at}}成员函数访问是安全的，它会自动\alert{检查}位置的\alert{合法性}\\
@@ -1716,10 +1717,10 @@ int main() {
     string target;
     cout << "请给出一个单词：";
     cin >> target;
-    cout << string(100, '\n'); //输出100个换行，用来隐藏输入的单词
+    cout << string(100, '\n');                  //输出100个换行，用来隐藏输入的单词
     int length = target.length();
-    string attempt(length,'*'),badchars;//分别记录当前正确和错误的猜测
-    int guesses = 5; //最大尝试次数
+    string attempt(length,'*'),badchars;        //分别记录当前正确和错误的猜测
+    int guesses = 5;                            //最大尝试次数
     cout<<"单词已准备好，它有"<<length<<"个字母:"<<attempt<<endl;
         \end{lstlisting}
 	\end{exampleblock}
@@ -1733,17 +1734,16 @@ int main() {
 do{
     char letter;
     cout << "请猜测一个字母: ";
-    cin >> letter; //badchars或attempt中已有letters
-    if (badchars.find(letter) != string::npos ||
-        attempt.find(letter) != string::npos)
+    cin >> letter;                      //badchars或attempt中已有letters
+    if (badchars.find(letter) != string::npos || attempt.find(letter) != string::npos)
         cout << "已经猜过该字母，请重猜" << endl;
-        continue; //string::npos匹配失败标志位
+        continue;                       //string::npos匹配失败标志位
     }
-    auto loc = target.find(letter); //使用auto自动推导loc类型
+    auto loc = target.find(letter);     //使用auto自动推导loc类型
     if (loc == string::npos) {
         cout << "没有此字母!" << endl;
-        --guesses; //允许错误次数-1
-        badchars += letter; //猜错的字母放到badchars里
+        --guesses;                      //允许错误次数-1
+        badchars += letter;             //猜错的字母放到badchars里
     }
         \end{lstlisting}
 	\end{exampleblock}
@@ -1757,8 +1757,8 @@ do{
 		\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,xleftmargin=2em,framexleftmargin=2em,firstnumber=26,basicstyle=\small\ttfamily]
         else {
                 cout << "有这个字母，继续加油!" << endl;
-                do {//把attempt里面相应的*用猜对的字母替换
-                    attempt[loc]=letter;//如果找到，下一次搜索从loc+1开始
+                do {                            //把attempt里面相应的*用猜对的字母替换
+                    attempt[loc]=letter;        //如果找到，下一次搜索从loc+1开始
                     loc = target.find(letter, loc + 1);
                 } while (loc != string::npos);
         }
@@ -1809,9 +1809,9 @@ char cstr[] = "Hello";
 	\begin{block}{利用指针处理\texttt{C}风格字符串}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 char cstr[] = "Hello";
-char *ps = cstr;//指向字符数组cstr
+char *ps = cstr;                    //指向字符数组cstr
 const char *ps2 = "C++";
-cout << ps << "," << ps2 << endl; //输出Hello,C++
+cout << ps << "," << ps2 << endl;   //输出Hello,C++
         \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -1885,8 +1885,8 @@ strcpy(carr, str.c_str());
 	\end{table}
 	\begin{block}{定义\texttt{vector}对象}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-vector<int> v1; //存放整数的空vector
-vector<int> v2 = {0,1,2}; //v2有三个元素，值分别为0、1和2
+vector<int> v1;             //存放整数的空vector
+vector<int> v2 = {0,1,2};   //v2有三个元素，值分别为0、1和2
 vector<int> v3(10);         //v3可存放10个整数，值为默认值0
 vector<int> v4(10,1);       //v4存放10个整数1
 vector<string> v5 = {"Hi","Lisha","Mandy","Rosita"};
@@ -1903,7 +1903,7 @@ vector<vector<int>> v6(10,v2);
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 vector<int> vi;
 for(int i=0; i < 100; ++i)
-    vi.push_back(i);//依次添加100个数：0-99
+    vi.push_back(i);        //依次添加100个数：0-99
                 \end{lstlisting}
 		\texttt{vi.push\_back()}成员函数称为尾插，即从容器尾端添加元素\\
 		\texttt{vi.pop\_back()}成员函数可从容器尾端移除一个元素\\
@@ -1912,7 +1912,7 @@ for(int i=0; i < 100; ++i)
 	\begin{block}{访问元素}
 		可用\alert{下标}运算符或\alert{\texttt{at}}成员函数访问容器里的元素\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-cout << vi.at(1);//或者cout << vi[1];
+cout << vi.at(1);           //或者cout << vi[1];
                 \end{lstlisting}
 		\texttt{at}函数会自动检查访问位置的合法性而下标运算符不会
 	\end{block}
@@ -1926,13 +1926,13 @@ cout << vi.at(1);//或者cout << vi[1];
 迭代器行为与指针类似，支持对数据的间接访问以及在元素间移动
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 vector<int> vi = {0,1,2,3};
-auto itb = vi.begin();//itb 指向 vi 的第一个元素
-auto ite = vi.end();//ite 指向 vi 的尾后元素
+auto itb = vi.begin();      //itb 指向 vi 的第一个元素
+auto ite = vi.end();        //ite 指向 vi 的尾后元素
                 \end{lstlisting}
 	\end{block}
 	\begin{block}{利用解引用获取迭代器指向对象的内容}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-cout << *itb << endl; //输出第一个元素值0
+cout << *itb << endl;       //输出第一个元素值0
                 \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -1943,7 +1943,7 @@ cout << *itb << endl; //输出第一个元素值0
 	\begin{block}{指向\texttt{vector}类型的迭代器支持指针运算}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 for(auto it = vi.begin(); it != vi.end(); ++it){
-    *it *= 2; //每个元素乘 2
+    *it *= 2;                       //每个元素乘 2
     cout << *it <<endl;
 }
         \end{lstlisting}
@@ -1959,12 +1959,12 @@ for(auto it = vi.begin(); it != vi.end(); ++it){
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
 vector<string> vs = {"Hi","Lisha","Mandy","Rosita"};
 for(auto it = vs.begin(); it != vs.end(); ++it ){
-    cout << (*it).size() << endl;//选择 string 类成员函数 size
+    cout << (*it).size() << endl;       //选择 string 类成员函数 size
 }
         \end{lstlisting}
 		\textcolor[rgb]{1,0,0}{注意}：迭代器外面的圆括号不可缺少，否则将表达完全不同的意思:\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-*it.size()；//错误：迭代器 it 没有成员函数 size，相当于 *(it.size());
+*it.size()；                                                             //错误：迭代器 it 没有成员函数 size，相当于 *(it.size());
         \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -2035,10 +2035,9 @@ int main() {
     constexpr int sz = 8;
     char map[sz][sz];
     for (auto &row : map)
-        for(auto &col:row)//以0.5的概率设置地雷，使用条件表达式简化代码
+        for(auto &col:row)          //以0.5的概率设置地雷，使用条件表达式简化代码
             col = rand() % 100 < 50 ? '*' : '0';
-    //打印地图，函数setw设置打印字符的宽度（见10.2.2节）
-    for (int i = 0; i < sz; ++i) {
+    for (int i = 0; i < sz; ++i) {  //打印地图，函数setw设置打印字符的宽度（见10.2.2节）
         for (int j = 0; j < sz; ++j) {
             if (map[i][j] == '*') cout <<setw(3)<< "*";
             else cout << setw(3) << i*sz+j;
@@ -2062,12 +2061,12 @@ cout << "请输入选择的方格编号[0-" << sz*sz - 1 << "]:";
 cin >> cell;
 if (map[cell/sz][cell%sz] == '*') {
     cout << "选择的是地雷" << endl;
-}else //容器nobomb存放未处理的方格编号，初始值为选择的方格编号
+}else                               //容器nobomb存放未处理的方格编号，初始值为选择的方格编号
     vector<int> result, nobomb(1,cell);
-    map[cell / sz][cell%sz] = '1';//标记该方格已经遍历
-    do {//取出nobomb中第一个待处理的方格编号，找到与cell相邻的方格
-        cell = nobomb.front();
-    //neibor存放与cell相邻的4个方格编号，如果没有对应方格编号标记为-1
+    map[cell / sz][cell%sz] = '1';  //标记该方格已经遍历
+    do {                            
+        cell = nobomb.front();      //取出nobomb中第一个待处理的方格编号，找到与cell相邻的方格
+                                    //neibor存放与cell相邻的4个方格编号，如果没有对应方格编号标记为-1
         int neibor[]={(cell/sz>0)?cell-sz:-1,(cell%sz>0)?cell-1:-1,
             (cell/sz<sz-1)?cell+sz:-1,(cell%sz<sz-1)?cell+1:-1};
             \end{lstlisting}\ttfamily
@@ -2082,14 +2081,14 @@ if (map[cell/sz][cell%sz] == '*') {
 	\begin{exampleblock}{代码清单4.5，例4.5：}
 		% \centering
 		\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,xleftmargin=2em,framexleftmargin=2em,firstnumber=30,basicstyle=\small\ttfamily]
-        for (auto &k : neibor) //注意k!=-1必须放到逻辑与的左侧
+        for (auto &k : neibor)          //注意k!=-1必须放到逻辑与的左侧
             if (k != -1 && map[k/sz][k%sz] == '0'){
-                nobomb.push_back(k);//所有与cell相邻的无雷方格放到nobomb中
-                map[k/sz][k%sz] = '1';//标记该方格已经遍历过
+                nobomb.push_back(k);    //所有与cell相邻的无雷方格放到nobomb中
+                map[k/sz][k%sz] = '1';  //标记该方格已经遍历过
             }
         }
-        result.push_back(cell); //将处理完的方格编号cell放到result中
-        nobomb.erase(nobomb.begin());//将cell从nobomb中移除
+        result.push_back(cell);         //将处理完的方格编号cell放到result中
+        nobomb.erase(nobomb.begin());   //将cell从nobomb中移除
     } while (!nobomb.empty());
     for (auto i : result)
         cout << i << " ";
@@ -2111,7 +2110,8 @@ return 0;
 const int red = 0; const int green = 1;  const int blue = 2;  ...
 \end{lstlisting}
 \end{block}
-	\begin{block}{定义枚举类型}
+\vspace{-2mm}
+	\begin{block}<2->{定义枚举类型}
 		\begin{itemize}
 			\item 不限定作用域
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
@@ -2119,13 +2119,13 @@ enum color{red, green, blue};
             \end{lstlisting}
 			      三个枚举成员的作用域与枚举类型本身的作用域相同\\
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
-enum emotion{happy, calm, blue};//错误：枚举成员 blue 已经定义过
+enum emotion{happy, calm, blue};    //错误：枚举成员 blue 已经定义过
             \end{lstlisting}
-			\item 限定作用域
+			\item<3-> 限定作用域
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 enum class stoplight{red, green,yellow};
-color c = red; //正确，可以访问color 类型的枚举成员
-stoplight a = red; //错误：stoplight 类型的枚举成员red在此不可访问
+color c = red;                      //正确，可以访问color 类型的枚举成员
+stoplight a = red;                  //错误：stoplight 类型的枚举成员red在此不可访问
             \end{lstlisting}
 			      \texttt{\textcolor[rgb]{0,0,1}{stoplight b = stoplight::red; //正确}}
 		\end{itemize}
