@@ -1,5 +1,5 @@
 %!TEX program = xelatex
-\documentclass[aspectratio=43,UTF8,10pt]{ctexbeamer}
+\documentclass[aspectratio=169,UTF8,10pt]{ctexbeamer}
 
     \mode<presentation> {
     \usetheme{Madrid}
@@ -179,10 +179,10 @@
 
     \begin{blueblock}<2->{\texttt{maximum}函数:返回两个整数中较大的数}
 \vspace{-1.5mm}\begin{lstlisting}
-int maximum(int a, int b) { //a和b为两个int类型(*@\alert{形参}@*)
-     int c;                //用来保存结果
+int maximum(int a, int b) {     //a和b为两个int类型(*@\alert{形参}@*)
+     int c;                     //用来保存结果
      c=a > b ? a : b;
-     return c;              //返回结果
+     return c;                  //返回结果
 }
 
 \end{lstlisting}\vspace{-1.5mm}
@@ -263,11 +263,11 @@ int maximum(int a, int b)
 \begin{greenblock}{是否正确调用\texttt{maximum}函数。}
 
 \vspace{-1.5mm}\begin{lstlisting}
-  maximum(1); //错误：实参数目不足
-  maximum("c++", "max"); //错误：类型不匹配
-  maxi(1, 2); //错误：函数名和被调函数名不一致
-  maximum(1, 2, 3); //错误：实参个数太多
-  maximum(2.3, 4 + 1); //正确：第一个实参将被转换为int类型
+  maximum(1);               //错误：实参数目不足
+  maximum("c++", "max");    //错误：类型不匹配
+  maxi(1, 2);               //错误：函数名和被调函数名不一致
+  maximum(1, 2, 3);         //错误：实参个数太多
+  maximum(2.3, 4 + 1);      //正确：第一个实参将被转换为int类型
 \end{lstlisting}\vspace{-1.5mm}
 \end{greenblock}
 \end{columns}
@@ -301,12 +301,9 @@ void fun(void){/**/} // 显式定义空形参列表，返回值类型为~void
 \begin{frame}[fragile]{练习}
 找出下面函数的错误。
 
-
-
-
 \begin{columns}
 \column{0.45\textwidth}
-    \begin{blueblock}{1}
+    \begin{blueblock}{练习1}
 \vspace{-1.5mm}\begin{lstlisting}
 int f(){
     string s;
@@ -317,7 +314,7 @@ int f(){
 \end{blueblock}
 
 \column{0.45\textwidth}
-    \begin{blueblock}{2}
+    \begin{blueblock}<2->{练习2}
 \vspace{-1.5mm}\begin{lstlisting}
 //定义一个无返回值的函数
 f2(int i){
@@ -331,7 +328,7 @@ f2(int i){
 
 \begin{columns}
 \column{0.45\textwidth}
-    \begin{blueblock}{3}
+    \begin{blueblock}<3->{练习3}
 \vspace{-1.5mm}\begin{lstlisting}
 int f(int v1,int v2)
     int x=v1+v2;
@@ -340,10 +337,12 @@ int f(int v1,int v2)
 \end{blueblock}
 
 \column{0.45\textwidth}
-    \begin{blueblock}{4}
+    \begin{blueblock}<4->{练习4}
 \vspace{-1.5mm}\begin{lstlisting}
+//定义函数square
 double square(double x)
 return x*x;
+
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \end{columns}
@@ -358,7 +357,7 @@ return x*x;
 \end{block}
 \begin{columns}
 \begin{column}{0.4\textwidth}
-\begin{block}{函数声明（函数原型）}
+\begin{block}<2->{函数声明（函数原型）}
 \begin{itemize}
   \item 返回值类型
   \item 名字
@@ -366,7 +365,7 @@ return x*x;
 \end{itemize}
 \end{block}
 
-\begin{blueblock}{函数声明的示例}
+\begin{blueblock}<3->{函数声明的示例}
 %\indent ~~~~\\
 %\indent ~~~~\\
 
@@ -381,7 +380,7 @@ int maximum(int, int);
 
 \begin{column}{0.5\textwidth}
 \vspace{-1.5mm}
-\begin{block}{}
+\begin{block}<4->{}
 \begin{lstlisting}[basicstyle=\small\ttfamily]
 int maximum(int a, int b); //函数声明
 
@@ -481,12 +480,6 @@ int main() {
     float t = 3.5;
     cout << "t=" << t << endl;
     fun(t);
-    for (int i = 0; i<10; i++) {
-        float t = i, x = t + i;
-        cout << x << endl;
-    }
-    cout << x << endl; // 在此不可见
-    return 0;
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -498,13 +491,14 @@ int main() {
 函数体内部定义的局部对象需要静态存储周期，保存上一次调用的计算结果
 \begin{itemize}
   \item 局部作用域；
-  \item 静态生命周期。
+  \item 静态生命周期；
+  \item 如果内置类型的局部静态对象没有提供初始值，则初始化为0
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{请问程序输出结果？}\vspace{-1.5mm}\begin{lstlisting}
 int fun() {
-    int a = 0; //a为局部自动对象
-    static int b = 0; //b为局部静态对象
+    int a = 0;          //a为局部自动对象
+    static int b = 0;   //b为局部静态对象
     return ++b + ++a;
 }
 int main() {
@@ -517,9 +511,7 @@ int main() {
   结果为：2 3 4
 \end{itemize}
 \end{blueblock}
-\begin{itemize}
-  \item<4-> 如果内置类型的局部静态对象没有提供初始值，则初始化为0
-\end{itemize}
+
 \end{frame}
 
 
@@ -531,22 +523,21 @@ int main() {
 在\alert{函数外面}定义的对象称为全局对象。
 \begin{itemize}
   \item 静态存储周期；
-  \item 全局作用域（文件域）。
+  \item 全局作用域（文件域）；
+  \item 如果内置类型的全局对象没有提供初始值，则初始化为0
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{全局对象使用示例}\vspace{-1.5mm}\begin{lstlisting}
-int sum = 10; //定义全局对象
+int sum = 10;                           //定义全局对象
 int main() {
-    int sum = 1; //定义局部对象
-    std::cout << sum << std::endl; //访问局部对象sum，打印输出1
-    std::cout << ::sum << std::endl; //访问全局对象sum，打印输出10
+    int sum = 1;                        //定义局部对象
+    std::cout << sum << std::endl;      //访问局部对象sum，打印输出1
+    std::cout << ::sum << std::endl;    //访问全局对象sum，打印输出10
     return 0;
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-\begin{itemize}
-  \item<2-> 如果内置类型的全局对象没有提供初始值，则初始化为0
-\end{itemize}
+
 \end{frame}
 
 \begin{frame}[fragile]
@@ -614,10 +605,10 @@ void Swap(int x, int y) {
      int z(x);
      x = y;
      y = z;
-}//交换x和y的值
+}                       
 int main() {
     int i(4), j(5);
-    Swap(i, j);//调用Swap函数，实参i和j分别初始化Swap函数的形参x和y
+    Swap(i, j);         //调用Swap函数，实参i和j分别初始化Swap函数的形参x和y
     cout << "i=" << i << ",j=" << j << endl;//输出i=4,j=5
 }
 \end{lstlisting}\vspace{-1.5mm}
@@ -643,7 +634,7 @@ int main() {
     {5.3.1 参数传递\small{~---~值传递}}
 \begin{blueblock}{代码清单5.1，例5.1}\vspace{-1.5mm}\begin{lstlisting}
 ...
-bool is_palindrome(int x);//函数声明
+bool is_palindrome(int x);                  //函数声明
 int main() {
     for (int i = 10; i <= 1000; ++i) {
         if (is_palindrome(i))
@@ -654,12 +645,11 @@ int main() {
 bool is_palindrome(int x) {
     vector<int> digit;//存放x的每一位数字
     while (x != 0) {
-         digit.push_back(x % 10);//获取当前x的个位数，并将其尾插到~digit~
-         x /= 10;//去掉~x~的个位数
+         digit.push_back(x % 10);       //获取当前x的个位数，并将其尾插到~digit~
+         x /= 10;                       //去掉~x~的个位数
     }
     for (int i = 0, j = digit.size() - 1; i < j; ++i, --j) {
-        if (digit[i] != digit[j])
-            return false;
+        if (digit[i] != digit[j])  return false;
     }
     return true;
 }
@@ -722,7 +712,7 @@ int main() {
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{exp5-3-1-2-a}
+  \includegraphics[width=0.5\textwidth]{exp5-3-1-2-a}
 \end{figure}
 
 \end{itemize}
@@ -1316,7 +1306,7 @@ inline void Swap(int &x, int &y){ /*...*/ }
   \item<2->[]
 \begin{figure}
   \centering
-  \includegraphics[width=0.7\textwidth]{Fig7-3}
+  \includegraphics[width=0.6\textwidth]{Fig7-3}
 \end{figure}
 
 \end{itemize}
