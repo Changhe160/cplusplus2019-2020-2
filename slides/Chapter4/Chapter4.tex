@@ -1267,7 +1267,7 @@ for (auto &row : a) {
 			\item 除了最内层的循环外，其它各层循环中必须使用引用，例如：
 			      \begin{lstlisting}[basicstyle=\small\ttfamily]
 int a2d[2][2] = { { 1,2 },{ 3,4 } };
-for (auto &row : a2d) {//row被推导为int(&)[5] 类型
+for (auto &row : a2d) {//row被推导为int(&)[2] 类型
     for (auto col : row) //正确，row为一维数组的引用
         cout << col << " ";
     cout << endl;
@@ -1885,10 +1885,10 @@ strcpy(carr, str.c_str());
 	\end{table}
 	\begin{block}{定义\texttt{vector}对象}
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-vector<int> v1;             //存放整数的空vector
-vector<int> v2 = {0,1,2};   //v2有三个元素，值分别为0、1和2
-vector<int> v3(10);         //v3可存放10个整数，值为默认值0
-vector<int> v4(10,1);       //v4存放10个整数1
+vector<int> v1;                 //存放整数的空vector
+vector<int> v2 = {0,1,2};       //v2有三个元素，值分别为0、1和2
+vector<int> v3(10);             //v3可存放10个整数，值为默认值0
+vector<int> v4(10,1);           //v4存放10个整数1
 vector<string> v5 = {"Hi","Lisha","Mandy","Rosita"};
 vector<vector<int>> v6(10,v2);
         \end{lstlisting}
@@ -1964,7 +1964,7 @@ for(auto it = vs.begin(); it != vs.end(); ++it ){
         \end{lstlisting}
 		\textcolor[rgb]{1,0,0}{注意}：迭代器外面的圆括号不可缺少，否则将表达完全不同的意思:\\
 		\begin{lstlisting}[basicstyle=\small\ttfamily]
-*it.size()；                                                             //错误：迭代器 it 没有成员函数 size，相当于 *(it.size());
+*it.size()；                      //错误：迭代器 it 没有成员函数 size，相当于 *(it.size());
         \end{lstlisting}
 	\end{block}
 \end{frame}
@@ -2064,11 +2064,11 @@ if (map[cell/sz][cell%sz] == '*') {
 }else                               //容器nobomb存放未处理的方格编号，初始值为选择的方格编号
     vector<int> result, nobomb(1,cell);
     map[cell / sz][cell%sz] = '1';  //标记该方格已经遍历
-    do {                            
-        cell = nobomb.front();      //取出nobomb中第一个待处理的方格编号，找到与cell相邻的方格
-                                    //neibor存放与cell相邻的4个方格编号，如果没有对应方格编号标记为-1
+    do {
+        cell = nobomb.front();      //取出nobomb中第一个待处理的方格编号，找到与cell相邻的方格                               
         int neibor[]={(cell/sz>0)?cell-sz:-1,(cell%sz>0)?cell-1:-1,
             (cell/sz<sz-1)?cell+sz:-1,(cell%sz<sz-1)?cell+1:-1};
+            //neibor存放与cell相邻的4个方格编号，如果没有对应方格编号标记为-1
             \end{lstlisting}\ttfamily
 
 	\end{exampleblock}
@@ -2081,14 +2081,14 @@ if (map[cell/sz][cell%sz] == '*') {
 	\begin{exampleblock}{代码清单4.5，例4.5：}
 		% \centering
 		\begin{lstlisting}[numbers=left,numberstyle=\small,numbers=left,xleftmargin=2em,framexleftmargin=2em,firstnumber=30,basicstyle=\small\ttfamily]
-        for (auto &k : neibor)          //注意k!=-1必须放到逻辑与的左侧
+        for (auto &k : neibor)              //注意k!=-1必须放到逻辑与的左侧
             if (k != -1 && map[k/sz][k%sz] == '0'){
-                nobomb.push_back(k);    //所有与cell相邻的无雷方格放到nobomb中
-                map[k/sz][k%sz] = '1';  //标记该方格已经遍历过
+                nobomb.push_back(k);        //所有与cell相邻的无雷方格放到nobomb中
+                map[k/sz][k%sz] = '1';      //标记该方格已经遍历过
             }
         }
-        result.push_back(cell);         //将处理完的方格编号cell放到result中
-        nobomb.erase(nobomb.begin());   //将cell从nobomb中移除
+        result.push_back(cell);             //将处理完的方格编号cell放到result中
+        nobomb.erase(nobomb.begin());       //将cell从nobomb中移除
     } while (!nobomb.empty());
     for (auto i : result)
         cout << i << " ";
