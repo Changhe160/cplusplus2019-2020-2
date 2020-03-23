@@ -179,7 +179,7 @@
 
     \begin{blueblock}<2->{\texttt{maximum}函数:返回两个整数中较大的数}
 \vspace{-1.5mm}\begin{lstlisting}
-int maximum(int a, int b) {     //a和b为两个int类型(*@\alert{形参}@*)
+int maximum(int a, int b) {     //a和b为两个int类型形式参数((*@\alert{简称形参}@*))
      int c;                     //用来保存结果
      c=a > b ? a : b;
      return c;                  //返回结果
@@ -198,20 +198,20 @@ int maximum(int a, int b) {     //a和b为两个int类型(*@\alert{形参}@*)
     {5.1 认识函数\small{~---~调用函数}}
 
 \begin{columns}
-\column{0.5\textwidth}
+\column{0.6\textwidth}
 
     \begin{blueblock}{调用maxnum函数}
 \vspace{-1.5mm}\begin{lstlisting}[basicstyle=\small\ttfamily]
-int maximum(int a, int b) {
+int maximum(int a, int b) { //被调函数
      int c;
      c=a > b ? a : b;
      return c;
 }
-int main() {
+int main() {            //主调函数
     int x, y, z;
     cin >> x >> y;
-    //调用函数maximum，x和y为(*@\alert{实参}@*)
-    z = maximum(x, y);
+                        //调用函数maximum
+    z = maximum(x, y);  //x和y为实际参数((*@\alert{简称实参}@*))
     cout << "The maximum value is " << z << endl;
     return 0;
 }
@@ -219,7 +219,7 @@ int main() {
 \end{blueblock}
 
 
-\column{0.5\textwidth}
+\column{0.4\textwidth}
 %        \begin{column}{0.4\textwidth}
 函数调用过程（如下）：
 
@@ -242,14 +242,14 @@ int main() {
     {5.1 认识函数\small{~---~调用规则}}
 \begin{block}{调用规则}
 \begin{itemize}
-  \item 调用处的函数名要和被调函数的函数名一致；
-  \item 实参和形参存在一一对应的关系，类型要兼容；
-  \item 实参可以是左值或右值，但形参必须是左值（用于接受实参的值）。
+  \item<1-> 调用处的函数名要和被调函数的函数名一致；
+  \item<2-> 实参和形参存在一一对应的关系，类型要兼容；
+  \item<3-> 实参可以是左值或右值，但形参必须是\alert{左值}（why?）。
 \end{itemize}
 \end{block}
 \begin{columns}
 \column{0.3\textwidth}
-    \begin{blueblock}{\texttt{maximum}函数}
+    \begin{blueblock}<4->{\texttt{maximum}函数}
 \vspace{-1.5mm}\begin{lstlisting}
 int maximum(int a, int b)
 {
@@ -260,7 +260,7 @@ int maximum(int a, int b)
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \column{0.65\textwidth}
-\begin{greenblock}{是否正确调用\texttt{maximum}函数。}
+\begin{greenblock}<4->{是否正确调用\texttt{maximum}函数。}
 
 \vspace{-1.5mm}\begin{lstlisting}
   maximum(1);               //错误：实参数目不足
@@ -287,10 +287,10 @@ int maximum(int a, int b)
 
 \begin{blueblock}<3->{无参列表和~void~返回类型例子}
 \vspace{-1.5mm}\begin{lstlisting}
-void fun(){/**/} // 隐式定义空形参列表，返回值类型为~void
+void fun(){/**/}        // 隐式定义空形参列表，返回值类型为~void
 \end{lstlisting}
 \vspace{-1.5mm}\begin{lstlisting}
-void fun(void){/**/} // 显式定义空形参列表，返回值类型为~void
+void fun(void){/**/}    // 显式定义空形参列表，返回值类型为~void
 \end{lstlisting}\vspace{-1.5mm}
 
 \end{blueblock}
@@ -361,7 +361,7 @@ return x*x;
 \begin{itemize}
   \item 返回值类型
   \item 名字
-  \item 形参列表
+  \item 形参列表（可以省略形参名）
 \end{itemize}
 \end{block}
 
@@ -451,12 +451,19 @@ int maximum(int a, int b) {
 \subsection{局部对象}
 \begin{frame}[fragile]
     {5.2 认识函数\small{~---~局部对象}}
-\begin{block}{局部对象（local object）}
-在\alert{语句块内部}定义的对象，包括函数的形参。
+    \begin{block}{按照对象定义的位置}
+    \begin{itemize}
+        \item 局部对象：函数内部
+        \item 全局对象：函数外部
+    \end{itemize}
+    \end{block}
+    
+\begin{block}<2->{局部对象（local object）：在\alert{函数内部}定义的对象，包括函数的形参}
 \begin{itemize}
-  \item 仅在相应的语句块内部可见；
-  \item 屏蔽外层作用域中的同名对象；
-  \item 生命期取决于存储类型。
+  \item<3-> 仅在相应的语句块内部可见；
+  \item<4-> 屏蔽外层作用域中的同名对象；
+  \item<5-> 生命期取决于存储类型；
+  \item<6-> 局部自动对象和局部静态对象。
 \end{itemize}
 \end{block}
 \end{frame}
@@ -464,7 +471,7 @@ int maximum(int a, int b) {
 
 \begin{frame}[fragile]
     {5.2.2 认识函数\small{~---~局部对象}}
-\begin{block}{自动对象}
+\begin{block}{局部自动对象}
 \begin{itemize}
   \item 自动存储周期；
   \item 初始化方式：（1）初始值；（2）默认初始化（内置类型除外）。
@@ -472,7 +479,7 @@ int maximum(int a, int b) {
 \end{block}
 \begin{blueblock}<2->{使用自动对象的例子}
 \vspace{-1.5mm}\begin{lstlisting}
-void fun(float x) {
+void fun(float x) { //x和t均为局部自动对象
     int t = x + 5;
     cout << "t=" << t << endl;
 }
@@ -488,17 +495,17 @@ int main() {
 \begin{frame}[fragile]
     {5.2.2 认识函数\small{~---~局部对象}}
 \begin{block}{局部静态对象}
-函数体内部定义的局部对象需要静态存储周期，保存上一次调用的计算结果
+函数体内部定义的局部对象需要保存上一次调用之后的计算结果
 \begin{itemize}
   \item 局部作用域；
-  \item 静态生命周期；
-  \item 如果内置类型的局部静态对象没有提供初始值，则初始化为0
+  \item<2-> \alert{静态生命周期；}
+  \item<3-> \alert{如果内置类型的局部静态对象没有提供初始值，则初始化为0}
 \end{itemize}
 \end{block}
-\begin{blueblock}<2->{请问程序输出结果？}\vspace{-1.5mm}\begin{lstlisting}
+\begin{blueblock}<4->{请问程序输出结果？}\vspace{-1.5mm}\begin{lstlisting}
 int fun() {
-    int a = 0;          //a为局部自动对象
-    static int b = 0;   //b为局部静态对象
+    int a = 0;              //a为局部自动对象
+    static int b = 0;       //b为局部静态对象
     return ++b + ++a;
 }
 int main() {
@@ -507,7 +514,7 @@ int main() {
 }
 \end{lstlisting}\vspace{-1.5mm}
 \begin{itemize}
-  \item<3->[]
+  \item<5->[]
   结果为：2 3 4
 \end{itemize}
 \end{blueblock}
@@ -524,15 +531,15 @@ int main() {
 \begin{itemize}
   \item 静态存储周期；
   \item 全局作用域（文件域）；
-  \item 如果内置类型的全局对象没有提供初始值，则初始化为0
+  \item 如果内置类型的全局对象没有提供初始值，则初始化为0。
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{全局对象使用示例}\vspace{-1.5mm}\begin{lstlisting}
-int sum = 10;                           //定义全局对象
+int sum = 10;                               //定义全局对象
 int main() {
-    int sum = 1;                        //定义局部对象
-    std::cout << sum << std::endl;      //访问局部对象sum，打印输出1
-    std::cout << ::sum << std::endl;    //访问全局对象sum，打印输出10
+    int sum = 1;                            //定义局部对象
+    std::cout << sum << std::endl;          //访问局部对象sum，打印输出1
+    std::cout << ::sum << std::endl;        //访问全局对象sum，打印输出10
     return 0;
 }
 \end{lstlisting}\vspace{-1.5mm}
@@ -542,23 +549,23 @@ int main() {
 
 \begin{frame}[fragile]
     {5.2.3 认识函数\small{~---~全局对象}}
-\begin{block}{链接性（linkage\index{L!linkage}）：在作用域外部的可见性}
+\begin{block}{链接性（linkage\index{L!linkage}）：在作用域外部的可见性（共享性）}
 \begin{itemize}
-  \item 局部对象没有链接性，不能共享；
-  \item 全局对象具有外部链接性\text{（external linkage\index{E!external linkage}）}，可在文件间共享；
-  \item ~\textcolor{blue}{static}~修饰的全局对象具有内部链接性（internal linkage\index{I!internal linkage}） ，只能由同一个文件中的函数共享。
+  \item<2-> 局部对象没有链接性，不能共享；
+  \item<3-> 全局对象具有外部链接性\text{（external linkage\index{E!external linkage}）}，可在文件间共享；
+  \item<4-> ~\textcolor{blue}{static}~修饰的全局对象具有内部链接性（internal linkage\index{I!internal linkage}） ，只能由同一个文件中的函数共享。
 \end{itemize}
 \end{block}
 \begin{columns}
 %\columns{0.45\textwidth}
 \column{0.45\textwidth}
-\begin{blueblock}<2->{fun.cpp}\vspace{-1.5mm}\begin{lstlisting}
+\begin{blueblock}<5->{fun.cpp}\vspace{-1.5mm}\begin{lstlisting}
 //g_val~具有外部链接性
 int g_val = 10;
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \column{0.45\textwidth}
-\begin{blueblock}<2->{main.cpp}\vspace{-1.5mm}\begin{lstlisting}
+\begin{blueblock}<5->{main.cpp}\vspace{-1.5mm}\begin{lstlisting}
 extern int g_val;
 //gs_val内部链接性
 static int gs_val = 20;
@@ -569,7 +576,7 @@ int main() {
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \end{columns}
-\begin{redblock}<3->{提示}
+\begin{redblock}<6->{提示}
 尽量不要使用全局对象。
 \end{redblock}
 \end{frame}
@@ -581,7 +588,11 @@ int main() {
 
 \begin{frame}[fragile]
     {5.3 参数传递}
-\begin{block}{实参和形参的交互方式}
+    \begin{block}{参数传递}
+    主调函数和被调函数间信息传递的主要方式，通过实参和形参来实现信息传递
+    \end{block}
+    
+\begin{block}<2->{实参和形参的交互方式}
 \begin{itemize}
   \item 单向的值传递（passed by value\index{P!passed by value}）方式；
   \item 双向的引用传递（passed by reference\index{P!passed by reference}）方式。
@@ -605,7 +616,7 @@ void Swap(int x, int y) {
      int z(x);
      x = y;
      y = z;
-}                       
+}
 int main() {
     int i(4), j(5);
     Swap(i, j);         //调用Swap函数，实参i和j分别初始化Swap函数的形参x和y
@@ -632,21 +643,23 @@ int main() {
 
 \begin{frame}[fragile]
     {5.3.1 参数传递\small{~---~值传递}}
+    \vspace{-3mm}
 \begin{blueblock}{代码清单5.1，例5.1}\vspace{-1.5mm}\begin{lstlisting}
 ...
-bool is_palindrome(int x);                  //函数声明
+bool is_palindrome(int x);              //函数声明
+
 int main() {
     for (int i = 10; i <= 1000; ++i) {
         if (is_palindrome(i))
             cout << i << endl;
     }
-    return 0;
 }
+
 bool is_palindrome(int x) {
-    vector<int> digit;//存放x的每一位数字
+    vector<int> digit;                  //存放x的每一位数字
     while (x != 0) {
-         digit.push_back(x % 10);       //获取当前x的个位数，并将其尾插到~digit~
-         x /= 10;                       //去掉~x~的个位数
+         digit.push_back(x % 10);       //获取当前x的个位数，并将其尾插到digit
+         x /= 10;                       //去掉x的个位数
     }
     for (int i = 0, j = digit.size() - 1; i < j; ++i, --j) {
         if (digit[i] != digit[j])  return false;
@@ -708,7 +721,7 @@ int main() {
 \end{blueblock}
 \column{0.45\textwidth}
 \begin{itemize}
-  \item<3->[]
+  \item<2->[]
 
 \begin{figure}
   \centering
@@ -724,7 +737,7 @@ int main() {
 \begin{frame}[fragile]
     {5.3.1 参数传递\small{~---~值传递}}
         \begin{block}{地址传递}
-将实参的地址传递给形参，也就是说形参的类型为指针类型，通过形参改变实参的值。
+将实参的地址传递给形参，也就是说形参的类型为指针类型，通过形参间接访问实参。
 \end{block}
 \begin{columns}
 \column{0.45\textwidth}
@@ -744,11 +757,11 @@ int main() {
 \end{blueblock}
 \column{0.45\textwidth}
 \begin{itemize}
-  \item<3->[]
+  \item<2->[]
 
 \begin{figure}
   \centering
-  \includegraphics[width=0.6\textwidth]{exp5-3-1-2-b}
+  \includegraphics[width=0.5\textwidth]{exp5-3-1-2-b}
 \end{figure}
 
 \end{itemize}
@@ -768,11 +781,11 @@ int main() {
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{引用传递的例子}\vspace{-1.5mm}\begin{lstlisting}
-void swap(int &x, int &y) {//x和y分别是实参i和j的别名
+void Swap(int &x, int &y) {                 //x和y分别是实参i和j的别名
     int z(x);
     x = y;
     y = z;
-} //交换x和y所绑定的对象的值
+}                                           //交换x和y所绑定的对象的值
 int main() {
     int i(4), j(5);
     Swap(i, j);
@@ -790,10 +803,16 @@ int main() {
 
 \begin{frame}[fragile]
     {5.3.3 参数传递\small{~---~const~形参}}
-\begin{block}{const~形参}
+    \begin{block}{兼顾效率与安全}
+\begin{itemize}
+  \item 避免内容的拷贝：高效性；
+  \item 不能通过形参改变实参：安全性。
+\end{itemize}
+\end{block}
+\begin{block}<2->{const~形参}
 ~const~修饰的形参名字和~const~修饰的对象名字的含义相同。
 \end{block}
-\begin{blueblock}<2->{请问以下~const~修饰的形参名字的含义}\vspace{-1.5mm}\begin{lstlisting}
+\begin{blueblock}<3->{请问以下~const~修饰的形参名字的含义}\vspace{-1.5mm}\begin{lstlisting}
 void f_cval(const int i);
 void f_cptr(const int *i);
 void f_cref(const int &i);
@@ -803,13 +822,19 @@ void f_cref(const int &i);
 \end{frame}
 \begin{frame}[fragile]
     {5.3.3 参数传递\small{~---~const~形参}}
+    \begin{block}{兼顾效率与安全}
+\begin{itemize}
+  \item 避免内容的拷贝：高效性；
+  \item 不能通过形参改变实参：安全性。
+\end{itemize}
+\end{block}
 \begin{block}{const~形参}
 ~const~修饰的形参名字和~const~修饰的对象名字的含义相同。
 \end{block}
 \begin{blueblock}{请问以下~const~修饰的形参名字的含义}\vspace{-1.5mm}\begin{lstlisting}
-void f_cval(const int i); //i 为 const 对象
-void f_cptr(const int *i);//i 指向 const 类型的实参
-void f_cref(const int &i);//i 为 const 类型实参的引用
+void f_cval(const int i);   //i 为 const 对象
+void f_cptr(const int *i);  //i 指向 const 类型的实参
+void f_cref(const int &i);  //i 为 const 类型实参的引用
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
@@ -818,19 +843,19 @@ void f_cref(const int &i);//i 为 const 类型实参的引用
 
 \begin{frame}[fragile]
     {5.3.3 参数传递\small{~---~const~形参}}
-\begin{block}{兼顾效率与安全}
+
+\begin{blueblock}<2->{非const引用形参}
 \begin{itemize}
-  \item 避免内容的拷贝：高效性；
-  \item 不能通过形参改变实参：安全性。
+ \item 非const引用形参不能接受字面值常量、表达式的求值结果、需要转换的对象或者~const~对象。
 \end{itemize}
-\end{block}
-\begin{blueblock}<2->{const~引用形参可以接受字面值常量、表达式的求值结果、需要转换的对象或者~const~对象，但引用形参是不可以的。}\vspace{-1.5mm}\begin{lstlisting}
-void f_ref(int &i);//引用形参
+\begin{lstlisting}
+void f_ref(int &i);     //左值引用形参
+
 const int cx = 1;
 int x = 1;
-f_ref(41);//错误：左值引用不能绑定字面值常量
-f_ref(cx);//错误：左值引用不能绑定常量
-f_ref(x+1);//错误：左值引用不能绑定右值表达式
+f_ref(41);              //错误：左值引用不能绑定字面值常量
+f_ref(cx);              //错误：左值引用不能绑定常量
+f_ref(x+1);             //错误：左值引用不能绑定右值表达式
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \begin{redblock}<3->{建议}
