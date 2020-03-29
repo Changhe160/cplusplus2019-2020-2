@@ -9,6 +9,12 @@ void Swap(int x, int y) {
 	y = z;
 }
 
+/*void Swap(int x, int y) {
+	int z(x);
+	x = y;
+	y = z;
+}*/
+
 void Swap(int *x, int *y) {	//Ö¸ÕëxºÍy·Ö±ğÖ¸ÏòÊµ²Îi ºÍj
 	int z(*x);				//z ±£´æÖ¸ÕëxÖ¸ÏòµÄ¶ÔÏóµÄÖµ£¨Êµ²Îi£©
 	*x = *y;				//½âÒıÓÃ²»ÄÜÊ¡ÂÔ
@@ -22,7 +28,9 @@ void f_cref(const int &i);//iÎªconstÀàĞÍÊµ²ÎµÄÒıÓÃ
 void f_ref(int &i);//ÒıÓÃĞÎ²Î
 
 //5.3.4 Êı×éĞÎ²Î 
-void fun(int *p) {}
+void fun(int *p) {
+
+}
 //void fun(int p[]);	//Êı×éµÄ·½Ê½
 //void fun(int p[5]);	//¡°Ö¸Ã÷¡±Êı×éµÄ³¤¶È
 void print(char *str, unsigned size) {
@@ -41,7 +49,10 @@ void print(char *beg, char * end) {//Êä³öbegºÍendÖ®¼äµÄÔªËØ£¨°üº¬begµ«²»°üº¬endÖ
 void print(const char *str);
 void print(const char *str, unsigned size);
 void print(const char *beg, const char * end);
-void fun(int(*a2d)[5]) {}		//a2dÖ¸ÏòÒ»¸öº¬ÓĞ5¸öÔªËØµÄÒ»Î¬Êµ²ÎÊı×é
+
+void fun(int(*a2d)[5]) {
+
+}		//a2dÖ¸ÏòÒ»¸öº¬ÓĞ5¸öÔªËØµÄÒ»Î¬Êµ²ÎÊı×é
 
 //Àı5.1 »ØÎÄº¯Êı
 bool is_palindrome(int x) {

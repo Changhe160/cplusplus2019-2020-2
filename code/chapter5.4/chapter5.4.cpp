@@ -3,14 +3,14 @@
 using namespace std;
 
 //5.4.1 无值返回
-	void Swap(int &x, int &y) {
-		if (x == y)
-			return;		//显式返回主调函数
-		int z(x);
-		x = y;
-		y = z;
-		//隐式返回主调函数，无需return语句
-	}
+void Swap(int &x, int &y) {
+	if (x == y)
+		return;		//显式返回主调函数
+	int z(x);
+	x = y;
+	y = z;
+	//隐式返回主调函数，无需return语句
+}
 
 //5.4.2 有值返回
 int maximum(int a, int b) {

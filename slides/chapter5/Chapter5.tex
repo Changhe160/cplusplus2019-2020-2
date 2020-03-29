@@ -200,7 +200,7 @@ int maximum(int a, int b) {     //a和b为两个int类型形式参数((*@\alert{
 \begin{columns}
 \column{0.6\textwidth}
 
-    \begin{blueblock}{调用maxnum函数}
+    \begin{blueblock}{调用maximum函数}
 \vspace{-1.5mm}\begin{lstlisting}[basicstyle=\small\ttfamily]
 int maximum(int a, int b) { //被调函数
      int c;
@@ -457,7 +457,7 @@ int maximum(int a, int b) {
         \item 全局对象：函数外部
     \end{itemize}
     \end{block}
-    
+
 \begin{block}<2->{局部对象（local object）：在\alert{函数内部}定义的对象，包括函数的形参}
 \begin{itemize}
   \item<3-> 仅在相应的语句块内部可见；
@@ -591,7 +591,7 @@ int main() {
     \begin{block}{参数传递}
     主调函数和被调函数间信息传递的主要方式，通过实参和形参来实现信息传递
     \end{block}
-    
+
 \begin{block}<2->{实参和形参的交互方式}
 \begin{itemize}
   \item 单向的值传递（passed by value\index{P!passed by value}）方式；
@@ -789,7 +789,7 @@ void Swap(int &x, int &y) {                 //x和y分别是实参i和j的别名
 int main() {
     int i(4), j(5);
     Swap(i, j);
-    cout << "i=" << i << ",j=" << j << endl;//输出i=4,j=5
+    cout << "i=" << i << ",j=" << j << endl;//输出i=5,j=4
     return 0;
 }
 \end{lstlisting}\vspace{-1.5mm}
@@ -887,14 +887,14 @@ void fun2(int p[]);//等价于上式，数组的方式
 \end{blueblock}
 \begin{blueblock}<4->{调用方式}\vspace{-1.5mm}\begin{lstlisting}
 int arr[5] = {1, 2};
-fun(arr); //正确：数组名转化为首元素的地址
-fun(&arr[0]);//正确：显式传递首元素的地址
+fun(arr);               //正确：数组名转化为首元素的地址
+fun(&arr[0]);           //正确：显式传递首元素的地址
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
 \begin{redblock}<5->{传递的是数组首元素的地址，编译器不会检查数组的大小}
 \vspace{-1.5mm}\begin{lstlisting}
-void fun(int p[5]); //“指明”数组的长度，无用
+void fun(int p[5]);     //“指明”数组的长度，无用
 \end{lstlisting}\vspace{-1.5mm}
 \end{redblock}
 \end{frame}
@@ -968,11 +968,11 @@ void print(const char *beg, const char * end);
   \item 编译器只忽略第一维的长度。
 \end{itemize}
 \end{block}
-\begin{blueblock}<2->{使用~const~形参示例}\vspace{-2.5mm}\begin{lstlisting}
-void fun(int (*a2d)[5]);  //a2d 指向一个含有5个元素的一维实参数组
-void fun(int a2d[][5]);  //与上式等价
+\begin{blueblock}<2->{二维数组形参示例}\vspace{-2.5mm}\begin{lstlisting}
+void fun(int (*a2d)[5]);    //a2d 指向一个含有5个元素的一维实参数组
+void fun(int a2d[][5]);     //与上式等价
 int matrix[4][5] = {};
-fun(matrix); //传递 matrix 首元素地址，即一个具有5个元素的一维数组
+fun(matrix);                //传递 matrix 首元素地址，即一个具有5个元素的一维数组
 \end{lstlisting}
 \end{blueblock}
 
@@ -1049,9 +1049,7 @@ void Swap(int &x, int &y) {
 \begin{block}{值返回}
 通过拷贝返回值的方式将结果传递给主调函数。
 \begin{itemize}
-  \item 简单；
-  \item 安全；
-  \item 效率低。
+  \item 简单、 安全、 效率低。
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{值返回示例}
@@ -1084,7 +1082,7 @@ maximum~函数返回值存放在一个临时对象里，用来初始化对象~c�
     {5.4.2 返回值类型\small{~---~有值返回}}
 
 \begin{block}{引用返回}
-返回的对象的一个别名，与返回对象指向同一个存储空间，不会产生临时对象。
+返回对象的一个别名，与返回对象指向同一个存储空间，不会产生临时对象。
 \end{block}
 %\column{0.45\textwidth}
 \begin{blueblock}<2->{引用返回示例}
@@ -1174,11 +1172,14 @@ int& maximum(int a, int b) {
     {5.4.2 返回值类型\small{~---~有值返回}}
 \begin{block}{值返回方法比较}
 \begin{itemize}
-  \item 值返回方式可以返回局部对象的值，但需要借助于一个额外的临时对象完成值的返回；
-  \item 引用和指针返回不需要借助于临时对象，但不能返回局部对象的引用或地址；
-  \item 指针返回还经常用于返回一个具有动态存储周期的对象的地址。
+  \item<1-> 值返回方式可以返回局部对象的值，但需要借助于一个额外的临时对象完成值的返回；
+  \item<2-> 引用和指针返回不需要借助于临时对象，但不能返回局部对象的引用或地址；
+  \item<3-> 指针返回还经常用于返回一个具有动态存储周期的对象的地址;
 \end{itemize}
-根据实际需要并结合安全性和效率来进行选择
+\begin{itemize}
+  \item<4-> 根据实际需要并结合安全性和效率来进行选择
+\end{itemize}
+
 \end{block}
 
 \end{frame}
@@ -1304,13 +1305,13 @@ void print(int a = 1, int b = 2, int c = 3); //正确：所有参数具有默认
     {5.5 函数重载和特殊用途的函数\small{~---~内联函数}}
     \begin{block}{函数优缺点}
 \begin{itemize}
-  \item 函数的使用体现了模块化程序设计思想，降低了程序设计的复杂性；
-  \item 函数调用，比如执行流的转移操作、参数传递、返回值处理等，需要时间和空间的开销。
+  \item 优点：函数的使用体现了模块化程序设计思想，降低了程序设计的复杂性；
+  \item 不足：函数调用，比如执行流的转移操作、参数传递、返回值处理等，需要时间和空间的开销。
 \end{itemize}
-C++~提供了一种即保证函数化的形式又兼顾执行效率的方法：\alert{内联函数}。
 \end{block}
 \begin{blueblock}<2->{示例}
-\vspace{-2.5mm}\begin{lstlisting}
+C++~提供了一种即保证函数化的形式又兼顾执行效率的方法：\alert{内联函数}。
+\vspace{-1.5mm}\begin{lstlisting}
 inline void Swap(int &x, int &y){ /*...*/ }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -1318,7 +1319,7 @@ inline void Swap(int &x, int &y){ /*...*/ }
 编译器将在调用处嵌入内联函数的代码，不会发生函数调用，因而也不会产生函数调用的开销了。
 \end{block}
 \begin{redblock}<4->{注意}
-对于编译器来说，inline~关键字只是一个建议。
+对于编译器来说，inline~关键字只是一个建议。通常为使用频率高的简单函数。另外，内联函数放在头文件中。
 \end{redblock}
 \end{frame}
 
@@ -1344,26 +1345,27 @@ inline void Swap(int &x, int &y){ /*...*/ }
     {5.5 函数重载和特殊用途的函数\small{~---~内联函数}}
 \vspace{-1em}
 \begin{blueblock}{利用冒泡排序法将容器中的学生成绩排序}
-\vspace{-3.5mm}\begin{lstlisting}
+\begin{lstlisting}
 inline void Swap(int &x, int &y) {
     int z(x);
     x = y;
     y = z;
 }
+
 int main() {
     srand(0);
     vector<int> score(10);
-    for (auto &i : score)
-        i = rand() % 100;
+    for (auto &i : score)   i = rand() % 100;
+    
     for (int i = score.size()-1; i >=0; --i) {
-        for (int j = 0; j < i;++j) {//每一轮冒泡过程将最大的数浮出来（右边）
-             if (score[j+1] < score[j])//相邻的两个数比较
+        for (int j = 0; j < i;++j) {                //每一轮冒泡过程将最大的数浮出来（右边）
+             if (score[j+1] < score[j])             //相邻的两个数比较
                  Swap(score[j+1], score[j]);
         }
     }
-    for (auto &i : score)
-        cout << i << endl;
-    return 0;
+    
+    for (auto &i : score)        cout << i << endl;
+
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -1379,7 +1381,7 @@ int main() {
 
     \begin{greenblock}{问题}
     \begin{itemize}
-      \item<1->[]
+      \item[]
       以下程序是否正确，为什么，该如何修改？
 \vspace{-2.5mm}\begin{lstlisting}
 const int getNumber() { return 10; }
@@ -1387,7 +1389,7 @@ const int numStudent = getNumber();
 
 int arr[numStudent];
 \end{lstlisting}\vspace{-1.5mm}
-      \item<2->[]
+      \item[]
       此时编译器会报错，提示无法在编译时计算~numStudent~的值。这是因为只能在运行期间调用函数~getNumber~后才能计算~numStudent~的值。
     \end{itemize}
     \end{greenblock}
@@ -1398,7 +1400,7 @@ int arr[numStudent];
 \begin{frame}[fragile]
     {5.5 函数重载和特殊用途的函数\small{~---~constexpr~函数*}}
 
-\begin{block}<1->{constexpr~函数}
+\begin{block}{constexpr~函数}
 constexpr~函数指的是能用于常量表达式的函数。要求：
 \begin{itemize}
   \item 函数体中有且仅有一条~return~语句；
@@ -1407,7 +1409,7 @@ constexpr~函数指的是能用于常量表达式的函数。要求：
 \end{itemize}
 
 \end{block}
-\begin{blueblock}<2->{示例}
+\begin{blueblock}{示例}
 \vspace{-2.5mm}\begin{lstlisting}
 constexpr int f() { return 10; }
 constexpr int getNumber(int i) { return i; }
@@ -1416,7 +1418,7 @@ int num = 10;
 int stu2[getNumber(num)]; //错误：运行时才能确定num的值
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-\begin{redblock}<3->{提示}
+\begin{redblock}{提示}
 constexpr~函数会隐式转化为内联函数。
 \end{redblock}
 \end{frame}
@@ -1487,9 +1489,9 @@ pFun pf; //和定义普通指针一样的方式来定义一个函数指针
 
 \begin{blueblock}<2->{示例}
 \vspace{-2.5mm}\begin{lstlisting}
-pFun pf1 = compareInt; //隐式初始化，pf1指向compareInt函数
-pFun pf2 = &compareInt; //显式初始化，pf2指向compareInt函数
-pFun pf3 = nullptr; //pf3不指向任何函数
+pFun pf1 = compareInt;      //隐式初始化，pf1指向compareInt函数
+pFun pf2 = &compareInt;     //显式初始化，pf2指向compareInt函数
+pFun pf3 = nullptr;         //pf3不指向任何函数
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
@@ -1518,7 +1520,7 @@ bool b2 = (*pf2)(1, 2);
   \item[]<3->
             \begin{figure}[ht]
                 \centering
-                \includegraphics[width=0.4\textwidth]{Fig5-2}
+                \includegraphics[width=0.37\textwidth]{Fig5-2}
                 \caption{梯形法求积分示例图}
                 % \label{fig:label}
             \end{figure}
@@ -1532,22 +1534,19 @@ bool b2 = (*pf2)(1, 2);
 \begin{blueblock}{代码清单5.3，例 5.3}
 \vspace{-2.5mm}\begin{lstlisting}
 using pFun = double(*)(double);
-double f_sphere(double x) {
-    return x*x;
-}
-double f_default(double x) {
-    return 0;
-}
-double f_sin(double x) {
-    return sin(x);
-}
+
+double f_sphere(double x) {    return x*x;      }
+double f_default(double x) {        return 0;   }
+double f_sin(double x) {    return sin(x);      }
+
 double integrate(double l, double u, pFun pf = f_default, int n = 1000) {
     double sum = 0.0;
-    double gap = (u - l) / n;  //每个间隔的长度
+    double gap = (u - l) / n;                   //每个间隔的长度
     for (int i = 0; i < n; i++)
         sum += (gap / 2.0) * (pf(l + i*gap) + pf(l + (i + 1)*gap));
     return sum;
 }
+
 int main() {
     cout<<"默认函数在区间[0:1]上的积分为："<<integrate(0, 1) << endl;
     cout<<"Sphere函数在区间[0:1]上的积分为："<<integrate(0, 1, f_sphere)<<endl;
@@ -1590,7 +1589,7 @@ void(*c(int, void(*fp)(int)))(int);
 \begin{blueblock}<4->{利用~using~声明简化语句}
 \begin{lstlisting}
 using PF = void(*)(int);
-PF *a[5];
+PF a[5];
 PF(*b)[5];
 PF c(int, PF);
 \end{lstlisting}\vspace{-1.5mm}
@@ -1605,14 +1604,14 @@ PF c(int, PF);
 
     \begin{block}{~lambda~表达式}
 \begin{itemize}
-  \item 只使用一次；
-  \item 临时的匿名函数，表示一个可以调用的代码单元；
-  \item 与函数类似，lambda~表达式具有返回值、形参列表和函数体；
-  \item 可定义在一个函数内部。
+  \item<2-> 只使用一次；
+  \item<3-> 临时的匿名函数，表示一个可以调用的代码单元；
+  \item<4-> 与函数类似，lambda~表达式具有返回值、形参列表和函数体；
+  \item<5-> 可定义在一个函数内部。
 \end{itemize}
 \end{block}
 
-\begin{block}<2->{1.~定义~lambda~表达式}
+\begin{block}<6->{1.~定义~lambda~表达式}
 \centering [captures](parameters) -> return type \{statements\}\\
 \begin{itemize}
   \item captures：指定在同一作用域下~lambda~主体捕获（访问）哪些对象以及如何捕获这些对象；
@@ -1630,8 +1629,8 @@ PF c(int, PF);
 
 \begin{blueblock}<1->{~auto~关键字}
 \begin{lstlisting}
-auto fun = [](int i) {cout << i << endl; };
-fun(17); //输出17
+    auto fun = [](int i) {cout << i << endl; };
+    fun(17);                //输出17
 \end{lstlisting}
 \begin{itemize}
   \item ~auto~关键字把一个~lambda~表达式存放到一个对象
@@ -1653,27 +1652,24 @@ fun(17); //输出17
 lambda~可以捕获外围作用域内的局部对象，而且还可以指定捕获的方式
 \end{block}
 \begin{columns}
-\column{0.45\textwidth}
+\column{0.48\textwidth}
 \begin{blueblock}<2->{按值捕获特定的外围对象}
 \vspace{-2.5mm}\begin{lstlisting}
 int divisor = 5;
 vector<int> numbers{ 1, 2, 3, 4, 5, 10, 15, 20, 25, 35, 45, 50 };
-for_each(numbers.begin(), numbers.end(), [divisor](int y) {
-    //divisor为外围divisor的拷贝
+for_each(numbers.begin(), numbers.end(), [divisor](int y) {     //divisor为外围divisor的拷贝
     if (y % divisor == 0)
-        cout << y << endl;
-    //输出被divisor整除的元素
+        cout << y << endl;//输出被divisor整除的元素
 });
 \end{lstlisting}\vspace{-1.5mm}
 divisor 作为副本在函数体内部使用
 \end{blueblock}
-\column{0.45\textwidth}
+\column{0.48\textwidth}
 \begin{blueblock}<3->{按引用捕获特定的外围对象}
 \vspace{-2.5mm}\begin{lstlisting}
 int sum = 0;
 
-for_each(numbers.begin(), numbers.end(), [divisor, &sum](int y) {
-    //sum为外围sum 的引用
+for_each(numbers.begin(), numbers.end(), [divisor, &sum](int y) { //sum为外围sum 的引用
     if (y % divisor == 0)
         sum += y;
     //累加被divisor整除的元素，结果存放到外围对象sum中
@@ -1693,7 +1689,7 @@ sum 作为引用在函数体内部使用
 \section{递归调用}
 \begin{frame}[fragile]
     {5.7 递归调用}
-    \begin{block}{递归调用}
+    \begin{block}{递归调用：一种程序设计方法}
 一个函数直接或间接地调用自己，这个函数称为递归函数（recursive function\index{R!recursive function}）
 \begin{itemize}
   \item 易实现；
@@ -1747,9 +1743,9 @@ int main() {
 \end{columns}
     \begin{block}<2->{递归调用三要素}
 \begin{itemize}
-  \item 递推；
-  \item 回归；
-  \item 终止条件。
+  \item<3-> 递推；
+  \item<4-> 终止条件；
+  \item<5-> 回归。
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1798,23 +1794,22 @@ int main() {
 \begin{frame}[fragile]
     {5.7 递归调用\small{~---~递推和回归}}
 \begin{columns}
-\column{0.55\textwidth}
+\column{0.65\textwidth}
 \begin{blueblock}<1->{汉诺塔问题}
 \vspace{-2.5mm}\begin{lstlisting}
 #include<iostream>
 using namespace std;
+
 void hanoi(int n, char src, char mid, char tar) {
     if (n == 1)
         cout << src << "->" << tar << '\t';
-    else {
-        //将n-1个盘子移到中间柱上
-        hanoi(n - 1, src, tar, mid);
-        //将最后一个盘子移到目标柱上
-        cout<<src<<"->"<< tar << '\t';
-        //将n-1个盘子从中间柱移到目标柱上
-        hanoi(n - 1, mid, src, tar);
+    else {       
+        hanoi(n - 1, src, tar, mid);       //将n-1个盘子移到中间柱       
+        cout<<src<<"->"<< tar << '\t';     //将最后一个盘子移到目标柱     
+        hanoi(n - 1, mid, src, tar);       //将n-1个盘子从中间柱移到目标柱
     }
 }
+
 int main() {
     int n;
     cin >> n;
@@ -1823,7 +1818,7 @@ int main() {
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-\column{0.45\textwidth}
+\column{0.35\textwidth}
 \begin{itemize}
   \item<2->[]
   	\begin{figure}
@@ -1876,8 +1871,7 @@ int main() {
 \vspace{-2.5mm}\begin{lstlisting}
 bool isSafe(int i, const vector<int> &que) {
     for (int k = 0; k < i; ++k)
-        if (que[k] == que[i] || (abs(que[i] - que[k]) == abs(i - k)))
-        return false;
+        if (que[k] == que[i] || (abs(que[i] - que[k]) == abs(i - k)))    return false;
     return true;
 }
 void queen(int i, vector<int> &que, int &cnt) {
@@ -1892,7 +1886,7 @@ void queen(int i, vector<int> &que, int &cnt) {
     }
 }
 int main() {
-    constexpr int sz = 8; int cnt(0);
+    int sz(8), cnt(0);
     vector<int> que(sz);
     queen(0, que, cnt);
 }
@@ -1958,8 +1952,7 @@ void testFun() {
 \end{block}
 
 \end{columns}
-\begin{redblock}<4->{建议}
-尽量使用~const~对象和内联函数
+\begin{redblock}<4->{建议：尽量使用~const~对象和内联函数}
 \end{redblock}
 \end{frame}
 
@@ -1973,8 +1966,7 @@ void testFun() {
 \begin{columns}
 \column{0.47\textwidth}
 \begin{block}<2->{~字符串化操作符\#~}
-把语言符号转化成字符串，即将后面的宏参数进行字符串化操作。\\
-\indent \#define str(a) \#a\\
+把语言符号转化成字符串，即将后面的宏参数进行字符串化操作。
  \begin{lstlisting}
 #define str(a) #a
 cout << str(test) << endl;
@@ -1986,8 +1978,7 @@ cout << "test" << endl;
 \end{block}
 \column{0.47\textwidth}
 \begin{block}<3->{连接符~\#\#}
-将两个语言符号连接为一个语言符号\\
-\indent \#define glue(a,b) a\#\#b\\
+将两个语言符号连接为一个语言符号
  \begin{lstlisting}
 #define glue(a,b) a##b
 glue(c, out) << "test" << endl;
