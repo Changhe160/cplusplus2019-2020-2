@@ -603,16 +603,22 @@ Fraction(int above, int below){
     {6.2.1 默认构造函数\small{~---~初始值列表}}
 \begin{block}<1->{初始值列表的语法}
 \begin{itemize}
-  \item 在构造函数参数列表后面和左花括号之间；
-  \item 以\alert{冒号}开始；
+  \item 在构造函数参数列表后面和左花括号之间，以\alert{冒号}开始；
   \item 利用形参值直接初始化数据成员；
-  \item 数据成员之间用\alert{逗号}隔开。
+  \item 数据成员之间用\alert{逗号}隔开；
+  \item 按照数据成员声明顺序依次执行初始化操作。
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{示例}
 \begin{lstlisting}
-    Fraction::Fraction(int above, int below) : m_numerator(above), m_denominator(below) {}
+class Fraction {
+    int m_numerator = 0;            
+    int m_denominator = 1;  
+public：       
+    Fraction(int above, int below) : m_numerator(above), m_denominator(below) {}
+}
 \end{lstlisting}
+\onslide<3->{思考：什么情况必须用初始化列表？}
 \end{blueblock}
 
 \end{frame}
