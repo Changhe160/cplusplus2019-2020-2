@@ -1,5 +1,5 @@
 %!TEX program = xelatex
-\documentclass[aspectratio=43,UTF8,10pt]{ctexbeamer}
+\documentclass[aspectratio=169,UTF8,10pt]{ctexbeamer}
 
     \mode<presentation> {
     \usetheme{Madrid}
@@ -61,9 +61,10 @@
     breaklines,                                                           % 控制是否折行
     % postbreak=\space,                                                     % 控制折行后显示的标识字符
     breakindent=5pt,                                                      % 控制折行后缩进数量
-    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream,istream}, % 非内置类型
+    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream,istream,Fraction}, % 非内置类型
     emphstyle={\color{teal}},
     escapeinside={(*@}{@*)},
+    literate={&}{{\color{red}\&}}{1}                                      %{<replace>}{<replacement text>}{<length>} no comma between items
 }
 
 \usepackage{multicol}
@@ -100,6 +101,16 @@
 \end{frame}
 
 
+\begin{frame}[fragile]
+\hspace{-3mm}
+\begin{tabular}{@{}c@{}c}
+   \includegraphics[width=0.5\textwidth]{Fig/Structure-of-procedural-oriented-programs.png}&
+   \includegraphics[width=0.5\textwidth]{Fig/procedural-vs-oop.png}
+\end{tabular}
+
+\end{frame}
+
+
 \begin{frame}{目录}
 \begin{multicols}{2}
   \tableofcontents
@@ -118,8 +129,8 @@
 \begin{block}{学习目标}
 \begin{enumerate}
 \item 理解类的概念和基本设计原则；
-\item 理解构造函数和析构函数的作用与执行过程；
-\item 掌握常见运算符重载技术和静态成员的使用方法；
+\item 理解{\color{red}构造函数和析构函数}的作用与执行过程；
+\item 掌握常见{\color{red}运算符重载技术}和静态成员的使用方法；
 \item 能够运用面向对象程序设计方法设计和实现简单类；
 \end{enumerate}
 \end{block}
@@ -184,18 +195,18 @@
  \vspace{-1em}
 \begin{blueblock}<2->{分数类}
  \vspace{-0.1em}\begin{lstlisting}
-class Fraction {
+class Fraction (*@{\color{red}\{}@*)
     //数据成员，访问控制属性默认是私有
-    int m_numerator = 0;  // 分子默认为0； C++11
-    int m_denominator = 1;  //分母默认为1；
-public://公有成员函数
+    int m_numerator = 0;        // 分子默认为0； C++11
+    int m_denominator = 1;      //分母默认为1；
+public:                         //公有成员函数
     int numerator() const { return m_numerator; }
     int denominator() const { return m_denominator; }
-    double value() const;  //计算分数值
-    void reduce();  //约分
+    double value() const;       //计算分数值
+    void reduce();              //约分
 private:
-    int gcd(int x, int y);  //求分子分母最大公约数
-};
+    int gcd(int x, int y);      //求分子分母最大公约数
+(*@{\color{red}\};}@*)
 //辅助函数
 void makeCommon(Fraction &a, Fraction &b);
 ostream& print(ostream &out, const Fraction &f);
@@ -240,7 +251,7 @@ inline double Fraction::value() const{
     return static_cast<double>(m_numerator) / m_denominator;
 }
 void Fraction::reduce(){
-    int n=gcd(m_numerator, m_denominator); //获取分子分母的最大公约数
+    int n=gcd(m_numerator, m_denominator);          //获取分子分母的最大公约数
     m_denominator /= n;
     m_numerator /= n;
 }
@@ -257,20 +268,20 @@ void Fraction::reduce(){
 \begin{blueblock}<1->{使用~value~成员函数}
  \vspace{-2.5mm}\begin{lstlisting}
 Fraction a, *p = &a;
-cout << a.value() <<" "<< p->value() << endl; //打印默认值0
+cout << a.value() <<" "<< p->value() << endl;       //打印默认值0
 \end{lstlisting}\vspace{-1.5mm}
 \onslide<2-> a的数据成员如何传到value成员函数中？
 \end{blueblock}
 
 \begin{blueblock}<3->{编译器转化~value~成员函数声明}
  \vspace{-2.5mm}\begin{lstlisting}
-double value(Fraction *const this) const;//伪代码，说明成员函数的执行过程
+double value(Fraction *const this) const;           //伪代码，说明成员函数的执行过程
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
 \begin{blueblock}<3->{~value~成员函数等价调用}
  \vspace{-2.5mm}\begin{lstlisting}
-a.value(&a);
+a.value()--> value(&a);
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
@@ -279,7 +290,7 @@ a.value(&a);
   \item 指向调用成员函数对象的\alert{const指针（指针常量）}，运行代码演示
 \end{itemize}
  \vspace{-0.5em}\begin{lstlisting}
-double Fraction::value() const{
+double Fraction::value(){
     return static_cast<double>(this->m_numerator) / this->m_denominator;
 }
 \end{lstlisting}
@@ -302,7 +313,7 @@ double Fraction::value() const{
 \end{block}
 \begin{blueblock}<2->{示例}
  \vspace{-2.5mm}\begin{lstlisting}
-double value() const;
+double Fraction::value() const{ }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \begin{blueblock}<3->{等价于}
@@ -323,10 +334,10 @@ this~指针是一个指向~\textcolor{blue}{const}~对象的~\textcolor{blue}{co
     {6.1.3 定义辅助函数}
 
 \begin{block}<1->{辅助函数}
-一个类需要一些普通函数来辅助完成某些操作，不是类的成员函数，从概念上属于类的接口。
+一个类需要一些普通函数来辅助完成某些操作，不是类的成员函数，从概念上属于类的{\color{red}接口}。
 \begin{itemize}
-  \item 通常将它们的声明和类的定义放到同一个头文件内；
-  \item 定义和类成员函数的定义放到同一个源文件内。
+  \item 将它们的{\color{red}声明}和类的定义放到同一个{\color{red}头文件}内；
+  \item 将它们的{\color{red}定义}和类成员函数的定义放到同一个{\color{red}源文件}内。
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{示例}
@@ -349,8 +360,8 @@ print(cout,a);//打印0/1
 
 \begin{block}<1->{封装的意义}
 \begin{itemize}
-  \item 类的开发者：有利于程序的模块化设计，提高代码的重用性；
-  \item 类的使用者：隐藏类的实现细节，使用者不能在类的外面操控数据成员，形成一种保护机制。
+  \item 类的{\color{red}开发者}：有利于程序的模块化设计，提高代码的重用性；
+  \item 类的{\color{red}使用者}：隐藏类的实现细节，使用者不能在类的外面操控数据成员，形成一种保护机制。
 \end{itemize}
 \end{block}
 
@@ -371,8 +382,31 @@ print(cout,a);//打印0/1
 \end{frame}
 
 \begin{frame}[fragile]
-    {6.1.4 访问控制}
+    {Fraction类}
 
+\begin{blueblock}{}
+ \vspace{-0.1em}\begin{lstlisting}
+class Fraction (*@{\color{red}\{}@*)
+    //私有数据成员
+    int m_numerator = 0;            // 分子默认为0； C++11
+    int m_denominator = 1;          //分母默认为1；
+public://公有成员函数
+    int numerator() const { return m_numerator; }
+    int denominator() const { return m_denominator; }
+    double value() const;           //计算分数值
+    void reduce();                  //约分
+private://私有成员函数
+    int gcd(int x, int y);          //求分子分母最大公约数
+(*@{\color{red}\};}@*)
+//辅助函数
+void makeCommon(Fraction &a, Fraction &b);
+ostream& print(ostream &out, const Fraction &f);
+\end{lstlisting}%\vspace{-1.5mm}
+\end{blueblock}
+\end{frame}
+
+\begin{frame}[fragile]
+    {6.1.4 访问控制}
 \begin{greenblock}{下面函数是否正确？}
  \vspace{-2.5mm}\begin{lstlisting}
 ostream& print(ostream &out, const Fraction &f) {
@@ -396,14 +430,6 @@ void Fraction::reduce(){
 \end{lstlisting}
  \vspace{-0.1em}
 \end{redblock}
-
-\begin{redblock}<4->{\textcolor{blue}{class}~和~\textcolor{blue}{struct}}
-\begin{itemize}
-  \item 使用~\textcolor{blue}{class}~定义的类中成员的访问属性默认为~\textcolor{blue}{private}；
-  \item 使用~\textcolor{blue}{struct}~定义的类中成员的访问属性默认为~\textcolor{blue}{public}；
-\end{itemize}
-\end{redblock}
-
 
 \end{frame}
 
@@ -452,61 +478,6 @@ ostream& print(ostream &out, const Fraction &f) {
 \end{frame}
 
 
-\begin{frame}[fragile]
-    {6.1.5 类的定义\small{~---~友元类}}
-\begin{block}<1->{友元类}
-将其它类或其它类的成员函数声明为该类的友元。
-\end{block}
-
-\begin{greenblock}<2->{问题}
-下面定义两个类：Point~类和~Circle~类，并将~Circle~类声明为~Point~ 类的友元，使~Circle~类的成员函数可以直接访问~Point~类的私有成员。
-\end{greenblock}
-
-\end{frame}
-
-
-\begin{frame}[fragile]
-    {6.1.5 友元\small{~---~友元类}}
-\begin{block}{友元类的定义}
- \vspace{-2.5mm}\begin{lstlisting}
-class Circle; //前向声明
-class Point {
-    friend class Circle;
-private:
-    double m_x = 0, m_y = 0;//x和y坐标
-};
-class Circle {
-    Point m_center; //圆心
-    double m_radius = 1.0;//半径
-public:
-    void moveXTo(double val) {//将圆心沿x轴移动到指定位置
-       m_center.m_x = val;//直接访问Point私有成员m_x
-    }
-};
-\end{lstlisting}\vspace{-1.5mm}
-\end{block}
-\end{frame}
-
-\begin{frame}[fragile]
-    {6.1.5 友元\small{~---~友元类}}
-\begin{block}<1->{前向声明（forward declaration\index{F!friend!forward declaration}）}
-将~Circle~类声明为~Point~类的友元之前，需要先声明~Circle~类，否则会出现语法错误。
-\end{block}
-
-\begin{block}<2->{不完全类型（incomplete type\index{I!incomplete type}）\label{chap6-1-5-1}}
-\begin{itemize}
-  \item 只告诉编译器~Circle~为类类型，但~Circle~类的成员此时还未知，如前向声明；
-  \item 不完全类开型可以定义指向该类型的指针或引用。
-\end{itemize}
-\end{block}
-
-
-\begin{redblock}<3->{提示}
-友元单向且不可传递。
-\end{redblock}
-\end{frame}
-
-
 \section{构造函数与析构函数}
 
 
@@ -543,14 +514,8 @@ private:
     int m_numerator = 0;
     int m_denominator = 1;
 };
-\end{lstlisting}\vspace{-1.5mm}
+\end{lstlisting}
 \end{block}
-
-\begin{greenblock}<2->{ 为什么构造函数不能声明为常量成员函数?}
-\begin{itemize}
-  \item<3->[] 只有当构造函数执行完毕之后，对象才创建完毕，在创建的过程中要为数据成员分配存储空间并执行初始化操作。
-  \end{itemize}
-\end{greenblock}
 
 \end{frame}
 
@@ -598,25 +563,17 @@ C++11~允许在显式定义构造函数的情况下，使用默认的构造函�
 \begin{itemize}
   \item<2->[]
 \begin{lstlisting}
-class Fraction {//注意，Fraction 类其它成员在此没有列出
+class Fraction {        //注意，Fraction 类其它成员在此没有列出
 public:
    Fraction() = default ;
    Fraction(int above, int below) :m_numerator(above), m_denominator(below) {}
 };
 
-Fraction a; //正确：默认构造函数。
-Fraction b(1,2); //正确：带参构造函数。
+Fraction a;             //正确：默认构造函数。
+Fraction b(1,2);        //正确：带参构造函数。
 \end{lstlisting}\vspace{-1.5mm}
 \end{itemize}
 \end{block}
-
-\begin{redblock}<3->{警告：切勿乱用圆括号}
- \vspace{-2.5mm}\begin{lstlisting}
-Fraction a();
-\end{lstlisting}\vspace{-1.5mm}
-上面代码为一个函数声明，函数名为~a，返回值类型为~Fraction。
-\end{redblock}
-
 
 \end{frame}
 
@@ -630,8 +587,8 @@ Fraction a();
   \item<1->[]
 \vspace{-2.5mm}\begin{lstlisting}
 Fraction(int above, int below){
-    m_numerator = above;//赋值语句
-    m_denominator = below;//赋值语句
+    m_numerator = above;        //赋值语句
+    m_denominator = below;      //赋值语句
 }
 \end{lstlisting}\vspace{-1.5mm}
   \item<2->[]
@@ -653,35 +610,12 @@ Fraction(int above, int below){
 \end{itemize}
 \end{block}
 \begin{blueblock}<2->{示例}
- \vspace{-2.5mm}\begin{lstlisting}
-    Fraction(int above, int below) :
-       m_numerator(above), m_denominator(below) {}
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-\begin{redblock}<3->{提示}
-数据成员的构造顺序取决于数据成员在类内定义的顺序。
-\end{redblock}
-\end{frame}
-%--------------------
-\begin{frame}[fragile]
-    {6.2.1 默认构造函数\small{~---~初始值列表}}
-
-\begin{greenblock}<1->{为什么下面必须使用初值值列表进行初始化？}
 \begin{lstlisting}
-class Foo {
-    int &m_ref;
-    const int m_con;
-public:
-    Foo(int &i) :m_ref(i), m_con(i)/*必须在此初始化*/ {}
-};
-\end{lstlisting}\vspace{-1.5mm}
-\begin{itemize}
-  \item <2->[]
-引用类型成员或者有~const~修饰符的成员，必须要利用初始值列表进行初始化。
-\end{itemize}
-\end{greenblock}
-\end{frame}
+    Fraction::Fraction(int above, int below) : m_numerator(above), m_denominator(below) {}
+\end{lstlisting}
+\end{blueblock}
 
+\end{frame}
 
 %--------------------
 \begin{frame}[fragile]
@@ -691,118 +625,52 @@ public:
 \end{block}
 \begin{blueblock}<2->{示例}
  \vspace{-2.5mm}\begin{lstlisting}
- class Fraction {
+class Fraction {
 public:
-    Fraction(int above = 0, int below = 1):
-       m_numerator(above), m_denominator(below) {}
+
+    Fraction(int above = 0, int below = 1): m_numerator(above), m_denominator(below) {}
+    
 };
 
-Fraction a;       //形参默认值构造函数
-Fraction b(1,2);  //使用提供的实参
+Fraction a;         //使用默认值
+Fraction b(1,2);    //使用实参值
 
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \end{frame}
-%--------------------
-\begin{frame}[fragile]
-    {6.2.1 默认构造函数\small{~---~委托构造函数}}
-\begin{block}{委托构造函数（delegating constructor\index{C!constructor!delegating constructor}）}
-委托构造函数将使用其它的构造函数来完成数据成员的初始化。
-\end{block}
-\end{frame}
-%--------------------
-\begin{frame}[fragile]
-    {6.2.1 默认构造函数\small{~---~委托构造函数}}
-\begin{blueblock}<1->{示例}
- \vspace{-2.5mm}\begin{lstlisting}
-class Employee {
-    int m_id;
-    string m_name;
-public:
-    Employee(int id = 0, const string &name = "") :
-        m_id(id), m_name(name) {}
-    Employee(const string &name) :Employee(0, name) {}
-};
-Employee member("Kevin");
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-\begin{itemize}
-  \item[]<2->
 
-\begin{figure}
-  \centering
-  \includegraphics[width=0.5\textwidth]{FIG/exp6-2-1-4}
-  \caption{创建~Employee~对象~member~的过程}
-\end{figure}
-\end{itemize}
-\end{frame}
-%--------------------
+
 %#####################################
 \subsection{复制构造函数}
 \begin{frame}[fragile]
     {6.2.2 复制构造函数}
 
-\begin{blueblock}<1->{示例}
-复制一个已存在对象的内容来创建对象
-\begin{lstlisting}
+\begin{blueblock}<1->{复制对象}
+\vspace{-2.5mm}\begin{lstlisting}
 int i(1), j(i);
-Fraction a(1, 5); //直接初始化
-Fraction b(a);//直接初始化，b 为对象 a 的拷贝
+Fraction a(1, 5);       //直接初始化
+Fraction b(a);          //直接初始化，b 为对象 a 的拷贝
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
+\begin{blueblock}<2->{定义形式}
+ \vspace{-2.5mm}\begin{lstlisting}
+class Fraction {
+public:
+    Fraction(const Fraction &rhs) : m_numerator(rhs.m_numerator), m_denominator(rhs.m_denominator) {  }
+};
+\end{lstlisting}\vspace{-1.5mm}
+\end{blueblock}
 
-\begin{block}<2->{复制构造函数（copy constructor\index{C!constructor!copy constructor}）}
+\begin{block}<3->{复制构造函数（copy constructor\index{C!constructor!copy constructor}）}
 \begin{itemize}
   \item 功能是将给定对象的数据成员依次复制给正在创建的对象；
   \item 复制构造函数的形参必须是\alert{引用类型}，即给定实参的引用；
   \item 编译器会自动合成： 逐个成员\alert{按值复制}，数组成员按元素逐个复制。
 \end{itemize}
 \end{block}
-\begin{blueblock}<3->{定义形式}
- \vspace{-2.5mm}\begin{lstlisting}
-class Fraction {
-public:
-    Fraction(const Fraction &rhs) : m_numerator(rhs.m_numerator),
-        m_denominator(rhs.m_denominator) {  }
-};
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
+
 \end{frame}
-
-%--------------------
-\begin{frame}[fragile]
-    {6.2.2 复制构造函数}
-\begin{columns}
-\column{0.55\textwidth}
-\begin{greenblock}{问题：下面代码是否正确？}
- \vspace{-2.5mm}\begin{lstlisting}
-class Fraction {
-public:
-    Fraction(Fraction rhs):
-        m_numerator(rhs.m_numerator),m_denominator(rhs.m_denominator) {}
-};
-int main(){
-    Fraction a;
-    Fraction b(a);
-}
-\end{lstlisting}\vspace{-1.5mm}
-\end{greenblock}
-\column{0.45\textwidth}
-
-\begin{itemize}
-  \item<2->[]
-
-\begin{figure}
-  \centering
-  \includegraphics[width=0.8\textwidth]{FIG/exp6-2-2}
-  \caption{无穷调用}
-\end{figure}
-\end{itemize}
-\end{columns}
-\end{frame}
-
-
 
 %--------------------
 \begin{frame}[fragile]
@@ -857,17 +725,11 @@ Fraction c(3, 2);
   \item 将~=~右侧的对象复制给待创建对象；
   \item 类型不一致，编译器尝试通过构造函数进行类型转换；
   \item 如果没有可用构造函数，将产生类型无法转换的错误。
-   \vspace{-1.5mm}\begin{lstlisting}
-Fraction d = 7;
-\end{lstlisting}\vspace{-1.5mm}
 \end{itemize}
 
 \end{yellowblock}
 
 \end{frame}
-
-
-
 
 
 \begin{frame}[fragile]
@@ -880,26 +742,19 @@ Fraction d = 7;
 \end{itemize}
 \end{block}
 
-\begin{block}{抑制隐式类型转换}
+\begin{block}<2->{抑制隐式类型转换}
 ~\textcolor{blue}{explicit}\index{E!explicit}~关键字来阻止隐式类型转换，例子：\\
 \begin{lstlisting}
 class Fraction {
 public:
-    explicit Fraction(int above = 0, int below = 1) :
-        m_numerator(above), m_denominator(below) {  }
+    explicit Fraction(int above = 0, int below = 1) : m_numerator(above), m_denominator(below) {  }
 };
-\end{lstlisting}\vspace{-1.5mm}
+\end{lstlisting}
 
-\begin{itemize}
-  \item<2->[]
-  \vspace{-2.5mm} \begin{lstlisting}
-Fraction d2 = 7; //错误：无法将 int 类型转换为 Fraction 类型
-\end{lstlisting}\vspace{-1.5mm}
-  \item<3->[]
- \vspace{-1.5mm}   \begin{lstlisting}
-Fraction d2 = static_cast<Fraction>(7);//正确，强制类型转换
-\end{lstlisting}\vspace{-1.5mm}
-\end{itemize}
+\begin{lstlisting}
+Fraction d2 = 7;                                //错误：无法将 int 类型转换为 Fraction 类型
+Fraction d2 = static_cast<Fraction>(7);         //正确，强制类型转换
+\end{lstlisting}
 
 
 \end{block}
@@ -932,11 +787,13 @@ Fraction d2 = static_cast<Fraction>(7);//正确，强制类型转换
 ~divide~函数：用来实现两个分数的相除运算，返回结果为一个分数类型。
 \begin{lstlisting}
 Fraction divide(Fraction dividend, Fraction divisor) {
+
     Fraction result(divident.numerator()*divisor.denominator(),
-         divident.denominator()*divisor.numerator());
+                    divident.denominator()*divisor.numerator());
     return result;
 }
 
+Fraction b(2,3), c(4,5);
 Fraction e = divide(b, c);
 \end{lstlisting}\vspace{-1.5mm}
 \onslide<2-> 调用几次构造函数？
@@ -961,11 +818,11 @@ Fraction e = divide(b, c);
   \begin{lstlisting}
 class Employee {
 public:
-    Employee(const Employee &) = delete;//阻止复制
+    Employee(const Employee &) = delete;        //阻止复制
 };
 
-Employee e1;  //调用默认构造函数
-Employee e2(e1); //错误：复制构造函数是删除的，不能调用
+Employee e1;                                    //调用默认构造函数
+Employee e2(e1);                                //错误：复制构造函数是删除的，不能调用
 \end{lstlisting}\vspace{-1.5mm}
 \end{greenblock}
 
@@ -977,8 +834,7 @@ Employee e2(e1); //错误：复制构造函数是删除的，不能调用
 
 \begin{greenblock}{以下代码会输出什么？}
 \vspace{-2.5mm}\begin{lstlisting}
-Fraction::Fraction(const Fraction &rhs) : m_numerator(rhs.m_numerator),
-    m_denominator(rhs.m_denominator) {
+Fraction::Fraction(const Fraction &rhs) : m_numerator(rhs.m_numerator), m_denominator(rhs.m_denominator) {
     cout<< "Copy constructor called" << endl;
 }
 Fraction c2 = Fraction(3, 2);
@@ -994,10 +850,9 @@ C++~编译器使用一种名为\alert{拷贝去除}（copy ellision\index{C!cons
 Fraction divide(const Fraction &dividend, const Fraction &divisor) {
     return Fraction(divident.numerator()*divisor.denominator(),divident.denominator()*divisor.numerator());//返回值优化
 }
-Fraction b(2,3),c(4,5);
-Fraction e = divide(b, c);
+Fraction b(2,3), c(4,5);
+Fraction e = divide(b, c); //调用divide函数过程中Fraction类构造函数调用几次？
 \end{lstlisting}\vspace{-1.5mm}
-\onslide<4->divide函数调用过程中Fraction类构造函数调用几次？
 \end{greenblock}
 
 \end{frame}
@@ -1010,12 +865,12 @@ Fraction e = divide(b, c);
 
 \begin{block}{析构函数（destructor\index{D!destructor}）}
 \begin{itemize}
-  \item 一个对象生命期结束时，编译器会自动调用；
-  \item 销毁对象的所有成员；
-  \item 名字由\alert{波浪号}紧接类名构成，不能有返回值，也不能包含形参。
+  \item 触发：一个对象生命期结束时，编译器会自动调用；
+  \item 功能：销毁对象的所有成员；
+  \item 语法：名字由\alert{波浪号}紧接类名构成，不能有返回值，也不能包含形参。
 \end{itemize}
 \end{block}
-\begin{blueblock}<2->{示例}
+\begin{blueblock}{示例}
  \vspace{-2.5mm}\begin{lstlisting}
  class Fraction {
 public:
@@ -1024,7 +879,7 @@ public:
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
-\begin{block}<3->{析构函数的行为}
+\begin{block}<2->{析构函数的行为}
 \begin{itemize}
   \item 先执行函数体，然后按照初始化的顺序逆序销毁每个成员；
   \item 类类型的成员执行自己的析构函数；
@@ -1111,7 +966,7 @@ cout << obj ;
 \begin{block}<3->{运算符重载}
 \begin{itemize}
   \item 将运算符作用于类类型对象，重新赋予新的含义；
-  \item 增强代码的可读性。
+  \item 增强代码的{\color{red}可读性}。
 \end{itemize}
 \end{block}
 \end{frame}
@@ -1122,8 +977,8 @@ cout << obj ;
 \begin{block}{运算符重载}
 \begin{itemize}
 \item 一类特殊的函数；
-  \item 函数名由关键字~\textcolor{blue}{operator}\index{O!operator!operator overloading}~和需要重载的运算符共同组成；
-  \item 重载的运算符的返回值类型以及参数列表由运算符的性质来决定：
+  \item \textbf{函数名}由关键字~\textcolor{blue}{operator}\index{O!operator!operator overloading}~和需要重载的运算符共同组成；
+  \item \textbf{返回值类型}以及\textbf{参数列表}由运算符的性质来决定：
   \begin{itemize}
     \item 一元运算符有一个参数；
     \item 二元运算符有两个参数，左侧运算对象传递给第一个参数，右侧运算对象传递给第二个参数
@@ -1153,8 +1008,8 @@ cout << obj ;
   \item<2->[]
 \begin{blueblock}{调用方式1：}
 \begin{lstlisting}
-Fraction a, b;
-a / b;
+Fraction a(2,3), b(1,2), c;
+c = a / b;
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \end{itemize}
@@ -1163,8 +1018,8 @@ a / b;
   \item<3->[]
 \begin{blueblock}{调用方式2：}
 \begin{lstlisting}
-Fraction a, b;
-operator/(a, b);  //与 a / b 等价
+Fraction a(2,3), b(1,2), c;
+c = operator/(a, b);  //与 a / b 等价
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \end{itemize}
@@ -1205,7 +1060,7 @@ public:
   \item<2->[]
 \begin{blueblock}{调用方式1：}
 \begin{lstlisting}
-Fraction a, b;
+Fraction a(2,3), b(1,2);
 a *= b;
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -1221,10 +1076,6 @@ a.operator *= (b); //与 a *= b 等价
 \end{blueblock}
 \end{itemize}
 \end{columns}
-
-\begin{redblock}<4->{提示}
-不可重载运算符：::、.、?:~和~.*。
-\end{redblock}
 \end{frame}
 
 
@@ -1450,30 +1301,41 @@ int main() {
  \vspace{-2.5mm}\begin{lstlisting}
 class Fraction {
 public:
-    Fraction operator++(); //前置版本
-    Fraction operator++(int);//后置版本
+    Fraction operator++();      //前置版本
+    Fraction operator++(int);   //后置版本
 };
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-
+\begin{columns}
+\column{0.48\textwidth}
 \begin{blueblock}<2->{前置递增}
  \vspace{-2.5mm}\begin{lstlisting}
 Fraction& Fraction::operator++() {
-    ++m_numerator;  //分子加1
-    return *this;  //为了与内置版本行为一致，前置递增运算符返回对象的引用
+    ++m_numerator;               //分子加1
+    return *this;                //返回调用对象的引用
 }
+//
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-
+\column{0.48\textwidth}
 \begin{blueblock}<3->{后置递增}
  \vspace{-2.5mm}\begin{lstlisting}
-Fraction Fraction::operator++(int) { //形参仅为区别于前置版本
-    Fraction a(*this);  //保存当前值
-    m_numerator++; //分子加1
-    return a; //以值返回方式返回局部对象
+Fraction Fraction::operator++(int) {
+    Fraction a(*this);       //保存调用对象
+    m_numerator++;           //分子加1
+    return a;                //返回保存的副本
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
+\end{columns}
+
+\begin{greenblock}<4->{示例}
+ \vspace{-2.5mm}\begin{lstlisting}
+    Fraction a(1, 5);       //直接初始化
+    a++;
+    ++a;
+\end{lstlisting}\vspace{-1.5mm}
+\end{greenblock}
 \end{frame}
 
 %#####################################
@@ -1481,116 +1343,31 @@ Fraction Fraction::operator++(int) { //形参仅为区别于前置版本
 \begin{frame}[fragile]
     {6.3.5 函数调用运算符}
 \begin{block}{函数调用运算符}
-一个类重载了函数调用运算符，可以通过函数的方式来使用该类的对象，该类的对象称为\alert{函数对象}（function object\index{F!function object}）。
+一个类重载了函数调用运算符，可以通过函数的方式来使用该类的对象，该类的对象称为\alert{函数对象}。
 \end{block}
-\begin{blueblock}<2->{示例}
-在~Fraction~类里面重载函数调用运算符，该运算符函数有两个形参，分别用来设置分子和分母，返回调用对象的~const~引用
+\begin{columns}
+\column{0.5\textwidth}
+\begin{blueblock}<2->{示例：利用函数调用运算符设置分子分母}
 \begin{lstlisting}
 class Fraction {
 public:
     const Fraction& operator()(int a, int b) {
         m_numerator = a;
         m_denominator = b;
-        return *this;
+        return *this;       //返回调用对象的const引用
     }
 };
-
 Fraction f;
-f(3, 5);  //调用函数调用运算符
+f(3, 5);         //调用函数调用运算符
+cout<<f<<endl;   //输出3/5
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
-
-\end{frame}
-
-\begin{frame}[fragile]
-    {6.3.5 函数调用运算符}
-
-\begin{yellowblock}<1->{函数调用运算符和普通函数}
+\column{0.45\textwidth}
+\begin{yellowblock}<3->{比较函数调用运算符和普通函数}
 和普通函数相比，函数对象不但能以函数方式使用，它还能存储状态，因此它比普通函数更加灵活。
 \end{yellowblock}
-
-
-\begin{redblock}<2->{提示：函数调用运算符可以重载}
-一个类可以重载多个版本的函数调用运算符，但它们必须为类的非静态成员函数。
-\end{redblock}
-
+\end{columns}
 \end{frame}
-
-%#####################################
- \subsection{类型转换运算符}\label{chap6-3-6}
-\begin{frame}[fragile]
-    {6.3.5 类型转换运算符}
-\begin{block}{类型转换运算符（conversion operator\index{C!conversion operator}）}
-\begin{itemize}
-  \item 将类类型数据转换成其它类型数据；
-  \item 语法格式如下：\\
- \indent operator type () const;\\
-\end{itemize}
-\end{block}
-
-\begin{blueblock}<2->{示例}
-为~Fraction~类添加一个转换为~double~类型的类型转换运算符：
-\begin{lstlisting}
-class Fraction {
-public:
-    Fraction(int above = 0, int below = 1) :
-        m_numerator(above), m_denominator(below) {}
-    operator double() const {
-        return 1.*m_numerator/m_denominator;
-    }
-};
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-
-\end{frame}
-
-
-
-\begin{frame}[fragile]
-    {6.3.5 类型转换运算符}
-
-\begin{greenblock}{问题：下面代码是否正确，为什么？}
-
-\begin{itemize}
-  \item<1->[]
-\begin{lstlisting}
-Fraction f = 2;
-\end{lstlisting}\vspace{-1.5mm}
-  \item<2->[]正确，将  \textcolor{blue}{int} 类型隐式转换成 Fraction 类型，然后进行构造。
-  \item<3->[]
-  \begin{lstlisting}
-double x = 1.5 + f;
-\end{lstlisting}\vspace{-1.5mm}
-  \item<4->[] 正确，调用类型转换运算符，将 f 隐式转换成  \textcolor{blue}{double} 类型。
-  \item<5->[]
-  \begin{lstlisting}
-int i = f;
-\end{lstlisting}\vspace{-1.5mm}
- \item<6->[] 正确：首先将 f 隐式转换成  \textcolor{blue}{double} 类型，然后将   \textcolor{blue}{double} 类型 转换为  \textcolor{blue}{int} 类型。
-\end{itemize}
-
-\end{greenblock}
-
-\end{frame}
-
-\begin{frame}[fragile]
-    {6.3.5 类型转换运算符}
-
-
-\begin{block}<1->{类型转换运算符的特点}
-\begin{itemize}
-  \item 以隐式的方式调用；
-  \item 没有显式的返回值类型，也没有形参；
-  \item 必须为类的成员函数；
-  \item 一般将类型转换运算符声明为~ \textcolor{blue}{const}~成员。
-\end{itemize}
-\end{block}
-\begin{redblock}<2->{提示}
-不要过度依赖类型转换运算符。
-\end{redblock}
-\end{frame}
-
-
 
 
  \section{静态成员}
@@ -1614,17 +1391,15 @@ int i = f;
     {6.4.1 声明静态成员}
 
 \begin{blueblock}<1->{示例：声明静态成员}
-利用关键字~ \textcolor{blue}{static}~为~Fraction~类添加一个静态成员
+利用关键字~ \textcolor{blue}{static}~为~Fraction~类添加静态成员
 \begin{lstlisting}
 class PartTimeWorker {
-    string m_name; //员工姓名
-    double m_hours;//工作小时数
-    static double ms_payRate;//小时工资
+    string m_name;                  //员工姓名
+    double m_hours;                 //工作小时数
+    static double ms_payRate;       //小时工资
 public:
     double salary();
-    static double rate() {
-        return ms_payRate;
-    }
+    static double rate() {     return ms_payRate;    }
     static void initRate(double rate);
 };
 \end{lstlisting}\vspace{-1.5mm}
@@ -1646,7 +1421,7 @@ public:
 \begin{frame}[fragile]
     {6.4.2 使用静态成员}
 \begin{block}{定义静态成员}
-为静态数据成员不属于类对象，因此他们并不是由构造函数来初始化。它们必须放到\alert{类的外部定义和初始化}。
+静态数据成员不属于类对象，因此他们并不是由构造函数来初始化。它们必须放到\alert{类的外部定义和初始化}。
 \begin{itemize}
   \item 在类外定义的时候必须要指明所属的类；
   \item 不能重复~\textcolor{blue}{static}~关键字。
@@ -1661,8 +1436,8 @@ public:
 
 \begin{blueblock}<1->{定义静态成员：在类外部提供初始值} \vspace{-2.5mm}
 \begin{lstlisting}
-class PartTimeWorker {//其他成员省略
-    static double ms_payRate;//小时工资
+class PartTimeWorker {               //其他成员省略
+    static double ms_payRate;        //小时工资
 };
 double PartTimeWorker::ms_payRate = 7.53;
 \end{lstlisting}\vspace{-1.5mm}
@@ -1670,10 +1445,10 @@ double PartTimeWorker::ms_payRate = 7.53;
 
 \begin{blueblock}<2->{定义静态成员：在类内部提供初始值} \vspace{-2.5mm}
 \begin{lstlisting}
-class PartTimeWorker {//其它成员与前面一致
-    static const int ms_maxHourWeek = 20;  //每周最长工作时间
+class PartTimeWorker {                           //其它成员与前面一致
+    static const int ms_maxHourWeek = 20;       //每周最长工作时间
 };
-const int PartTimeWorker::ms_maxHourWeek;//在类内部已经有了初始值，则在类外部不可以再提供初始值
+const int PartTimeWorker::ms_maxHourWeek;       //在类内部已经有了初始值，则在类外部不可以再提供初始值
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 
@@ -1732,144 +1507,15 @@ void PartTimeWorker::initRate(double rate) {
 \begin{frame}[fragile]{课后作业}
 \begin{columns}[t]
 \column{0.8\textwidth}
-\begin{block}{作业本}
- 本章没有纸质作业 $\smile$
-\end{block}
 
-\begin{block}{上机练习}
+\begin{block}{上机作业}
  \begin{enumerate}
    \item 实验指导书：第六章
+   \item 检查日期：待定
  \end{enumerate}
 \end{block}
 \end{columns}
 \end{frame}
-
-
-%#####################################
-
-
-\section{类成员指针*}
-
- \begin{frame}[fragile]
-    {6.5 类成员指针*}
-
-\begin{block}{类成员指针（pointer to member\index{P!pointer!pointer-to-member}）}
-指向类的非静态成员的指针。
-\end{block}
-
-\end{frame}
-
-\subsection{数据成员指针*}
-
-
-
-\begin{frame}[fragile]
-    {6.5.1 数据成员指针*}
-\begin{block}{数据成员指针}
-\begin{itemize}
-  \item 需要指明类成员的类型；
-  \item 需要显式指明成员所属的类。
-\end{itemize}
-\end{block}
-
-\begin{blueblock}<2->{示例：类成员指针的定义}
-定义一个指向~PartTimeWorker~类数据成员~m\_name 的指针：
-\begin{lstlisting}
-string  PartTimeWorker::*p1 = &PartTimeWorker::m_name;
-auto p2 = &PartTimeWorker::m_name;//利用 auto 简化指针的定义
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-
-
-\begin{blueblock}<3->{示例：类成员指针的使用}
-数据成员指针没有和类对象关联，可以将指针成员作用于类的对象来访问类的成员。
-\begin{lstlisting}
-PartTimeWorker w1, *w2 = &w1;
-cout << w1.m_name << endl;  //普通访问方式
-cout << w1.*p1 << endl; //数据成员指针访问方式，等价于 w1.m_name
-cout << w2->*p1 << endl; //数据成员指针访问方式，等价于 w2->m_name
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-\end{frame}
-
-
-
-
-\begin{frame}[fragile]
-    {6.5.1 数据成员指针*}
-\begin{redblock}{注意}
-类的\alert{访问控制规则}同样适用于成员指针：\\
-m\_name~为~PartTimeWorker~类的私有数据成员，因此上面的代码必须位于类的成员函数或类的友元函数中；否则，会出现编译错误。
-\end{redblock}
-
-\end{frame}
-
-
-
-
-
-\subsection{成员函数指针}
-
-
-
-\begin{frame}[fragile]
-    {6.5.2 成员函数指针*}
-\begin{block}{成员函数指针}
-\begin{itemize}
-  \item 需要指明类成员函数的类型；
-  \item 需要显式指明成员函数所属的类。
-\end{itemize}
-\end{block}
-
-\begin{blueblock}<2->{示例：成员函数指针的定义}
-定义一个指向~PartTimeWorker~类的成员函数指针~pf，pf~可以指向~PartTimeWorker~类中返回类型为~double~且无参的成员函数。
-\begin{itemize}
-  \item<3->[]
-  \begin{lstlisting}
-double (PartTimeWorker::*pf)();
-pf = &PartTimeWorker::salary;
-\end{lstlisting}\vspace{-1.5mm}
-  \item<4->[]
-    \begin{lstlisting}
-auto pf2 =  &PartTimeWorker::salary;
-\end{lstlisting}\vspace{-1.5mm}
-  \item<5->[]
-  \begin{lstlisting}
-using PTWS = double (PartTimeWorker::*)();
-PTWS pf3 = &PartTimeWorker::salary;
-\end{lstlisting}\vspace{-1.5mm}
-\end{itemize}
-\end{blueblock}
-
-
-\end{frame}
-
-
-
-
-\begin{frame}[fragile]
-    {6.5.2 成员函数指针*}
-
-\begin{blueblock}<1->{示例：类成员指针的使用}
-需要使用~.*~或者~->*~运算符作用于指向成员函数的指针，来调用类成员函数。
-\begin{lstlisting}
-PartTimeWorker w;
-cout << w.salary() << endl;  //普通调用方式
-cout << (w.*pf)() << endl; //成员函数指针调用方式
-\end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
-
-\begin{greenblock}<2->{(w.*pf)~的圆括号能否省略？}
-\begin{itemize}
-  \item<3-> (w.*pf)~的圆括号不能缺少，原因是函数调用运算符的优先级高于指向成员指针运算符的优先级。
-\end{itemize}
-\end{greenblock}
-
-
-\end{frame}
-
-
-
 
 \begin{frame}[fragile]
 	\frametitle{~~}

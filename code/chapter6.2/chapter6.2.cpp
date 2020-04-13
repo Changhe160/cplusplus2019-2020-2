@@ -43,6 +43,7 @@ int main() {
 
 		//Fraction d2 = static_cast<Fraction>(7); //当我们将 Fraction 类的默认构造函数声明为 explicit 之后
 
+		cout << "calling divide function" << endl;
 		Fraction e = divide(b, c);
 
 		Employee e1;

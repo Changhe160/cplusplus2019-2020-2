@@ -6,7 +6,7 @@ Fraction::Fraction(const Fraction& rhs):m_numerator(rhs.m_numerator),m_denominat
 }
 
 Fraction::Fraction(int above, int below) :m_numerator(above), m_denominator(below) {
-
+	cout << "Default constructor called" << endl;
 }
 
 Fraction::~Fraction() { 
@@ -14,7 +14,7 @@ Fraction::~Fraction() {
 }
 
 
-Fraction divide(const Fraction &left, const Fraction &right) {
+Fraction divide(const Fraction left, const Fraction right) {
 	//Fraction result(left.numerator()*right.denominator(), left.denominator()*right.numerator());
 	//return result;
 

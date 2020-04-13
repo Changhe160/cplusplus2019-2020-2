@@ -62,7 +62,7 @@
     breaklines,                                                           % 控制是否折行
     % postbreak=\space,                                                     % 控制折行后显示的标识字符
     breakindent=5pt,                                                      % 控制折行后缩进数量
-    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream}, % 非内置类型
+    emph={size\_t,array,deque,list,map,queue,set,stack,vector,string,pair,tuple,ostream,constexpr}, % 非内置类型
     emphstyle={\color{teal}},
     escapeinside={(*@}{@*)},
 }
@@ -1356,14 +1356,14 @@ int main() {
     srand(0);
     vector<int> score(10);
     for (auto &i : score)   i = rand() % 100;
-    
+
     for (int i = score.size()-1; i >=0; --i) {
         for (int j = 0; j < i;++j) {                //每一轮冒泡过程将最大的数浮出来（右边）
              if (score[j+1] < score[j])             //相邻的两个数比较
                  Swap(score[j+1], score[j]);
         }
     }
-    
+
     for (auto &i : score)        cout << i << endl;
 
 }
@@ -1803,9 +1803,9 @@ using namespace std;
 void hanoi(int n, char src, char mid, char tar) {
     if (n == 1)
         cout << src << "->" << tar << '\t';
-    else {       
-        hanoi(n - 1, src, tar, mid);       //将n-1个盘子移到中间柱       
-        cout<<src<<"->"<< tar << '\t';     //将最后一个盘子移到目标柱     
+    else {
+        hanoi(n - 1, src, tar, mid);       //将n-1个盘子移到中间柱
+        cout<<src<<"->"<< tar << '\t';     //将最后一个盘子移到目标柱
         hanoi(n - 1, mid, src, tar);       //将n-1个盘子从中间柱移到目标柱
     }
 }
@@ -2003,7 +2003,7 @@ int x1 = 1;
   \item 程序中的代码在满足一定条件下才会被编译；
   \item 编译的条件有两类：宏名和常量表达式；
   \item 条件编译指令包括：
-\#ifdef、\#ifndef、\#undef、 \#if、\#else、\#endif~ 等。
+{\color{blue}\#ifdef、\#ifndef、\#undef、 \#if、\#else、\#endif}等。
 \end{itemize}
 \end{block}
 \begin{columns}
@@ -2039,7 +2039,7 @@ int x1 = 1;
 \begin{itemize}
   \item 标识符的可见性：把标识符的声明放到头文件里面，实现名字共享；
 
-  \item 头文件保护：~\#ifndef、\#define 、~\#endif~预编译指令或者\#pragma once宏；
+  \item 头文件保护：~{\color{blue}\#ifndef、\#define 、~\#endif}~预编译指令或者{\color{blue}\#pragma once}宏；
   \item 头文件包含\begin{itemize}
                \item 函数的声明
                \item const~对象
@@ -2061,17 +2061,17 @@ int x1 = 1;
 \vspace{-2.5mm} \begin{lstlisting}
 #ifndef MYHEADER_H
 #define MYHEADER_H
-const double pi = 3.1415926;  //const对象
-int add(int, int);//函数声明
-extern int g_sum;   //全局对象声明
+const double pi = 3.1415926;        //const对象
+int add(int, int);                  //函数声明
+extern int g_sum;                   //全局对象声明
 inline bool isNumber(char ch) {//内联函数
     return ch >= '0'&&ch <= '9' ? 1 : 0;
 }
-constexpr int scale() {  //constexpr 函数
+constexpr int scale() {             //constexpr 函数
     return 10;
 }
-class myClass {  };  // 类定义
-template<typename T>  // 函数模板
+class myClass {  };                 // 类定义
+template<typename T>                // 函数模板
 const T& getMax(const T &a, const T &b) {
     return a > b ? a : b;
 }
