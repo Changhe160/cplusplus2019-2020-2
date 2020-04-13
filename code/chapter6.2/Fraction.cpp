@@ -15,8 +15,8 @@ Fraction::~Fraction() {
 
 
 Fraction divide(const Fraction left, const Fraction right) {
-	//Fraction result(left.numerator()*right.denominator(), left.denominator()*right.numerator());
-	//return result;
+	Fraction result(left.numerator()*right.denominator(), left.denominator()*right.numerator());
+	return result;
 
-	return Fraction(left.numerator()*right.denominator(), left.denominator()*right.numerator()); //返回值优化
+	//return Fraction(left.numerator()*right.denominator(), left.denominator()*right.numerator()); //返回值优化
 }
