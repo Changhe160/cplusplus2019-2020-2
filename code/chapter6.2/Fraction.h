@@ -23,5 +23,5 @@ public:
 	int denominator() const { return m_denominator; }
 };
 
-Fraction divide(const Fraction left, const Fraction right);
+Fraction divide(const Fraction &left, const Fraction &right);
 #endif

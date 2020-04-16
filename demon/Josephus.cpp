@@ -41,6 +41,7 @@ int josephus3(int n, int m) {
 
 int main() {
 	int n, m;
+
 	cout << "please give n and m :";
 	cin >> n >> m;
 	cout << josephus(n, m)<<endl;

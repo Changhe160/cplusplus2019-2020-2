@@ -22,7 +22,7 @@
     <ClInclude Include="myString\MyString.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="triangle.cpp" />
+    <ClCompile Include="Josephus.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{794C85D3-0578-4203-BA5E-DFE2BBA3581C}</ProjectGuid>

@@ -612,9 +612,9 @@ Fraction(int above, int below){
 \begin{blueblock}<2->{示例}
 \begin{lstlisting}
 class Fraction {
-    int m_numerator = 0;            
-    int m_denominator = 1;  
-public：       
+    int m_numerator = 0;
+    int m_denominator = 1;
+public：
     Fraction(int above, int below) : m_numerator(above), m_denominator(below) {}
 }
 \end{lstlisting}
@@ -635,7 +635,7 @@ class Fraction {
 public:
 
     Fraction(int above = 0, int below = 1): m_numerator(above), m_denominator(below) {}
-    
+
 };
 
 Fraction a;         //使用默认值
@@ -1017,7 +1017,7 @@ cout << obj ;
 Fraction a(2,3), b(1,2), c;
 c = a / b;
 \end{lstlisting}\vspace{-1.5mm}
-\end{blueblock}
+\end{blueblock}%(*@ \alert{=} @*)
 \end{itemize}
 \column{0.45\textwidth}
 \begin{itemize}
@@ -1098,8 +1098,8 @@ a.operator *= (b); //与 a *= b 等价
 \end{block}
 \begin{block}<2->{2.~行为与内置类型一致}
  \vspace{-2.5mm}\begin{lstlisting}
-Fraction& Fraction::operator=(const Fraction &rhs) {//返回左值对象的引用
-    if (&rhs == this) return *this;   //不会给自己赋值，例如， a = a;
+Fraction& Fraction::operator=(const Fraction &rhs) {            //返回左值对象的引用
+    if (&rhs == this) return *this;                             //不会给自己赋值，例如， a = a;
     m_numerator = rhs.m_numerator;    m_denominator = rhs.m_denominator;
     return *this;
 }
@@ -1181,10 +1181,8 @@ int operator-(int, int);
 \begin{frame}[fragile]
     {6.3.3 输入和输出运算符}
 \begin{block}{输入和输出运算符}
-
 重载~IO~标准库运算符~\verb;<<;~和~\verb;>>;~ 来实现输出和输入操作
 ，为了与~IO~标准库兼容，IO~运算符被声明为\alert{友元}。
-
 \end{block}
 
 \begin{blueblock}<2->{示例}
@@ -1195,6 +1193,12 @@ class Fraction {
 };
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
+
+\begin{enumerate}
+  \item<3-> 返回值类型为什是IO类引用？
+  \item<3-> 第一个参数为什么是IO类对象，且是引用？
+  \item<3-> 第二个参数是类类型，为什么输出运算符是const引用，输入运算符不是const引用？
+\end{enumerate}
 \end{frame}
 
 
@@ -1290,7 +1294,7 @@ public:
 };
 int main() {
     Fraction a;
-    a.operator>>(cin);//类的成员函数的调用方式
+    a.operator>>(cin);      //类的成员函数的调用方式或者a>>cin
     return 0;
 }
 
@@ -1307,8 +1311,8 @@ int main() {
  \vspace{-2.5mm}\begin{lstlisting}
 class Fraction {
 public:
-    Fraction operator++();      //前置版本
-    Fraction operator++(int);   //后置版本
+    Fraction operator++();          //前置版本
+    Fraction operator++(int);       //后置版本
 };
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -1327,9 +1331,9 @@ Fraction& Fraction::operator++() {
 \begin{blueblock}<3->{后置递增}
  \vspace{-2.5mm}\begin{lstlisting}
 Fraction Fraction::operator++(int) {
-    Fraction a(*this);       //保存调用对象
-    m_numerator++;           //分子加1
-    return a;                //返回保存的副本
+    Fraction a(*this);          //保存调用对象
+    m_numerator++;              //分子加1
+    return a;                   //返回保存的副本
 }
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
@@ -1364,8 +1368,8 @@ public:
     }
 };
 Fraction f;
-f(3, 5);         //调用函数调用运算符
-cout<<f<<endl;   //输出3/5
+f(3, 5);                //调用函数调用运算符
+cout<<f<<endl;          //输出3/5
 \end{lstlisting}\vspace{-1.5mm}
 \end{blueblock}
 \column{0.45\textwidth}
