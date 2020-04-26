@@ -20,7 +20,6 @@ Fraction::Fraction(const Fraction& rhs) : m_numerator(rhs.m_numerator), m_denomi
 	
 }
 Fraction& Fraction::operator=(const Fraction &rhs) {
-	
 	if (&rhs == this) return *this;   //do not assign itself, e.g. a=a;
 	m_numerator = rhs.m_numerator;
 	m_denominator = rhs.m_denominator;

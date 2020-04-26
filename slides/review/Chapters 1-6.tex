@@ -99,8 +99,11 @@
 \titlepage % Print the title page as the first slide
 
 \begin{multicols}{2}
-	黑色部分：基础知识，掌握		
-	\color{blue}{蓝色部分：高级话题，了解}
+\begin{itemize}
+	\item 黑色部分：基础知识，掌握	
+    \item \alert{红色部分：关键知识，运用}	
+	\item \color{blue}{蓝色部分：高级话题，了解}
+\end{itemize}
 \end{multicols}
 \end{frame}
 
@@ -112,7 +115,16 @@
   \item main函数：有且仅有1个main函数
 \item 注释语句：单行注释与多行注释
 \item 输入输出：std::cin, std::cout
-\item 编译与调试
+\item \alert{编译与调试：提高编程能力的唯一途径}
+\begin{lstlisting}
+while(存在语法错误){
+    编辑代码;
+}
+
+do{
+    编辑–编译–调试;
+}while{逻辑错误}
+\end{lstlisting}\vspace{-1.5mm}
 \end{itemize}
 \end{multicols}
 \end{frame}
@@ -133,7 +145,7 @@
 \item 对象：数据和操作的载体
 \begin{itemize}
   \item 定义和初始化，声明
-  \item 类型、名字、内存结构、生命期、作用域
+  \item 类型、名字、\textcolor{blue}{内存结构}、\alert{生命期}、作用域
 \end{itemize}
 
 \item const修饰符和类型推导
@@ -145,10 +157,10 @@
 
 \item 表达式求值与构造
 \begin{itemize}
-  \item {\color{blue}左值、右值}、优先级、结合性和{\color{blue}求值次序}
+  \item {\color{blue}左值、右值}、运算符、\alert{优先级、结合性}和{\color{blue}求值次序}
   \item 优先级：逗号运算符\texttt{<}赋值运算符~\texttt{<}逻辑或\texttt{<}逻辑与~\texttt{<}~关系运算符~\texttt{<}~算术运算符~\texttt{<}~逻辑非
       \item 条件运算符、sizeof运算符、\textcolor{blue}{位运算符}
-  \item 表达式构造，短路求值，隐式类型转换规则
+  \item 表达式构造，\alert{短路求值}，隐式类型转换规则
 \end{itemize}
 \end{itemize}
 \end{multicols}
@@ -166,14 +178,20 @@
 
 \item 分支结构
 \begin{itemize}
-  \item if语句, if else语句,if嵌套,悬垂else
-  \item switch语句：标签,break
-  \item 循环语句：while, do while和for（执行流程）
-  \item 循环语句选择
-  \item 跳转语句：break只能用于循环或switch语句；continue只能用于循环结构
+  \item if语句，if else语句，if嵌套，\alert{悬垂else}
+  \item switch语句：标签, \alert{break语句}
 \end{itemize}
-
-\item 嵌套结构：根据问题分析设计
+\item 循环结构
+\begin{itemize}
+ \item 循环语句：while, do while和for语句的执行流程
+ \item \alert{循环语句选择}
+\end{itemize}
+\item 跳转语句
+\begin{itemize}
+ \item \alert{break}只能用于循环或switch语句；
+ \item \alert{continue}只能用于循环结构
+\end{itemize}
+\item \alert{嵌套结构}：根据问题分析设计
 \end{itemize}
 \end{multicols}
 \end{frame}
@@ -186,7 +204,7 @@
   \item （左值）引用：左值对象的别名
 \begin{itemize}
   \item 定义时必须初始化
-  \item 指向const对象的引用
+  \item \alert{const与引用：兼顾安全与效率}
   \item {\color{blue}auto, decltype和引用}
   \item {\color{blue}右值引用：把右值变成左值}
 \end{itemize}
@@ -195,28 +213,29 @@
 \begin{itemize}
   \item 指针对象：存储左值对象的地址
   \item 赋值操作改变指针指向
-  \item 指向const对象的指针域const指针
+  \item 指向const对象的指针，const指针
   \item {\color{blue}auto, decltype和指针}
   \item {\color{blue}void指针和多级指针}
-  \item 指针和引用：初始化、赋值行为不同；引用可以看做const指针
+  \item \alert{指针和引用}：初始化、赋值行为不同；引用可以看做const指针
 \end{itemize}
 
 \item 数组：有限个同类型元素的有序集合
 \begin{itemize}
-  \item 初始化（字符数组）
+  \item 初始化（字符数组的特殊性）
   \item {\color{blue}复杂数组定义}
   \item 下标法访问；{\color{blue}范围for语句}
-  \item 二维数组
+  \item 二维数组:int a[5][5];
 \end{itemize}
 
-\item 指针和数组：利用指针访问数组（地址、元素和值）
+\item \alert{指针和数组}：利用指针访问数组（地址、元素和值）
 \begin{itemize}
   \item 指针指向数组
   \item 指向数组的指针运算：移动、关系和减法
-  \item 访问二维数组：*(*(p2d+1)+1),*(p2d[1]+1)
+  \item 访问数组：
+        int (*p2d)[5] = a; *(*(p2d+1)+1),*(p2d[1]+1)
 \end{itemize}
 
-\item {\color{blue}string、vector和枚举类型}
+\item string、vector和{\color{blue}枚举类型}
 \item {\color{blue}C风格字符数组的处理函数}
 \end{itemize}
 \end{multicols}
@@ -227,10 +246,11 @@
 	\frametitle{第五章：函数}
 \begin{multicols}{2}
 \begin{itemize}
-  \item 函数，代码间数据传递和交互的主要方式
+  \item 函数：代码间数据传递和交互的主要方式
 \begin{itemize}
   \item 函数四个要素
-  \item 函数声明与函数调用
+  \item 函数声明与函数定义
+  \item 函数调用过程
 \end{itemize}
 
 \item 存储类型
@@ -240,7 +260,7 @@
   \item 静态类型：无外部链接性
 \end{itemize}
 
-\item 参数传递
+\item \alert{参数传递}
 \begin{itemize}
   \item 单向值传递，安全但低效 Swap(int,int);
   \item 地址传递：传递实参的地址 Swap(int *, int*);
@@ -249,19 +269,18 @@
   \item 数组形参：地址方式传递，需要传递数组长度（字符数组例外）
 \end{itemize}
 
-\item 返回值类型
+\item\alert{返回值类型}
 \begin{itemize}
   \item 值返回：右值临时对象
   \item 引用或地址返回：左值（在函数调用之前产生），不要返回函数内部在栈里产生的局部对象的引用或地址
-  \item \color{blue}{函数重载、形参默认值、内联函数、函数指针、lambda表达式}
-  \item \color{blue}{递归程序设计}
 \end{itemize}
-
+\item {\color{blue}{函数重载、形参默认值、内联函数、函数指针、lambda表达式}}
+\item {\color{blue}{递归程序设计}}
 \item 编译预处理和多文件结构
 \begin{itemize}
   \item 宏定义：带参和不带参
-  \item \color{blue}{条件编译}
-  \item \color{blue}{多文件结构：头文件和源文件}
+  \item {\color{blue}{条件编译}}
+  \item 多文件结构：\alert{头文件和源文件}
 \end{itemize}
 
 \end{itemize}
@@ -275,14 +294,17 @@
 \begin{itemize}
   \item 类的定义
   \begin{itemize}
-    \item 数据成员和成员函数的封装\\ class Fraction\{ \\
-    private: 数据成员;\\
-    public: 成员函数; \\
-    \};
+    \item 成员的抽象与\alert{封装}
+    \begin{lstlisting}
+class Fraction {
+private: 数据成员;
+public: 成员函数; 
+};
+\end{lstlisting}
     \item 成员函数调用 ：. ->
     \item 访问控制和友元
   \end{itemize}
-  \item 构造与析构
+  \item \alert{构造与析构：控制对象生命期}
   \begin{itemize}
     \item 构造函数：语法和功能，初始化列表
     \item 默认与复制构造函数：直接与复制初始化
@@ -293,7 +315,7 @@
 \begin{itemize}
   \item 运算符重载
   \begin{itemize}
-    \item 重载原则：含义与行为与内置类型一致；改变自身状态的作为类成员，对称性的作为辅助函数
+    \item \alert{重载原则}：含义和行为与内置类型一致；改变自身状态的作为类成员，对称性的作为辅助函数
     \item 输入和输出运算符：辅助函数，注意返回值和参数类型
     \item \color{blue}{递增和递减运算符：成员函数，注意行为与内置类型一致}
     \item \color{blue}{函数调用和类型转换运算符}
@@ -304,13 +326,15 @@
   \item 静态成员函数不能访问非静态数据成员
   \item 类名::成员名
 \end{itemize}
+ \item class Fraction \{\};是空类吗？
 \end{itemize}
 \end{multicols}
 \end{frame}
 
 
 \begin{frame}[fragile]
-	\frametitle{算法}
+	\frametitle{算法设计与程序设计}
+\begin{block}{算法设计}
 \begin{multicols}{2}
 \begin{itemize}
   \item 直接法：例3.2（成绩转换）、3.3（解方程）、3.5（字符统计）、3.6（猜数字）、3.8（石头剪刀布）、3.9（百钱买百鸡）、4.1（分数统计）、4.3（扫雷地图）、4.4（猜单词）
@@ -321,7 +345,18 @@
   \item 其它应用：例5.2（排序），5.3（求积分）
 \end{itemize}
 \end{multicols}
-\end{frame}
+\end{block}
 
+\begin{block}{程序设计模式}
+\begin{multicols}{2}
+\begin{itemize}
+  \item 面向过程
+  \item 基于对象
+  \item 面向对象
+  \item 泛型编程
+\end{itemize}
+\end{multicols}
+\end{block}
+\end{frame}
 
 \end{document}

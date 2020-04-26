@@ -9,10 +9,12 @@ int main() {
 	//6.3.1
 	{
 		Fraction a(1, 5);	//直接初始化
-		Fraction b(a);		//直接初始化，b为对象a的拷贝
+		Fraction b(a),c;		//直接初始化，b为对象a的拷贝
 		
 		a / b;
 		operator/(a, b);
+
+		a.operator=( b) ;
 
 		a *= b;				//调用重载的 * =
 		a.operator *= (b);	//与 a*= b 等价
